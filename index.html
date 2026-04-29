@@ -245,15 +245,26 @@ body {
   border-bottom: 1px solid #e8eef5;
 }
 
-/* localizador específico destacado */
+/* localizador específico + cia aérea na mesma linha */
+.loc-cia-row {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
+}
 .loc-esp-bloco {
   background: var(--r-loc-bg, #1e3f6e);
   border-radius: 6px; padding: 7px 12px;
-  margin-bottom: 10px; display: inline-flex;
-  align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
 }
 .loc-esp-label { font-size: 10px; color: rgba(255,255,255,.6); font-weight: 500; }
 .loc-esp-val { font-size: 13px; color: #fff; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+.cia-bloco {
+  border: 1px solid var(--r-loc-bg, #1e3f6e);
+  border-radius: 6px; padding: 7px 12px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.cia-label { font-size: 10px; color: var(--r-loc-bg, #1e3f6e); font-weight: 500; }
+.cia-val { font-size: 13px; color: var(--r-loc-bg, #1e3f6e); font-weight: 700; }
 
 /* grid partida/destino */
 .trecho-cols {
@@ -578,8 +589,9 @@ function showMsg(t, tp) {
 
 // ═══ PARSER ═══
 const DELIMITADORES = [
-  'Passageiro', 'Localizador Geral', 'Trecho \\d+',
-  'Localizador Específico', 'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
+  'Passageiro', 'Localizador Geral', 'Cia A[eé]rea Geral', 'Trecho \\d+',
+  'Localizador Específico', 'Cia A[eé]rea Específica',
+  'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
   'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
   'Bagagem Específica', 'Bagagem Geral', 'Informa[çc][õo]es?',
   'Valor [àa] Pagar', 'Pagamento'
@@ -587,9 +599,9 @@ const DELIMITADORES = [
 
 function inserirQuebras(raw) {
   let txt = raw;
-  // ORDEM IMPORTA: rótulos mais longos primeiro para não cortar no meio
   const ordem = [
     'Localizador Geral', 'Localizador Específico',
+    'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
     'Data Sa[íi]da', 'Hora Sa[íi]da',
     'Data Chegada', 'Hora Chegada',
     'Bagagem Específica', 'Bagagem Geral',
@@ -602,7 +614,6 @@ function inserirQuebras(raw) {
       txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1');
     } catch(e) {}
   });
-  // "Trecho N" sem dois pontos
   txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
   return txt;
 }
@@ -611,7 +622,7 @@ function parsear() {
   const raw = document.getElementById('paste-input').value.trim();
   if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
 
-  D = { passageiros: [], locGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
 
   const txt = inserirQuebras(raw);
   const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
@@ -633,7 +644,7 @@ function parsear() {
   }
 
   function novoTrecho() {
-    trechoAtual = { num: D.trechos.length + 1, locEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: '', duracao: '', bagEsp: [] };
+    trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: '', duracao: '', bagEsp: [] };
     D.trechos.push(trechoAtual);
   }
 
@@ -645,8 +656,10 @@ function parsear() {
       return;
     }
     if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
+    if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
     if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; return; }
     if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
+    if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
     if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
     if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataPartida'; if (trechoAtual) trechoAtual.dataPartida = l.replace(/^Data Sa[íi]da:\s*/i, '').trim(); return; }
     if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaPartida'; if (trechoAtual) trechoAtual.horaPartida = l.replace(/^Hora Sa[íi]da:\s*/i, '').trim(); return; }
@@ -710,18 +723,31 @@ function update() {
     }
   }
 
-  // Localizador Geral
-  if (D.locGeral) {
-    html += `<div class="bloco bloco-loc"><div class="bloco-titulo">➡️ Localizador</div><p>${esc(D.locGeral)}</p></div>`;
+  // Localizador Geral + Cia Aérea Geral
+  if (D.locGeral || D.ciaGeral) {
+    html += `<div class="bloco bloco-loc" style="padding:16px 20px;">`;
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+    if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:22px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
+    if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+    else if (!D.locGeral && D.ciaGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:22px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+    html += `</div></div>`;
   }
 
   // Trechos
   D.trechos.forEach(t => {
     html += `<div class="trecho"><div class="trecho-titulo">✈️ Trecho ${t.num}</div>`;
 
-    // Localizador específico destacado
-    if (t.locEsp) {
-      html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+    // Linha loc+cia
+    const temLoc = t.locEsp, temCia = t.ciaEsp;
+    if (temLoc || temCia) {
+      html += `<div class="loc-cia-row">`;
+      if (temLoc) {
+        html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+      }
+      if (temCia) {
+        html += `<div class="cia-bloco"><span class="cia-label">CIA AÉREA</span><span class="cia-val">${esc(t.ciaEsp)}</span></div>`;
+      }
+      html += `</div>`;
     }
 
     // Grid duas colunas: Partida | Destino
@@ -750,7 +776,7 @@ function update() {
       if (t.paradas) html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${esc(t.paradas)}</div></div>`;
       if (t.duracao) html += `<div class="tbot-item"><div class="tbot-label">Duração</div><div class="tbot-val">${esc(t.duracao)}</div></div>`;
       if (t.bagEsp.length) {
-        html += `<div class="bag-esp"><div class="bag-esp-titulo">🧳 Bagagem Específica</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+        html += `<div class="bag-esp"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
       }
       html += `</div>`;
     }
