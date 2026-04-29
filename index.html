@@ -1,0 +1,349 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--color-background-tertiary);}
+.app{display:flex;min-height:600px;}
+.sidebar{width:300px;min-width:300px;background:var(--color-background-primary);border-right:.5px solid var(--color-border-tertiary);padding:1.1rem;display:flex;flex-direction:column;gap:.8rem;overflow-y:auto;max-height:700px;}
+.sidebar h2{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.08em;padding-bottom:7px;border-bottom:.5px solid var(--color-border-tertiary);}
+.paste-box{border:1.5px dashed #1a3a5c;border-radius:8px;padding:10px;background:var(--color-background-secondary);}
+.paste-box label{font-size:11px;color:var(--color-text-info);display:block;margin-bottom:5px;font-weight:500;}
+.paste-box textarea{font-size:11px;min-height:110px;border:.5px solid var(--color-border-tertiary);border-radius:5px;background:var(--color-background-primary);color:var(--color-text-primary);width:100%;padding:6px 8px;font-family:monospace;resize:vertical;}
+.parse-btn{margin-top:6px;width:100%;padding:8px;font-size:12px;border:none;border-radius:6px;background:#1a3a5c;color:#fff;cursor:pointer;font-weight:500;}
+.parse-btn:hover{background:#14304f;}
+.msg{font-size:11px;margin-top:5px;padding:5px 8px;border-radius:5px;display:none;}
+.msg.ok{background:#e8f5e9;color:#2e7d32;}
+.msg.err{background:#fdecea;color:#b71c1c;}
+.fl{display:flex;flex-direction:column;gap:4px;}
+.fl label{font-size:11px;color:var(--color-text-secondary);}
+.fl input{font-size:12px;padding:6px 8px;border:.5px solid var(--color-border-secondary);border-radius:6px;background:var(--color-background-secondary);color:var(--color-text-primary);width:100%;}
+.logo-btn{font-size:11px;background:none;border:.5px dashed var(--color-border-secondary);border-radius:6px;padding:7px;cursor:pointer;color:var(--color-text-secondary);text-align:center;width:100%;}
+.expbtn{background:#1a3a5c;color:#fff;border:none;border-radius:7px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;width:100%;margin-top:auto;}
+.expbtn:hover{background:#14304f;}
+.preview-area{flex:1;padding:1.5rem;overflow-y:auto;max-height:700px;background:#999;display:flex;flex-direction:column;align-items:center;}
+
+/* RECIBO */
+#recibo{width:650px;background:#fff;color:#111;font-family:'Segoe UI',Arial,sans-serif;font-size:13px;padding:28px 32px;}
+.rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:13px;border-bottom:2.5px solid #1a3a5c;}
+.rec-logo-area{display:flex;align-items:center;gap:12px;}
+.logo-ph{width:68px;height:68px;background:linear-gradient(135deg,#1a3a5c 60%,#e8a020 100%);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700;text-align:center;line-height:1.4;}
+.rec-company h1{font-size:18px;font-weight:700;color:#1a3a5c;}
+.rec-slogan{font-size:10px;color:#555;margin-top:3px;border:.5px solid #ccc;border-radius:4px;padding:2px 7px;display:inline-block;}
+.rec-tel{font-size:10px;color:#888;margin-top:3px;}
+.rec-cnpj{text-align:right;font-size:11px;color:#555;}
+.rec-cnpj strong{color:#1a3a5c;font-size:12px;display:block;}
+
+.bloco{border:1px solid #d0d8e4;border-radius:7px;padding:10px 14px;margin-bottom:11px;background:#f7f9fc;break-inside:avoid;page-break-inside:avoid;}
+.bloco-titulo{font-weight:700;font-size:13px;color:#1a3a5c;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.bloco p{color:#333;font-size:12px;line-height:1.8;}
+
+.bloco-loc{background:#1e3f6e;border-color:#1e3f6e;}
+.bloco-loc .bloco-titulo{color:#fff;}
+.bloco-loc p{color:#c8d8f0;font-size:13px;font-weight:600;}
+
+.trecho{background:#fff;border:1px solid #d0d8e4;border-radius:7px;padding:10px 14px;margin-bottom:11px;break-inside:avoid;page-break-inside:avoid;}
+.trecho-titulo{font-weight:700;font-size:13px;color:#1a3a5c;display:flex;align-items:center;gap:6px;margin-bottom:7px;padding-bottom:6px;border-bottom:1px solid #e8eef5;}
+.trecho-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-bottom:6px;}
+.tg-item{}
+.tg-label{font-size:10px;color:#888;margin-bottom:1px;}
+.tg-val{font-size:12px;color:#222;font-weight:500;}
+.tg-full{grid-column:1/-1;}
+.bag-esp{margin-top:8px;padding:7px 10px;background:#f0f4fa;border-radius:5px;border-left:3px solid #1a3a5c;}
+.bag-esp-titulo{font-size:10px;font-weight:700;color:#1a3a5c;margin-bottom:3px;}
+.bag-esp ul{list-style:none;}
+.bag-esp li{font-size:11px;color:#333;line-height:1.7;}
+.bag-esp li::before{content:"✓ ";color:#1a3a5c;font-weight:700;}
+
+.bloco-bag{background:#fff8ee;border-color:#e8c97a;}
+.bloco-bag .bloco-titulo{color:#8a6000;}
+.bloco-bag ul{list-style:none;}
+.bloco-bag li{font-size:12px;color:#333;line-height:1.8;}
+.bloco-bag li::before{content:"✓ ";color:#8a6000;font-weight:700;}
+
+.bloco-info{background:#f0f7ff;border-color:#b0cff5;}
+.bloco-info .bloco-titulo{color:#1a3a5c;}
+.bloco-info p{white-space:pre-wrap;font-size:12px;color:#333;line-height:1.75;}
+
+.bloco-valor{background:#1a3a5c;border-color:#1a3a5c;display:flex;justify-content:space-between;align-items:center;}
+.bloco-valor .bloco-titulo{color:#fff;margin-bottom:0;}
+.valor-num{font-size:22px;font-weight:700;color:#fff;}
+
+.bloco-pag .bloco-titulo{color:#1a3a5c;}
+.bloco-pag p{font-size:12px;color:#333;white-space:pre-wrap;}
+
+.rec-footer{margin-top:18px;padding-top:10px;border-top:1px solid #d0d8e4;font-size:10px;color:#aaa;text-align:center;}
+
+@media print{
+  html,body{background:#fff!important;margin:0!important;padding:0!important;}
+  .sidebar{display:none!important;}
+  .app{display:block!important;}
+  .preview-area{background:#fff!important;padding:0!important;max-height:none!important;overflow:visible!important;}
+  #recibo{width:100%!important;padding:16px 20px!important;}
+  .bloco,.trecho{break-inside:avoid!important;page-break-inside:avoid!important;}
+  @page{margin:1.2cm;size:A4 portrait;}
+}
+</style>
+
+<div class="app">
+<div class="sidebar">
+  <h2>K&V — Gerador de Recibo</h2>
+
+  <div class="paste-box">
+    <label>📋 Cole os dados do Coda aqui</label>
+    <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..."></textarea>
+    <button class="parse-btn" onclick="parsear()">Gerar recibo ↗</button>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div class="fl">
+    <label>Ajuste — Passageiro</label>
+    <input id="f-pass" oninput="update()" placeholder="Nome do passageiro">
+  </div>
+
+  <button class="logo-btn" onclick="document.getElementById('logo-file').click()">
+    📷 Trocar logo da empresa
+    <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="loadLogo(event)">
+  </button>
+
+  <button class="expbtn" onclick="window.print()">Exportar PDF</button>
+</div>
+
+<div class="preview-area">
+<div id="recibo">
+  <div class="rec-header">
+    <div class="rec-logo-area">
+      <div id="logo-wrap"><div class="logo-ph">K&V<br>Viagens</div></div>
+      <div class="rec-company">
+        <h1>K&amp;V&nbsp; Easy Traveling</h1>
+        <div class="rec-slogan">✨ "Viaje hoje, viaje barato, viaje sempre" ✨</div>
+        <div class="rec-tel">📱 (38) 9 8815-5417</div>
+      </div>
+    </div>
+    <div class="rec-cnpj">CNPJ:<strong>65.597.589/0001-00</strong></div>
+  </div>
+  <div id="r-corpo"></div>
+  <div class="rec-footer">Recibo gerado pela K&amp;V Easy Traveling &nbsp;|&nbsp; Informações do Seu Pedido</div>
+</div>
+</div>
+</div>
+
+<script>
+let D={passageiro:'',locGeral:'',trechos:[],bagGeral:[],informacoes:'',valor:'',pagamento:[]};
+
+function loadLogo(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{document.getElementById('logo-wrap').innerHTML=`<img src="${ev.target.result}" style="width:68px;height:68px;object-fit:cover;border-radius:7px;">`};
+  r.readAsDataURL(f);
+}
+
+function showMsg(txt,tipo){
+  const el=document.getElementById('msg');
+  el.textContent=txt;el.className='msg '+tipo;el.style.display='block';
+}
+
+// Rótulos conhecidos — ordem importa para o regex de split
+const ROTULOS=[
+  'Passageiro',
+  'Localizador Geral',
+  'Trecho \\d+',
+  'Localizador Específico',
+  'Partida',
+  'Data Partida',
+  'Hora Partida',
+  'Destino',
+  'Data Chegada',
+  'Hora Chegada',
+  'Paradas',
+  'Duração',
+  'Bagagem Específica',
+  'Bagagem Geral',
+  'Informa[çc][õo]es',
+  'Valor [àa] Pagar',
+  'Pagamento',
+];
+
+function normalizar(raw){
+  // Inserir \n antes de cada rótulo conhecido
+  let txt=raw;
+  ROTULOS.forEach(r=>{
+    const re=new RegExp(`(${r}:)`, 'gi');
+    txt=txt.replace(re,'\n$1');
+  });
+  // Trecho sem ":" — ex: "Trecho 1" sozinho na linha
+  txt=txt.replace(/(Trecho\s*\d+)(?!:)/gi,'\n$1\n');
+  return txt;
+}
+
+function parsear(){
+  const raw=document.getElementById('paste-input').value.trim();
+  if(!raw){showMsg('Cole algum texto primeiro.','err');return;}
+
+  D={passageiro:'',locGeral:'',trechos:[],bagGeral:[],informacoes:'',valor:'',pagamento:[]};
+
+  const txt=normalizar(raw);
+  const linhas=txt.split('\n').map(l=>l.trim()).filter(l=>l);
+
+  // ── extrair campos simples de cabeçalho ──
+  function extrair(rotulo, arr){
+    const re=new RegExp(`^${rotulo}:\\s*(.*)$`,'i');
+    for(let i=0;i<arr.length;i++){
+      const m=arr[i].match(re);
+      if(m)return{val:m[1].trim(),idx:i};
+    }
+    return null;
+  }
+
+  // Passageiro
+  const passR=extrair('Passageiro',linhas);
+  if(passR)D.passageiro=passR.val;
+
+  // Localizador Geral
+  const locGR=extrair('Localizador Geral',linhas);
+  if(locGR)D.locGeral=locGR.val;
+
+  // ── separar trechos ──
+  const trechoIdxs=[];
+  linhas.forEach((l,i)=>{if(/^Trecho\s*\d+\s*$/i.test(l))trechoIdxs.push(i);});
+
+  trechoIdxs.forEach((start,idx)=>{
+    const end=trechoIdxs[idx+1]||linhas.length;
+    const bloco=linhas.slice(start,end);
+    const t={num:idx+1,locEsp:'',partida:'',dataPartida:'',horaPartida:'',destino:'',dataChegada:'',horaChegada:'',paradas:'',duracao:'',bagEsp:[]};
+
+    let bagEspMode=false;
+
+    bloco.forEach(l=>{
+      // cada campo tem rótulo explícito — sem ambiguidade
+      if(/^Localizador Específico:\s*/i.test(l)){t.locEsp=l.replace(/^Localizador Específico:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Partida:\s*/i.test(l)){t.partida=l.replace(/^Partida:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Data Partida:\s*/i.test(l)){t.dataPartida=l.replace(/^Data Partida:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Hora Partida:\s*/i.test(l)){t.horaPartida=l.replace(/^Hora Partida:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Destino:\s*/i.test(l)){t.destino=l.replace(/^Destino:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Data Chegada:\s*/i.test(l)){t.dataChegada=l.replace(/^Data Chegada:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Hora Chegada:\s*/i.test(l)){t.horaChegada=l.replace(/^Hora Chegada:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Paradas:\s*/i.test(l)){t.paradas=l.replace(/^Paradas:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Dura[çc][ãa]o:\s*/i.test(l)){t.duracao=l.replace(/^Dura[çc][ãa]o:\s*/i,'').trim();bagEspMode=false;}
+      else if(/^Bagagem Específica:\s*/i.test(l)){
+        bagEspMode=true;
+        const inline=l.replace(/^Bagagem Específica:\s*/i,'').trim();
+        if(inline&&inline!=='""')t.bagEsp.push(inline);
+      }
+      else if(bagEspMode&&l&&!/^Trecho\s*\d+/i.test(l)){
+        t.bagEsp.push(l);
+      }
+    });
+
+    D.trechos.push(t);
+  });
+
+  // ── rodapé: Bagagem Geral, Informações, Valor, Pagamento ──
+  // pegar linhas a partir da primeira ocorrência de Bagagem Geral / Informações / Valor
+  const rodapeStart=linhas.findIndex(l=>
+    /^Bagagem Geral:/i.test(l)||
+    /^Informa[çc][õo]es:/i.test(l)||
+    /^Valor [àa] Pagar:/i.test(l)
+  );
+
+  if(rodapeStart>=0){
+    const rodape=linhas.slice(rodapeStart);
+    let modo=''; // 'bag' | 'info' | 'pag'
+    let infoLinhas=[];
+    let pagLinhas=[];
+
+    rodape.forEach(l=>{
+      if(/^Bagagem Geral:/i.test(l)){
+        modo='bag';
+        const inline=l.replace(/^Bagagem Geral:\s*/i,'').trim();
+        if(inline)D.bagGeral.push(inline);
+      }
+      else if(/^Informa[çc][õo]es?:/i.test(l)){
+        modo='info';
+        const inline=l.replace(/^Informa[çc][õo]es?:\s*/i,'').trim();
+        if(inline)infoLinhas.push(inline);
+      }
+      else if(/^Valor [àa] Pagar:/i.test(l)){
+        modo='';
+        D.valor=l.replace(/^Valor [àa] Pagar:\s*/i,'').trim();
+      }
+      else if(/^Pagamento:/i.test(l)){
+        modo='pag';
+        const inline=l.replace(/^Pagamento:\s*/i,'').trim();
+        if(inline)pagLinhas.push(inline);
+      }
+      else if(modo==='bag'&&l)D.bagGeral.push(l);
+      else if(modo==='info'&&l)infoLinhas.push(l);
+      else if(modo==='pag'&&l)pagLinhas.push(l);
+    });
+
+    D.informacoes=infoLinhas.join('\n');
+    D.pagamento=pagLinhas;
+  }
+
+  document.getElementById('f-pass').value=D.passageiro;
+  showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.bagGeral.length} bagagem(ns) geral | ${D.informacoes?'info ✓':'sem info'} | ${D.valor?'valor ✓':'sem valor'}`,'ok');
+  update();
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function update(){
+  const pass=document.getElementById('f-pass').value.trim()||D.passageiro;
+  let html='';
+
+  // Passageiro
+  html+=`<div class="bloco"><div class="bloco-titulo">👤 Passageiro</div><p>${esc(pass||'—')}</p></div>`;
+
+  // Localizador Geral
+  if(D.locGeral){
+    html+=`<div class="bloco bloco-loc"><div class="bloco-titulo">➡️ Localizador</div><p>${esc(D.locGeral)}</p></div>`;
+  }
+
+  // Trechos
+  D.trechos.forEach(t=>{
+    html+=`<div class="trecho">
+      <div class="trecho-titulo">✈️ Trecho ${t.num}</div>
+      <div class="trecho-grid">
+        ${t.locEsp?`<div class="tg-item tg-full"><div class="tg-label">Localizador</div><div class="tg-val">${esc(t.locEsp)}</div></div>`:''}
+        ${t.partida?`<div class="tg-item"><div class="tg-label">Partida</div><div class="tg-val">${esc(t.partida)}</div></div>`:''}
+        ${t.destino?`<div class="tg-item"><div class="tg-label">Destino</div><div class="tg-val">${esc(t.destino)}</div></div>`:''}
+        ${t.dataPartida?`<div class="tg-item"><div class="tg-label">Data partida</div><div class="tg-val">${esc(t.dataPartida)}</div></div>`:''}
+        ${t.horaPartida?`<div class="tg-item"><div class="tg-label">Hora partida</div><div class="tg-val">${esc(t.horaPartida)}</div></div>`:''}
+        ${t.dataChegada?`<div class="tg-item"><div class="tg-label">Data chegada</div><div class="tg-val">${esc(t.dataChegada)}</div></div>`:''}
+        ${t.horaChegada?`<div class="tg-item"><div class="tg-label">Hora chegada</div><div class="tg-val">${esc(t.horaChegada)}</div></div>`:''}
+        ${t.paradas?`<div class="tg-item tg-full"><div class="tg-label">Paradas</div><div class="tg-val">${esc(t.paradas)}</div></div>`:''}
+        ${t.duracao?`<div class="tg-item"><div class="tg-label">Duração</div><div class="tg-val">${esc(t.duracao)}</div></div>`:''}
+      </div>
+      ${t.bagEsp.length?`<div class="bag-esp"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b=>`<li>${esc(b)}</li>`).join('')}</ul></div>`:''}
+    </div>`;
+  });
+
+  // Bagagem Geral
+  if(D.bagGeral.length){
+    html+=`<div class="bloco bloco-bag">
+      <div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div>
+      <ul>${D.bagGeral.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>
+    </div>`;
+  }
+
+  // Informações
+  if(D.informacoes){
+    html+=`<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
+  }
+
+  // Valor
+  if(D.valor){
+    html+=`<div class="bloco bloco-valor"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num">${esc(D.valor)}</div></div>`;
+  }
+
+  // Pagamento
+  if(D.pagamento.length){
+    html+=`<div class="bloco bloco-pag"><div class="bloco-titulo">💳 Pagamento</div><p>${D.pagamento.map(esc).join('\n')}</p></div>`;
+  }
+
+  document.getElementById('r-corpo').innerHTML=html;
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+update();
+</script>
