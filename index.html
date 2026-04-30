@@ -413,7 +413,7 @@ body {
     <button class="btn-secondary" onclick="resetConfig()">↺ Restaurar padrão</button>
   </div>
 
-  <button class="btn-export" onclick="window.print()">Exportar PDF</button>
+  <button class="btn-export" onclick="exportarPDF()">Exportar PDF</button>
 </div>
 
 <!-- ═══ PREVIEW ═══ -->
@@ -826,6 +826,56 @@ window.addEventListener('load', () => {
     update();
   }
 });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function exportarPDF() {
+  const btn = document.querySelector('.btn-export');
+  const original = btn.textContent;
+  btn.textContent = 'Gerando PDF...';
+  btn.disabled = true;
+
+  try {
+    const recibo = document.getElementById('recibo');
+
+    const canvas = await html2canvas(recibo, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+
+    // dimensões em mm: 1px = 0.264583mm, canvas já está em scale 2
+    const pxToMm = 0.264583;
+    const larguraMm = 210; // 21cm fixo
+    const alturaCanvas = canvas.height / 2; // voltar ao tamanho real (scale 2)
+    const larguraCanvas = canvas.width / 2;
+    const ratio = larguraMm / (larguraCanvas * pxToMm);
+    const alturaMm = alturaCanvas * pxToMm * ratio;
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: [larguraMm, alturaMm]
+    });
+
+    doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
+
+    // nome do arquivo com passageiro se houver
+    const nomePass = D.passageiros[0] ? D.passageiros[0].split(' ')[0] : 'recibo';
+    doc.save(`KV_${nomePass}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.pdf`);
+
+  } catch(e) {
+    alert('Erro ao gerar PDF: ' + e.message);
+  }
+
+  btn.textContent = original;
+  btn.disabled = false;
+}
 </script>
 </body>
 </html>
