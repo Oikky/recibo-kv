@@ -341,6 +341,66 @@ body {
   font-size: 10px; color: #aaa; text-align: center;
 }
 
+/* ─── MODO CELULAR ─── */
+#recibo.modo-celular {
+  width: 390px !important;
+  padding: 20px 16px !important;
+  font-size: 14px !important;
+}
+
+#recibo.modo-celular .rec-header {
+  flex-direction: column; align-items: flex-start; gap: 12px;
+}
+#recibo.modo-celular #logo-img-wrap img,
+#recibo.modo-celular #logo-img-wrap .logo-ph {
+  width: 52px; height: 52px;
+}
+#recibo.modo-celular .rec-company h1 { font-size: 16px; }
+#recibo.modo-celular .rec-slogan { font-size: 10px; }
+#recibo.modo-celular .rec-cnpj { text-align: left; margin-top: 4px; }
+
+#recibo.modo-celular .bloco {
+  padding: 12px 14px; margin-bottom: 10px; border-radius: 10px;
+}
+#recibo.modo-celular .bloco-titulo { font-size: 13px; }
+#recibo.modo-celular .bloco p { font-size: 14px; line-height: 1.7; }
+#recibo.modo-celular .bloco-pass p { font-size: 15px; font-weight: 600; }
+
+#recibo.modo-celular .bloco-loc { padding: 14px 16px !important; }
+#recibo.modo-celular .bloco-loc .loc-esp-val { font-size: 18px !important; }
+#recibo.modo-celular .bloco-loc .cia-val { font-size: 14px !important; }
+
+#recibo.modo-celular .trecho {
+  padding: 14px 14px; border-radius: 10px; margin-bottom: 10px;
+}
+#recibo.modo-celular .trecho-titulo { font-size: 15px; }
+#recibo.modo-celular .loc-esp-bloco { padding: 8px 14px; }
+#recibo.modo-celular .loc-esp-val { font-size: 15px !important; }
+#recibo.modo-celular .cia-bloco { padding: 8px 14px; }
+#recibo.modo-celular .cia-val { font-size: 14px !important; }
+
+#recibo.modo-celular .trecho-cols {
+  grid-template-columns: 1fr; gap: 12px;
+}
+#recibo.modo-celular .tcol-header { font-size: 11px; }
+#recibo.modo-celular .trow-label { font-size: 11px; }
+#recibo.modo-celular .trow-val { font-size: 15px; }
+
+#recibo.modo-celular .tbot-label { font-size: 11px; }
+#recibo.modo-celular .tbot-val { font-size: 14px; }
+
+#recibo.modo-celular .bag-esp { padding: 10px 13px; }
+#recibo.modo-celular .bag-esp-titulo { font-size: 11px; }
+#recibo.modo-celular .bag-esp li { font-size: 13px; line-height: 1.9; }
+
+#recibo.modo-celular .bloco-bag li { font-size: 14px; line-height: 2; }
+#recibo.modo-celular .bloco-info p { font-size: 13px; line-height: 1.8; }
+
+#recibo.modo-celular .valor-num { font-size: 22px; }
+#recibo.modo-celular .bloco-pag p { font-size: 14px; line-height: 1.8; }
+
+#recibo.modo-celular .rec-footer { font-size: 11px; }
+
 /* ─── PRINT ─── */
 @media print {
   html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
@@ -368,6 +428,12 @@ body {
   <div class="tabs">
     <button class="tab active" onclick="showTab('dados')">Dados</button>
     <button class="tab" onclick="showTab('config')">Config</button>
+  </div>
+
+  <!-- FORMAT TOGGLE -->
+  <div style="display:flex;gap:4px;">
+    <button id="fmt-pdf" class="tab active" style="flex:1;font-size:11px;" onclick="setFormato('pdf')">📄 PDF</button>
+    <button id="fmt-cel" class="tab" style="flex:1;font-size:11px;" onclick="setFormato('celular')">📱 Celular</button>
   </div>
 
   <!-- TAB DADOS -->
@@ -438,7 +504,22 @@ body {
 
 <script>
 // ═══ STATE ═══
-let D = { passageiros: [], locGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+let formato = 'pdf'; // 'pdf' | 'celular'
+
+function setFormato(f) {
+  formato = f;
+  const recibo = document.getElementById('recibo');
+  if (f === 'celular') {
+    recibo.classList.add('modo-celular');
+    document.getElementById('fmt-cel').classList.add('active');
+    document.getElementById('fmt-pdf').classList.remove('active');
+  } else {
+    recibo.classList.remove('modo-celular');
+    document.getElementById('fmt-pdf').classList.add('active');
+    document.getElementById('fmt-cel').classList.remove('active');
+  }
+}
 
 // ═══ CONFIG ═══
 const CFG_DEFAULT = {
@@ -848,10 +929,10 @@ async function exportarPDF() {
 
     const imgData = canvas.toDataURL('image/png');
 
-    // dimensões em mm: 1px = 0.264583mm, canvas já está em scale 2
+    // dimensões em mm
     const pxToMm = 0.264583;
-    const larguraMm = 210; // 21cm fixo
-    const alturaCanvas = canvas.height / 2; // voltar ao tamanho real (scale 2)
+    const larguraMm = formato === 'celular' ? 103 : 210; // ~390px = 103mm para celular
+    const alturaCanvas = canvas.height / 2;
     const larguraCanvas = canvas.width / 2;
     const ratio = larguraMm / (larguraCanvas * pxToMm);
     const alturaMm = alturaCanvas * pxToMm * ratio;
