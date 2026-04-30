@@ -865,9 +865,19 @@ async function exportarPDF() {
 
     doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
 
-    // nome do arquivo com passageiro se houver
-    const nomePass = D.passageiros[0] ? D.passageiros[0].split(' ')[0] : 'recibo';
-    doc.save(`KV_${nomePass}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.pdf`);
+    // nome do arquivo com todos os passageiros e localizadores
+    const partes = ['Recibo K&V'];
+
+    if (D.passageiros.length) {
+      D.passageiros.forEach(p => { if (p.trim()) partes.push(p.trim()); });
+    }
+
+    if (D.locGeral) partes.push(D.locGeral.trim());
+
+    D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
+
+    const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
+    doc.save(`${nomeArquivo}.pdf`);
 
   } catch(e) {
     alert('Erro ao gerar PDF: ' + e.message);
