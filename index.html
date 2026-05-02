@@ -1103,6 +1103,35 @@ window.addEventListener('load', () => {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+function copiarLink() {
+  const texto = document.getElementById('paste-input').value.trim();
+  if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
+  const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
+  navigator.clipboard.writeText(url).then(() => {
+    showMsg('✓ Link copiado!', 'ok');
+  }).catch(() => {
+    // fallback para navegadores sem clipboard API
+    const el = document.createElement('textarea');
+    el.value = url;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    showMsg('✓ Link copiado!', 'ok');
+  });
+}
+
+function limparTudo() {
+  if (!confirm('Limpar todos os dados do recibo?')) return;
+  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+  document.getElementById('paste-input').value = '';
+  autoResize(document.getElementById('paste-input'));
+  document.getElementById('f-pass').value = '';
+  renderPassList();
+  update();
+  showMsg('↺ Dados limpos', 'ok');
+}
+
 async function exportarPDF() {
   const btn = document.querySelector('.btn-export');
   const original = btn.textContent;
