@@ -81,11 +81,14 @@ body {
 }
 .paste-box label { font-size: 11px; color: #5a9fd4; display: block; margin-bottom: 5px; font-weight: 500; }
 .paste-box textarea {
-  font-size: 11px; min-height: 100px;
+  font-size: 11px;
+  min-height: calc(100vh / 3);
+  max-height: none;
+  overflow: hidden;
   border: 1px solid var(--border); border-radius: 5px;
   background: var(--bg); color: #c8d8e8;
   width: 100%; padding: 7px 8px;
-  font-family: 'JetBrains Mono', monospace; resize: vertical;
+  font-family: 'JetBrains Mono', monospace; resize: none;
 }
 
 .btn-primary {
@@ -182,7 +185,6 @@ body {
   box-shadow: 0 8px 40px rgba(0,0,0,.5);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
-  color-adjust: exact;
 }
 
 .rec-header {
@@ -331,6 +333,40 @@ body {
 .bloco-valor .bloco-titulo { color: rgba(255,255,255,.7) !important; margin-bottom: 0; font-size: 11px !important; font-weight: 500 !important; }
 .valor-num { font-size: 24px; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
 
+/* hospedagem */
+.hospedagem {
+  background: #fff; border: 1px solid #d0d8e4; border-radius: 8px;
+  padding: 12px 15px; margin-bottom: 12px;
+  break-inside: avoid; page-break-inside: avoid;
+}
+.hosp-titulo {
+  font-weight: 700; font-size: 13px; color: var(--r-primary, #1a3a5c);
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 1px solid #e8eef5;
+}
+.hosp-conf {
+  background: var(--r-loc-bg, #1e3f6e);
+  border-radius: 5px; padding: 6px 12px;
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.hosp-conf-label { font-size: 10px; color: rgba(255,255,255,.5); font-weight: 600; }
+.hosp-conf-val { font-size: 13px; color: #fff; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.hosp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
+.hosp-item { display: flex; flex-direction: column; }
+.hosp-full { grid-column: 1/-1; }
+.hosp-label { font-size: 10px; color: #888; margin-bottom: 1px; }
+.hosp-val { font-size: 12px; color: #222; font-weight: 600; }
+.hosp-incluso {
+  margin-top: 8px; padding: 7px 10px;
+  background: var(--r-bag-bg, #fff8ee);
+  border-radius: 5px;
+  border-left: 3px solid var(--r-bag-accent, #c8860a);
+}
+.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-accent, #c8860a); margin-bottom: 3px; }
+.hosp-incluso p { font-size: 11px; color: #333; line-height: 1.7; white-space: pre-wrap; }
+
 /* pagamento */
 .bloco-pag .bloco-titulo { color: var(--r-primary, #1a3a5c); }
 .bloco-pag p { font-size: 12px; color: #333; white-space: pre-wrap; }
@@ -409,7 +445,7 @@ body {
   .preview-area { background: #fff !important; padding: 0 !important; overflow: visible !important; }
   #recibo { width: 100% !important; padding: 16px 20px !important; border-radius: 0 !important; box-shadow: none !important; }
   .bloco, .trecho { break-inside: avoid !important; page-break-inside: avoid !important; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;  }
   @page { margin: 1cm; size: 21cm auto; }
 }
 </style>
@@ -440,7 +476,8 @@ body {
   <div id="tab-dados" class="tab-panel active">
     <div class="paste-box">
       <label>📋 Cole os dados do Coda aqui</label>
-      <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..."></textarea>
+      <!-- textarea que cresce com o conteúdo: oninput chama autoResize -->
+      <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." oninput="autoResize(this)"></textarea>
       <button class="btn-primary" style="margin-top:6px" onclick="parsear()">Gerar recibo ↗</button>
       <div class="msg" id="msg"></div>
     </div>
@@ -480,6 +517,8 @@ body {
   </div>
 
   <button class="btn-export" onclick="exportarPDF()">Exportar PDF</button>
+  <button class="btn-secondary" style="font-size:11px;" onclick="copiarLink()">🔗 Copiar link com dados</button>
+  <button class="btn-secondary" style="font-size:11px;color:#cf6f6f;" onclick="limparTudo()">🗑 Limpar tudo</button>
 </div>
 
 <!-- ═══ PREVIEW ═══ -->
@@ -503,6 +542,14 @@ body {
 </div>
 
 <script>
+// ═══ AUTO RESIZE TEXTAREA ═══
+// Faz a textarea crescer conforme o usuário cola texto
+// scrollHeight = altura total do conteúdo interno
+function autoResize(el) {
+  el.style.height = 'auto';         // reseta para recalcular
+  el.style.height = el.scrollHeight + 'px'; // aplica altura real do conteúdo
+}
+
 // ═══ STATE ═══
 let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
 let formato = 'pdf'; // 'pdf' | 'celular'
@@ -674,8 +721,10 @@ const DELIMITADORES = [
   'Localizador Específico', 'Cia A[eé]rea Específica',
   'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
   'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
-  'Bagagem Específica', 'Bagagem Geral', 'Informa[çc][õo]es?',
-  'Valor [àa] Pagar', 'Pagamento'
+  'Bagagem Específica', 'Bagagem Geral',
+  'C[oó]digo de Confirma[çc][ãa]o', 'Local', 'Cidade',
+  'Data de Entrada', 'Data de Sa[íi]da', 'Incluso',
+  'Informa[çc][õo]es?', 'Valor [àa] Pagar', 'Pagamento'
 ];
 
 function inserirQuebras(raw) {
@@ -683,12 +732,15 @@ function inserirQuebras(raw) {
   const ordem = [
     'Localizador Geral', 'Localizador Específico',
     'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
+    'C[oó]digo de Confirma[çc][ãa]o',
+    'Data de Entrada', 'Data de Sa[íi]da',
     'Data Sa[íi]da', 'Hora Sa[íi]da',
     'Data Chegada', 'Hora Chegada',
     'Bagagem Específica', 'Bagagem Geral',
     'Informa[çc][õo]es?', 'Valor [àa] Pagar',
-    'Passageiro', 'Partida', 'Destino',
-    'Paradas', 'Dura[çc][ãa]o', 'Pagamento'
+    'Passageiro', 'Partida', 'Destino', 'Cidade',
+    'Paradas', 'Dura[çc][ãa]o', 'Pagamento',
+    'Incluso', 'Local'
   ];
   ordem.forEach(r => {
     try {
@@ -696,6 +748,7 @@ function inserirQuebras(raw) {
     } catch(e) {}
   });
   txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
+  txt = txt.replace(/(Hospedagem\s*\d*)(\s|$)/gi, '\n$1\n');
   return txt;
 }
 
@@ -703,13 +756,14 @@ function parsear() {
   const raw = document.getElementById('paste-input').value.trim();
   if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
 
-  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
 
   const txt = inserirQuebras(raw);
   const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
 
   let campoAtual = null;
   let trechoAtual = null;
+  let hospAtual = null;
   let bufferMulti = [];
 
   const isPlaceholder = v => !v || v.includes('Nesse caso') || v === '""';
@@ -721,12 +775,18 @@ function parsear() {
     else if (campoAtual === 'bagGeral') D.bagGeral.push(...vals);
     else if (campoAtual === 'informacoes') D.informacoes = (D.informacoes ? D.informacoes + '\n' : '') + vals.join('\n');
     else if (campoAtual === 'pagamento') D.pagamento.push(...vals);
+    else if (campoAtual === 'hospIncluso' && hospAtual) hospAtual.incluso = vals.join('\n');
     bufferMulti = [];
   }
 
   function novoTrecho() {
     trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: '', duracao: '', bagEsp: [] };
     D.trechos.push(trechoAtual);
+  }
+
+  function novaHospedagem() {
+    hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', saida: '', incluso: '' };
+    D.hospedagens.push(hospAtual);
   }
 
   linhas.forEach(l => {
@@ -738,7 +798,19 @@ function parsear() {
     }
     if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
     if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
-    if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; return; }
+    if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; hospAtual = null; return; }
+    if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual = 'hospedagem'; trechoAtual = null; return; }
+    if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCodigo'; if (hospAtual) hospAtual.codigo = l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i, '').trim(); return; }
+    if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
+    if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
+    if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
+    if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
+    if (/^Incluso:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'hospIncluso';
+      const inline = l.replace(/^Incluso:\s*/i, '').trim();
+      if (inline) bufferMulti.push(inline);
+      return;
+    }
     if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
     if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
     if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
@@ -774,7 +846,7 @@ function parsear() {
       if (inline) bufferMulti.push(inline);
       return;
     }
-    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento'].includes(campoAtual)) bufferMulti.push(l);
+    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso'].includes(campoAtual)) bufferMulti.push(l);
   });
   flushBuffer();
 
@@ -870,6 +942,21 @@ function update() {
     html += `<div class="bloco bloco-bag"><div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
   }
 
+  // Hospedagens (acima de informações)
+  D.hospedagens.forEach((h, i) => {
+    const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
+    html += `<div class="hospedagem"><div class="hosp-titulo">${titulo}</div>`;
+    if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
+    html += `<div class="hosp-grid">`;
+    if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
+    if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
+    if (h.entrada) html += `<div class="hosp-item"><div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div></div>`;
+    if (h.saida)   html += `<div class="hosp-item"><div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div></div>`;
+    html += `</div>`;
+    if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
+    html += `</div>`;
+  });
+
   // Informações
   if (D.informacoes) {
     html += `<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
@@ -946,17 +1033,10 @@ async function exportarPDF() {
 
     doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
 
-    // nome do arquivo com todos os passageiros e localizadores
+    // nome do arquivo: sem passageiros, só localizadores
     const partes = ['Recibo K&V'];
-
-    if (D.passageiros.length) {
-      D.passageiros.forEach(p => { if (p.trim()) partes.push(p.trim()); });
-    }
-
     if (D.locGeral) partes.push(D.locGeral.trim());
-
     D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
-
     const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
     doc.save(`${nomeArquivo}.pdf`);
 
