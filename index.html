@@ -287,12 +287,43 @@ body {
 
 /* linha inferior do trecho — coluna vertical */
 .trecho-bottom {
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; flex-direction: column; gap: 0;
   margin-top: 10px; padding-top: 10px;
   border-top: 1px solid #e8eef5;
 }
-.tbot-item { display: flex; flex-direction: column; }
-.tbot-label { font-size: 10px; color: #888; margin-bottom: 2px; }
+/* cabeçalho Paradas | Duração — mesmo grid que trecho-cols */
+.tbot-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  padding: 4px 0 6px;
+  border-bottom: 1px solid #d0d8e4;
+  margin-bottom: 4px;
+}
+.tbot-header-label {
+  font-size: 10px; font-weight: 700; color: #1a3a5c;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+/* linhas de parada — mesmo grid */
+.tbot-parada-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  padding: 3px 0;
+}
+.tbot-parada-row + .tbot-parada-row { border-top: .5px solid #f0f0f0; }
+.tbot-parada-local { font-size: 12px; color: #222; font-weight: 500; }
+.tbot-parada-dur { font-size: 12px; color: #555; }
+/* duração total da viagem — mesmo grid que paradas */
+.tbot-total {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid #d0d8e4;
+}
+.tbot-total-label { font-size: 10px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.tbot-total-val { font-size: 13px; color: #1a3a5c; font-weight: 700; }
+.tbot-direto { font-size: 12px; color: #555; padding: 4px 0; }
+.tbot-item { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
+.tbot-label { font-size: 10px; color: #888; }
 .tbot-val { font-size: 12px; color: #222; font-weight: 600; }
 
 /* bagagem específica dentro do trecho */
@@ -753,13 +784,14 @@ function inserirQuebras(raw) {
     'Localizador Geral', 'Localizador Específico',
     'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
     'C[oó]digo de Confirma[çc][ãa]o',
-    'Data de Entrada', 'Data de Sa[íi]da',
+    'Data de Entrada', 'Hora de Entrada',
+    'Data de Sa[íi]da', 'Hora de Sa[íi]da',
     'Data Sa[íi]da', 'Hora Sa[íi]da',
     'Data Chegada', 'Hora Chegada',
     'Bagagem Específica', 'Bagagem Geral',
     'Informa[çc][õo]es?', 'Valor [àa] Pagar',
     'Passageiro', 'Partida', 'Destino', 'Cidade',
-    'Paradas', 'Dura[çc][ãa]o', 'Pagamento',
+    'Paradas', 'Dura[çc][ãa]o Total', 'Dura[çc][ãa]o', 'Pagamento',
     'Incluso', 'Local'
   ];
   ordem.forEach(r => {
@@ -792,6 +824,7 @@ function parsear() {
     if (!campoAtual || !bufferMulti.length) return;
     const vals = bufferMulti.filter(l => l);
     if (campoAtual === 'bagEspTrecho' && trechoAtual) trechoAtual.bagEsp.push(...vals);
+    else if (campoAtual === 'paradas' && trechoAtual) trechoAtual.paradas.push(...vals);
     else if (campoAtual === 'bagGeral') D.bagGeral.push(...vals);
     else if (campoAtual === 'informacoes') D.informacoes = (D.informacoes ? D.informacoes + '\n' : '') + vals.join('\n');
     else if (campoAtual === 'pagamento') D.pagamento.push(...vals);
@@ -800,12 +833,12 @@ function parsear() {
   }
 
   function novoTrecho() {
-    trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: '', duracao: '', bagEsp: [] };
+    trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: [], duracaoTotal: '', bagEsp: [] };
     D.trechos.push(trechoAtual);
   }
 
   function novaHospedagem() {
-    hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', saida: '', incluso: '' };
+    hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', horaEntrada: '', saida: '', horaSaida: '', incluso: '' };
     D.hospedagens.push(hospAtual);
   }
 
@@ -824,7 +857,9 @@ function parsear() {
     if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
     if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
     if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
+    if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraEntrada'; if (hospAtual) hospAtual.horaEntrada = l.replace(/^Hora de Entrada:\s*/i, '').trim(); return; }
     if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
+    if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraSaida'; if (hospAtual) hospAtual.horaSaida = l.replace(/^Hora de Sa[íi]da:\s*/i, '').trim(); return; }
     if (/^Incluso:\s*/i.test(l)) {
       flushBuffer(); campoAtual = 'hospIncluso';
       const inline = l.replace(/^Incluso:\s*/i, '').trim();
@@ -839,8 +874,14 @@ function parsear() {
     if (/^Destino:\s*/i.test(l)) { flushBuffer(); campoAtual = 'destino'; if (trechoAtual) trechoAtual.destino = l.replace(/^Destino:\s*/i, '').trim(); return; }
     if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataChegada'; if (trechoAtual) trechoAtual.dataChegada = l.replace(/^Data Chegada:\s*/i, '').trim(); return; }
     if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaChegada'; if (trechoAtual) trechoAtual.horaChegada = l.replace(/^Hora Chegada:\s*/i, '').trim(); return; }
-    if (/^Paradas:\s*/i.test(l)) { flushBuffer(); campoAtual = 'paradas'; if (trechoAtual) trechoAtual.paradas = l.replace(/^Paradas:\s*/i, '').trim(); return; }
-    if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracao'; if (trechoAtual) trechoAtual.duracao = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
+    if (/^Paradas:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'paradas';
+      const inline = l.replace(/^Paradas:\s*/i, '').trim();
+      if (inline && trechoAtual) trechoAtual.paradas.push(inline);
+      return;
+    }
+    if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o Total:\s*/i, '').trim(); return; }
+    if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
     if (/^Bagagem Específica:\s*/i.test(l)) {
       flushBuffer(); campoAtual = 'bagEspTrecho';
       const inline = l.replace(/^Bagagem Específica:\s*/i, '').trim();
@@ -866,7 +907,7 @@ function parsear() {
       if (inline) bufferMulti.push(inline);
       return;
     }
-    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso'].includes(campoAtual)) bufferMulti.push(l);
+    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso', 'paradas'].includes(campoAtual)) bufferMulti.push(l);
   });
   flushBuffer();
 
@@ -942,15 +983,48 @@ function update() {
 
     html += `</div>`; // fim trecho-cols
 
-    // inferior: Paradas, Duração, Bagagem Específica em coluna
-    const temBottom = t.paradas || t.duracao || t.bagEsp.length;
+    // inferior: Paradas com duração por parada + Duração Total + Bagagem
+    const temBottom = t.paradas.length || t.duracaoTotal || t.bagEsp.length;
     if (temBottom) {
       html += `<div class="trecho-bottom">`;
-      if (t.paradas) html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${esc(t.paradas)}</div></div>`;
-      if (t.duracao) html += `<div class="tbot-item"><div class="tbot-label">Duração</div><div class="tbot-val">${esc(t.duracao)}</div></div>`;
-      if (t.bagEsp.length) {
-        html += `<div class="bag-esp"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+
+      if (t.paradas.length) {
+        // verificar se é voo direto (sem " - ")
+        const temDurPorParada = t.paradas.some(p => p.includes(' - '));
+
+        if (temDurPorParada) {
+          // cabeçalho
+          html += `<div class="tbot-header">
+            <span class="tbot-header-label">Paradas</span>
+            <span class="tbot-header-label">Duração</span>
+          </div>`;
+          // linhas: "São Paulo GRU - 2h10m" → split em " - "
+          t.paradas.forEach(p => {
+            const parts = p.split(/\s*-\s*(?=\d)/); // split antes de número (duração)
+            const local = parts[0] ? parts[0].trim() : p;
+            const dur   = parts[1] ? parts[1].trim() : '';
+            html += `<div class="tbot-parada-row">
+              <span class="tbot-parada-local">${esc(local)}</span>
+              <span class="tbot-parada-dur">${esc(dur)}</span>
+            </div>`;
+          });
+        } else {
+          // voo direto ou sem duração por parada
+          html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`;
+        }
       }
+
+      if (t.duracaoTotal) {
+        html += `<div class="tbot-total">
+          <span class="tbot-total-label">Duração Total da Viagem</span>
+          <span class="tbot-total-val">${esc(t.duracaoTotal)}</span>
+        </div>`;
+      }
+
+      if (t.bagEsp.length) {
+        html += `<div class="bag-esp" style="margin-top:8px;"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+      }
+
       html += `</div>`;
     }
 
@@ -974,8 +1048,14 @@ function update() {
     html += `</div>`;
     if (h.entrada || h.saida) {
       html += `<div class="hosp-datas">`;
-      if (h.entrada) html += `<div class="hosp-item"><div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div></div>`;
-      if (h.saida)   html += `<div class="hosp-item"><div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div></div>`;
+      html += `<div class="hosp-item">`;
+      if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div>`;
+      if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaEntrada)}</div>`;
+      html += `</div>`;
+      html += `<div class="hosp-item">`;
+      if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div>`;
+      if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaSaida)}</div>`;
+      html += `</div>`;
       html += `</div>`;
     }
     if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
