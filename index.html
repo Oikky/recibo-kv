@@ -185,6 +185,7 @@ body {
   box-shadow: 0 8px 40px rgba(0,0,0,.5);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  color-adjust: exact;
 }
 
 .rec-header {
@@ -333,38 +334,38 @@ body {
 .bloco-valor .bloco-titulo { color: rgba(255,255,255,.7) !important; margin-bottom: 0; font-size: 11px !important; font-weight: 500 !important; }
 .valor-num { font-size: 24px; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
 
-/* hospedagem */
+/* hospedagem — Modelo A */
 .hospedagem {
   background: #fff; border: 1px solid #d0d8e4; border-radius: 8px;
   padding: 12px 15px; margin-bottom: 12px;
   break-inside: avoid; page-break-inside: avoid;
 }
 .hosp-titulo {
-  font-weight: 700; font-size: 13px; color: var(--r-primary, #1a3a5c);
+  font-weight: 700; font-size: 13px; color: #1a3a5c;
   display: flex; align-items: center; gap: 6px;
   margin-bottom: 10px; padding-bottom: 8px;
   border-bottom: 1px solid #e8eef5;
 }
 .hosp-conf {
-  background: var(--r-loc-bg, #1e3f6e);
-  border-radius: 5px; padding: 6px 12px;
   display: inline-flex; align-items: center; gap: 8px;
-  margin-bottom: 10px;
+  border: 1.5px solid #1a3a5c; border-radius: 6px;
+  padding: 5px 12px; margin-bottom: 10px;
 }
-.hosp-conf-label { font-size: 10px; color: rgba(255,255,255,.5); font-weight: 600; }
-.hosp-conf-val { font-size: 13px; color: #fff; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.hosp-conf-label { font-size: 10px; color: #1a3a5c; font-weight: 600; letter-spacing: .06em; opacity: .6; }
+.hosp-conf-val { font-size: 13px; color: #1a3a5c; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: .05em; }
 .hosp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
 .hosp-item { display: flex; flex-direction: column; }
 .hosp-full { grid-column: 1/-1; }
+/* entrada | saída | vazia — 3 colunas iguais */
+.hosp-datas { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
 .hosp-label { font-size: 10px; color: #888; margin-bottom: 1px; }
 .hosp-val { font-size: 12px; color: #222; font-weight: 600; }
 .hosp-incluso {
   margin-top: 8px; padding: 7px 10px;
-  background: var(--r-bag-bg, #fff8ee);
-  border-radius: 5px;
-  border-left: 3px solid var(--r-bag-accent, #c8860a);
+  background: #fff8ee; border-radius: 5px;
+  border-left: 3px solid #c8860a;
 }
-.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-accent, #c8860a); margin-bottom: 3px; }
+.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: #c8860a; margin-bottom: 3px; }
 .hosp-incluso p { font-size: 11px; color: #333; line-height: 1.7; white-space: pre-wrap; }
 
 /* pagamento */
@@ -444,8 +445,27 @@ body {
   .app { display: block !important; }
   .preview-area { background: #fff !important; padding: 0 !important; overflow: visible !important; }
   #recibo { width: 100% !important; padding: 16px 20px !important; border-radius: 0 !important; box-shadow: none !important; }
-  .bloco, .trecho { break-inside: avoid !important; page-break-inside: avoid !important; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;  }
+  .bloco, .trecho, .hospedagem { break-inside: avoid !important; page-break-inside: avoid !important; }
+
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+
+  /* Forçar cores dos elementos escuros explicitamente */
+  .bloco-loc,
+  .loc-esp-bloco,
+  .hosp-conf { background-color: #1e3f6e !important; }
+
+  .loc-esp-val,
+  .hosp-conf-val,
+  .cia-val { color: #ffffff !important; }
+
+  .loc-esp-label,
+  .hosp-conf-label,
+  .cia-label { color: rgba(255,255,255,0.6) !important; }
+
+  .bloco-valor { background-color: #1a3a5c !important; }
+  .valor-num { color: #ffffff !important; }
+  .bloco-valor .bloco-titulo { color: rgba(255,255,255,0.7) !important; }
+
   @page { margin: 1cm; size: 21cm auto; }
 }
 </style>
@@ -748,7 +768,7 @@ function inserirQuebras(raw) {
     } catch(e) {}
   });
   txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
-  txt = txt.replace(/(Hospedagem\s*\d*)(\s|$)/gi, '\n$1\n');
+  txt = txt.replace(/(Hospedagem\s*\d*)(?=\s|C[oó]digo|Local|Cidade|Data|$)/gi, '\n$1\n');
   return txt;
 }
 
@@ -945,14 +965,19 @@ function update() {
   // Hospedagens (acima de informações)
   D.hospedagens.forEach((h, i) => {
     const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
-    html += `<div class="hospedagem"><div class="hosp-titulo">${titulo}</div>`;
+    html += `<div class="hospedagem">`;
+    html += `<div class="hosp-titulo">${titulo}</div>`;
     if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
     html += `<div class="hosp-grid">`;
     if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
     if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
-    if (h.entrada) html += `<div class="hosp-item"><div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div></div>`;
-    if (h.saida)   html += `<div class="hosp-item"><div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div></div>`;
     html += `</div>`;
+    if (h.entrada || h.saida) {
+      html += `<div class="hosp-datas">`;
+      if (h.entrada) html += `<div class="hosp-item"><div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div></div>`;
+      if (h.saida)   html += `<div class="hosp-item"><div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div></div>`;
+      html += `</div>`;
+    }
     if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
     html += `</div>`;
   });
@@ -1006,6 +1031,7 @@ async function exportarPDF() {
 
   try {
     const recibo = document.getElementById('recibo');
+    await document.fonts.ready;
 
     const canvas = await html2canvas(recibo, {
       scale: 2,
@@ -1016,9 +1042,8 @@ async function exportarPDF() {
 
     const imgData = canvas.toDataURL('image/png');
 
-    // dimensões em mm
     const pxToMm = 0.264583;
-    const larguraMm = formato === 'celular' ? 103 : 210; // ~390px = 103mm para celular
+    const larguraMm = formato === 'celular' ? 103 : 210;
     const alturaCanvas = canvas.height / 2;
     const larguraCanvas = canvas.width / 2;
     const ratio = larguraMm / (larguraCanvas * pxToMm);
@@ -1033,7 +1058,6 @@ async function exportarPDF() {
 
     doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
 
-    // nome do arquivo: sem passageiros, só localizadores
     const partes = ['Recibo K&V'];
     if (D.locGeral) partes.push(D.locGeral.trim());
     D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
