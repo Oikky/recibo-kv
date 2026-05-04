@@ -592,594 +592,594 @@ body {
 </div>
 </div>
 
-<script>
-// ═══ AUTO RESIZE TEXTAREA ═══
-// Faz a textarea crescer conforme o usuário cola texto
-// scrollHeight = altura total do conteúdo interno
-function autoResize(el) {
-  el.style.height = 'auto';         // reseta para recalcular
-  el.style.height = el.scrollHeight + 'px'; // aplica altura real do conteúdo
-}
-
-// ═══ STATE ═══
-let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-let formato = 'pdf'; // 'pdf' | 'celular'
-
-function setFormato(f) {
-  formato = f;
-  const recibo = document.getElementById('recibo');
-  if (f === 'celular') {
-    recibo.classList.add('modo-celular');
-    document.getElementById('fmt-cel').classList.add('active');
-    document.getElementById('fmt-pdf').classList.remove('active');
-  } else {
-    recibo.classList.remove('modo-celular');
-    document.getElementById('fmt-pdf').classList.add('active');
-    document.getElementById('fmt-cel').classList.remove('active');
-  }
-}
-
-// ═══ CONFIG ═══
-const CFG_DEFAULT = {
-  nome: 'K&V  Easy Traveling',
-  slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
-  tel: '📱 (38) 9 8815-5417',
-  cnpj: '65.597.589/0001-00',
-  rodape: 'Recibo gerado pela K&V Easy Traveling  |  Informações CANVAS',
-  primary: '#1a3a5c',
-  loc: '#1e3f6e',
-  bagBg: '#fff8ee',
-  bagAccent: '#c8860a',
-  infoBg: '#f0f7ff',
-  infoBorder: '#b0cff5',
-  bagEspBg: '#f0f4fa',
-  bagEspBorder: '#1a3a5c',
-  logo: null
-};
-
-function loadConfig() {
-  try {
-    const saved = localStorage.getItem('kv-config');
-    if (saved) return { ...CFG_DEFAULT, ...JSON.parse(saved) };
-  } catch(e) {}
-  return { ...CFG_DEFAULT };
-}
-
-function saveConfig() {
-  const cfg = getCurrentConfig();
-  localStorage.setItem('kv-config', JSON.stringify(cfg));
-  showMsg('✓ Configuração salva!', 'ok');
-}
-
-function resetConfig() {
-  localStorage.removeItem('kv-config');
-  applyConfigFromObj(CFG_DEFAULT);
-  loadConfigToForm(CFG_DEFAULT);
-  showMsg('↺ Configuração restaurada', 'ok');
-}
-
-function getCurrentConfig() {
-  return {
-    nome: document.getElementById('cfg-nome').value,
-    slogan: document.getElementById('cfg-slogan').value,
-    tel: document.getElementById('cfg-tel').value,
-    cnpj: document.getElementById('cfg-cnpj').value,
-    rodape: document.getElementById('cfg-rodape').value,
-    primary: document.getElementById('c-primary').value,
-    loc: document.getElementById('c-loc').value,
-    bagBg: document.getElementById('c-bag-bg').value,
-    bagAccent: document.getElementById('c-bag-accent').value,
-    infoBg: document.getElementById('c-info-bg').value,
-    infoBorder: document.getElementById('c-info-border').value,
-    bagEspBg: document.getElementById('c-bagesp-bg').value,
-    bagEspBorder: document.getElementById('c-bagesp-border').value,
-    logo: document.getElementById('logo-img-wrap').querySelector('img')?.src || null
-  };
-}
-
-function loadConfigToForm(cfg) {
-  document.getElementById('cfg-nome').value = cfg.nome;
-  document.getElementById('cfg-slogan').value = cfg.slogan;
-  document.getElementById('cfg-tel').value = cfg.tel;
-  document.getElementById('cfg-cnpj').value = cfg.cnpj;
-  document.getElementById('cfg-rodape').value = cfg.rodape;
-  document.getElementById('c-primary').value = cfg.primary;
-  document.getElementById('c-loc').value = cfg.loc;
-  document.getElementById('c-bag-bg').value = cfg.bagBg;
-  document.getElementById('c-bag-accent').value = cfg.bagAccent;
-  document.getElementById('c-info-bg').value = cfg.infoBg;
-  document.getElementById('c-info-border').value = cfg.infoBorder;
-  document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#f0f4fa';
-  document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#1a3a5c';
-}
-
-function applyConfigFromObj(cfg) {
-  const r = document.getElementById('recibo');
-  r.style.setProperty('--r-primary', cfg.primary);
-  r.style.setProperty('--r-loc-bg', cfg.loc);
-  r.style.setProperty('--r-bag-bg', cfg.bagBg);
-  r.style.setProperty('--r-bag-border', cfg.bagAccent);
-  r.style.setProperty('--r-bag-text', cfg.bagAccent);
-  r.style.setProperty('--r-info-bg', cfg.infoBg);
-  r.style.setProperty('--r-info-border', cfg.infoBorder);
-  r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#f0f4fa');
-  r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#1a3a5c');
-  document.getElementById('r-nome').textContent = cfg.nome;
-  document.getElementById('r-slogan').textContent = cfg.slogan;
-  document.getElementById('r-tel').textContent = cfg.tel;
-  document.getElementById('r-cnpj').textContent = cfg.cnpj;
-  document.getElementById('r-rodape').textContent = cfg.rodape;
-  if (cfg.logo) {
-    document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
-  }
-}
-
-function applyConfig() { applyConfigFromObj(getCurrentConfig()); }
-
-// ═══ LOGO ═══
-function loadLogo(e) {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    document.getElementById('logo-img-wrap').innerHTML = `<img src="${ev.target.result}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
-  };
-  r.readAsDataURL(f);
-}
-
-// ═══ PASSAGEIROS ═══
-function addPassageiro(nome = '') {
-  D.passageiros.push(nome);
-  renderPassList();
-  update();
-}
-
-function removePassageiro(i) {
-  D.passageiros.splice(i, 1);
-  renderPassList();
-  update();
-}
-
-function renderPassList() {
-  const c = document.getElementById('pass-list');
-  c.innerHTML = '';
-  D.passageiros.forEach((p, i) => {
-    const d = document.createElement('div');
-    d.className = 'pass-item';
-    d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;update()">
-      <button onclick="removePassageiro(${i})">✕</button>`;
-    c.appendChild(d);
-  });
-}
-
-// ═══ TABS ═══
-function showTab(id) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
-}
-
-// ═══ MSG ═══
-function showMsg(t, tp) {
-  const el = document.getElementById('msg');
-  el.textContent = t; el.className = 'msg ' + tp; el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 3000);
-}
-
-// ═══ PARSER ═══
-const DELIMITADORES = [
-  'Passageiro', 'Localizador Geral', 'Cia A[eé]rea Geral', 'Trecho \\d+',
-  'Localizador Específico', 'Cia A[eé]rea Específica',
-  'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
-  'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
-  'Bagagem Específica', 'Bagagem Geral',
-  'C[oó]digo de Confirma[çc][ãa]o', 'Local', 'Cidade',
-  'Data de Entrada', 'Data de Sa[íi]da', 'Incluso',
-  'Informa[çc][õo]es?', 'Valor [àa] Pagar', 'Pagamento'
-];
-
-function inserirQuebras(raw) {
-  let txt = raw;
-  const ordem = [
-    'Localizador Geral', 'Localizador Específico',
-    'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
-    'C[oó]digo de Confirma[çc][ãa]o',
-    'Data de Entrada', 'Hora de Entrada',
-    'Data de Sa[íi]da', 'Hora de Sa[íi]da',
-    'Data Sa[íi]da', 'Hora Sa[íi]da',
-    'Data Chegada', 'Hora Chegada',
-    'Bagagem Específica', 'Bagagem Geral',
-    'Informa[çc][õo]es?', 'Valor [àa] Pagar',
-    'Passageiro', 'Partida', 'Destino', 'Cidade',
-    'Paradas', 'Dura[çc][ãa]o Total', 'Dura[çc][ãa]o', 'Pagamento',
-    'Incluso', 'Local'
-  ];
-  ordem.forEach(r => {
-    try {
-      txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1');
-    } catch(e) {}
-  });
-  txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
-  txt = txt.replace(/(Hospedagem\s*\d*)(?=\s|C[oó]digo|Local|Cidade|Data|$)/gi, '\n$1\n');
-  return txt;
-}
-
-function parsear() {
-  const raw = document.getElementById('paste-input').value.trim();
-  if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
-
-  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-
-  const txt = inserirQuebras(raw);
-  const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
-
-  let campoAtual = null;
-  let trechoAtual = null;
-  let hospAtual = null;
-  let bufferMulti = [];
-
-  const isPlaceholder = v => !v || v.includes('Nesse caso') || v === '""';
-
-  function flushBuffer() {
-    if (!campoAtual || !bufferMulti.length) return;
-    const vals = bufferMulti.filter(l => l);
-    if (campoAtual === 'bagEspTrecho' && trechoAtual) trechoAtual.bagEsp.push(...vals);
-    else if (campoAtual === 'paradas' && trechoAtual) trechoAtual.paradas.push(...vals);
-    else if (campoAtual === 'bagGeral') D.bagGeral.push(...vals);
-    else if (campoAtual === 'informacoes') D.informacoes = (D.informacoes ? D.informacoes + '\n' : '') + vals.join('\n');
-    else if (campoAtual === 'pagamento') D.pagamento.push(...vals);
-    else if (campoAtual === 'hospIncluso' && hospAtual) hospAtual.incluso = vals.join('\n');
-    bufferMulti = [];
-  }
-
-  function novoTrecho() {
-    trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: [], duracaoTotal: '', bagEsp: [] };
-    D.trechos.push(trechoAtual);
-  }
-
-  function novaHospedagem() {
-    hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', horaEntrada: '', saida: '', horaSaida: '', incluso: '' };
-    D.hospedagens.push(hospAtual);
-  }
-
-  linhas.forEach(l => {
-    if (/^Passageiro:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'passageiro';
-      const v = l.replace(/^Passageiro:\s*/i, '').trim();
-      if (v) D.passageiros.push(v);
-      return;
-    }
-    if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
-    if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
-    if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; hospAtual = null; return; }
-    if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual = 'hospedagem'; trechoAtual = null; return; }
-    if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCodigo'; if (hospAtual) hospAtual.codigo = l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i, '').trim(); return; }
-    if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
-    if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
-    if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
-    if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraEntrada'; if (hospAtual) hospAtual.horaEntrada = l.replace(/^Hora de Entrada:\s*/i, '').trim(); return; }
-    if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraSaida'; if (hospAtual) hospAtual.horaSaida = l.replace(/^Hora de Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Incluso:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'hospIncluso';
-      const inline = l.replace(/^Incluso:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
-    if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
-    if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
-    if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataPartida'; if (trechoAtual) trechoAtual.dataPartida = l.replace(/^Data Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaPartida'; if (trechoAtual) trechoAtual.horaPartida = l.replace(/^Hora Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Destino:\s*/i.test(l)) { flushBuffer(); campoAtual = 'destino'; if (trechoAtual) trechoAtual.destino = l.replace(/^Destino:\s*/i, '').trim(); return; }
-    if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataChegada'; if (trechoAtual) trechoAtual.dataChegada = l.replace(/^Data Chegada:\s*/i, '').trim(); return; }
-    if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaChegada'; if (trechoAtual) trechoAtual.horaChegada = l.replace(/^Hora Chegada:\s*/i, '').trim(); return; }
-    if (/^Paradas:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'paradas';
-      const inline = l.replace(/^Paradas:\s*/i, '').trim();
-      if (inline && trechoAtual) trechoAtual.paradas.push(inline);
-      return;
-    }
-    if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o Total:\s*/i, '').trim(); return; }
-    if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
-    if (/^Bagagem Específica:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'bagEspTrecho';
-      const inline = l.replace(/^Bagagem Específica:\s*/i, '').trim();
-      if (inline && !isPlaceholder(inline)) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Bagagem Geral:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'bagGeral'; trechoAtual = null;
-      const inline = l.replace(/^Bagagem Geral:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Informa[çc][õo]es?:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'informacoes'; trechoAtual = null;
-      const inline = l.replace(/^Informa[çc][õo]es?:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Valor [àa] Pagar:\s*/i.test(l)) { flushBuffer(); campoAtual = 'valor'; trechoAtual = null; D.valor = l.replace(/^Valor [àa] Pagar:\s*/i, '').trim(); return; }
-    if (/^Pagamento:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'pagamento'; trechoAtual = null;
-      const inline = l.replace(/^Pagamento:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso', 'paradas'].includes(campoAtual)) bufferMulti.push(l);
-  });
-  flushBuffer();
-
-  // limpar placeholders
-  D.trechos.forEach(t => {
-    t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b));
-    if (isPlaceholder(t.locEsp)) t.locEsp = '';
-  });
-  if (isPlaceholder(D.locGeral)) D.locGeral = '';
-
-  renderPassList();
-  showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
-  update();
-}
-
-// ═══ RENDER ═══
-function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
-function update() {
-  let html = '';
-
-  // Passageiros
-  if (D.passageiros.length > 0) {
-    const nomes = D.passageiros.filter(p => p.trim());
-    if (nomes.length) {
-      html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length > 1 ? 'Passageiros' : 'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
-    }
-  }
-
-  // Localizador Geral + Cia Aérea Geral
-  if (D.locGeral || D.ciaGeral) {
-    html += `<div class="bloco bloco-loc" style="padding:16px 20px;">`;
-    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-    if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:22px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
-    if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
-    else if (!D.locGeral && D.ciaGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:22px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
-    html += `</div></div>`;
-  }
-
-  // Trechos
-  D.trechos.forEach(t => {
-    html += `<div class="trecho"><div class="trecho-titulo">✈️ Trecho ${t.num}</div>`;
-
-    // Linha loc+cia
-    const temLoc = t.locEsp, temCia = t.ciaEsp;
-    if (temLoc || temCia) {
-      html += `<div class="loc-cia-row">`;
-      if (temLoc) {
-        html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+      <script>
+      // ═══ AUTO RESIZE TEXTAREA ═══
+      // Faz a textarea crescer conforme o usuário cola texto
+      // scrollHeight = altura total do conteúdo interno
+      function autoResize(el) {
+        el.style.height = 'auto';         // reseta para recalcular
+        el.style.height = el.scrollHeight + 'px'; // aplica altura real do conteúdo
       }
-      if (temCia) {
-        html += `<div class="cia-bloco"><span class="cia-label">CIA AÉREA</span><span class="cia-val">${esc(t.ciaEsp)}</span></div>`;
-      }
-      html += `</div>`;
-    }
 
-    // Grid duas colunas: Partida | Destino
-    html += `<div class="trecho-cols">`;
+      // ═══ STATE ═══
+      let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+      let formato = 'pdf'; // 'pdf' | 'celular'
 
-    // coluna partida
-    html += `<div class="tcol"><div class="tcol-header">Partida</div>`;
-    if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.partida)}</div></div>`;
-    if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataPartida)}</div></div>`;
-    if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaPartida)}</div></div>`;
-    html += `</div>`;
-
-    // coluna destino
-    html += `<div class="tcol"><div class="tcol-header">Destino</div>`;
-    if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.destino)}</div></div>`;
-    if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataChegada)}</div></div>`;
-    if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaChegada)}</div></div>`;
-    html += `</div>`;
-
-    html += `</div>`; // fim trecho-cols
-
-    // inferior: Paradas com duração por parada + Duração Total + Bagagem
-    const temBottom = t.paradas.length || t.duracaoTotal || t.bagEsp.length;
-    if (temBottom) {
-      html += `<div class="trecho-bottom">`;
-
-      if (t.paradas.length) {
-        // verificar se é voo direto (sem " - ")
-        const temDurPorParada = t.paradas.some(p => p.includes(' - '));
-
-        if (temDurPorParada) {
-          // cabeçalho
-          html += `<div class="tbot-header">
-            <span class="tbot-header-label">Paradas</span>
-            <span class="tbot-header-label">Duração</span>
-          </div>`;
-          // linhas: "São Paulo GRU - 2h10m" → split em " - "
-          t.paradas.forEach(p => {
-            const parts = p.split(/\s*-\s*(?=\d)/); // split antes de número (duração)
-            const local = parts[0] ? parts[0].trim() : p;
-            const dur   = parts[1] ? parts[1].trim() : '';
-            html += `<div class="tbot-parada-row">
-              <span class="tbot-parada-local">${esc(local)}</span>
-              <span class="tbot-parada-dur">${esc(dur)}</span>
-            </div>`;
-          });
+      function setFormato(f) {
+        formato = f;
+        const recibo = document.getElementById('recibo');
+        if (f === 'celular') {
+          recibo.classList.add('modo-celular');
+          document.getElementById('fmt-cel').classList.add('active');
+          document.getElementById('fmt-pdf').classList.remove('active');
         } else {
-          // voo direto ou sem duração por parada
-          html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`;
+          recibo.classList.remove('modo-celular');
+          document.getElementById('fmt-pdf').classList.add('active');
+          document.getElementById('fmt-cel').classList.remove('active');
         }
       }
 
-      if (t.duracaoTotal) {
-        html += `<div class="tbot-total">
-          <span class="tbot-total-label">Duração Total da Viagem</span>
-          <span class="tbot-total-val">${esc(t.duracaoTotal)}</span>
-        </div>`;
+      // ═══ CONFIG ═══
+      const CFG_DEFAULT = {
+        nome: 'K&V  Easy Traveling',
+        slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
+        tel: '📱 (38) 9 8815-5417',
+        cnpj: '65.597.589/0001-00',
+        rodape: 'Recibo gerado pela K&V Easy Traveling  |  Informações',
+        primary: '#1a3a5c',
+        loc: '#1e3f6e',
+        bagBg: '#fff8ee',
+        bagAccent: '#c8860a',
+        infoBg: '#f0f7ff',
+        infoBorder: '#b0cff5',
+        bagEspBg: '#f0f4fa',
+        bagEspBorder: '#1a3a5c',
+        logo: null
+      };
+
+      function loadConfig() {
+        try {
+          const saved = localStorage.getItem('kv-config');
+          if (saved) return { ...CFG_DEFAULT, ...JSON.parse(saved) };
+        } catch(e) {}
+        return { ...CFG_DEFAULT };
       }
 
-      if (t.bagEsp.length) {
-        html += `<div class="bag-esp" style="margin-top:8px;"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+      function saveConfig() {
+        const cfg = getCurrentConfig();
+        localStorage.setItem('kv-config', JSON.stringify(cfg));
+        showMsg('✓ Configuração salva!', 'ok');
       }
 
-      html += `</div>`;
-    }
+      function resetConfig() {
+        localStorage.removeItem('kv-config');
+        applyConfigFromObj(CFG_DEFAULT);
+        loadConfigToForm(CFG_DEFAULT);
+        showMsg('↺ Configuração restaurada', 'ok');
+      }
 
-    html += `</div>`; // fim trecho
-  });
+      function getCurrentConfig() {
+        return {
+          nome: document.getElementById('cfg-nome').value,
+          slogan: document.getElementById('cfg-slogan').value,
+          tel: document.getElementById('cfg-tel').value,
+          cnpj: document.getElementById('cfg-cnpj').value,
+          rodape: document.getElementById('cfg-rodape').value,
+          primary: document.getElementById('c-primary').value,
+          loc: document.getElementById('c-loc').value,
+          bagBg: document.getElementById('c-bag-bg').value,
+          bagAccent: document.getElementById('c-bag-accent').value,
+          infoBg: document.getElementById('c-info-bg').value,
+          infoBorder: document.getElementById('c-info-border').value,
+          bagEspBg: document.getElementById('c-bagesp-bg').value,
+          bagEspBorder: document.getElementById('c-bagesp-border').value,
+          logo: document.getElementById('logo-img-wrap').querySelector('img')?.src || null
+        };
+      }
 
-  // Bagagem Geral
-  if (D.bagGeral.length) {
-    html += `<div class="bloco bloco-bag"><div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
-  }
+      function loadConfigToForm(cfg) {
+        document.getElementById('cfg-nome').value = cfg.nome;
+        document.getElementById('cfg-slogan').value = cfg.slogan;
+        document.getElementById('cfg-tel').value = cfg.tel;
+        document.getElementById('cfg-cnpj').value = cfg.cnpj;
+        document.getElementById('cfg-rodape').value = cfg.rodape;
+        document.getElementById('c-primary').value = cfg.primary;
+        document.getElementById('c-loc').value = cfg.loc;
+        document.getElementById('c-bag-bg').value = cfg.bagBg;
+        document.getElementById('c-bag-accent').value = cfg.bagAccent;
+        document.getElementById('c-info-bg').value = cfg.infoBg;
+        document.getElementById('c-info-border').value = cfg.infoBorder;
+        document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#f0f4fa';
+        document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#1a3a5c';
+      }
 
-  // Hospedagens (acima de informações)
-  D.hospedagens.forEach((h, i) => {
-    const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
-    html += `<div class="hospedagem">`;
-    html += `<div class="hosp-titulo">${titulo}</div>`;
-    if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
-    html += `<div class="hosp-grid">`;
-    if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
-    if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
-    html += `</div>`;
-    if (h.entrada || h.saida) {
-      html += `<div class="hosp-datas">`;
-      html += `<div class="hosp-item">`;
-      if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div>`;
-      if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaEntrada)}</div>`;
-      html += `</div>`;
-      html += `<div class="hosp-item">`;
-      if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div>`;
-      if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaSaida)}</div>`;
-      html += `</div>`;
-      html += `</div>`;
-    }
-    if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
-    html += `</div>`;
-  });
+      function applyConfigFromObj(cfg) {
+        const r = document.getElementById('recibo');
+        r.style.setProperty('--r-primary', cfg.primary);
+        r.style.setProperty('--r-loc-bg', cfg.loc);
+        r.style.setProperty('--r-bag-bg', cfg.bagBg);
+        r.style.setProperty('--r-bag-border', cfg.bagAccent);
+        r.style.setProperty('--r-bag-text', cfg.bagAccent);
+        r.style.setProperty('--r-info-bg', cfg.infoBg);
+        r.style.setProperty('--r-info-border', cfg.infoBorder);
+        r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#f0f4fa');
+        r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#1a3a5c');
+        document.getElementById('r-nome').textContent = cfg.nome;
+        document.getElementById('r-slogan').textContent = cfg.slogan;
+        document.getElementById('r-tel').textContent = cfg.tel;
+        document.getElementById('r-cnpj').textContent = cfg.cnpj;
+        document.getElementById('r-rodape').textContent = cfg.rodape;
+        if (cfg.logo) {
+          document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
+        }
+      }
 
-  // Informações
-  if (D.informacoes) {
-    html += `<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
-  }
+      function applyConfig() { applyConfigFromObj(getCurrentConfig()); }
 
-  // Valor
-  if (D.valor) {
-    html += `<div class="bloco bloco-valor"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num">${esc(D.valor)}</div></div>`;
-  }
+      // ═══ LOGO ═══
+      function loadLogo(e) {
+        const f = e.target.files[0]; if (!f) return;
+        const r = new FileReader();
+        r.onload = ev => {
+          document.getElementById('logo-img-wrap').innerHTML = `<img src="${ev.target.result}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
+        };
+        r.readAsDataURL(f);
+      }
 
-  // Pagamento
-  if (D.pagamento.length) {
-    html += `<div class="bloco bloco-pag"><div class="bloco-titulo">💳 Pagamento</div><p>${D.pagamento.map(esc).join('\n')}</p></div>`;
-  }
+      // ═══ PASSAGEIROS ═══
+      function addPassageiro(nome = '') {
+        D.passageiros.push(nome);
+        renderPassList();
+        update();
+      }
 
-  document.getElementById('r-corpo').innerHTML = html;
-}
+      function removePassageiro(i) {
+        D.passageiros.splice(i, 1);
+        renderPassList();
+        update();
+      }
 
-// ═══ INIT ═══
-window.addEventListener('load', () => {
-  // Carregar config salva
-  const cfg = loadConfig();
-  loadConfigToForm(cfg);
-  applyConfigFromObj(cfg);
+      function renderPassList() {
+        const c = document.getElementById('pass-list');
+        c.innerHTML = '';
+        D.passageiros.forEach((p, i) => {
+          const d = document.createElement('div');
+          d.className = 'pass-item';
+          d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;update()">
+            <button onclick="removePassageiro(${i})">✕</button>`;
+          c.appendChild(d);
+        });
+      }
 
-  // Dados via URL
-  const params = new URLSearchParams(window.location.search);
-  const dados = params.get('dados');
-  if (dados) {
-    try {
-      document.getElementById('paste-input').value = decodeURIComponent(dados);
-      parsear();
-    } catch(e) {}
-  } else {
-    update();
-  }
-});
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-function copiarLink() {
-  const texto = document.getElementById('paste-input').value.trim();
-  if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
-  const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
-  navigator.clipboard.writeText(url).then(() => {
-    showMsg('✓ Link copiado!', 'ok');
-  }).catch(() => {
-    // fallback para navegadores sem clipboard API
-    const el = document.createElement('textarea');
-    el.value = url;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showMsg('✓ Link copiado!', 'ok');
-  });
-}
+      // ═══ TABS ═══
+      function showTab(id) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-' + id).classList.add('active');
+        event.target.classList.add('active');
+      }
 
-function limparTudo() {
-  if (!confirm('Limpar todos os dados do recibo?')) return;
-  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-  document.getElementById('paste-input').value = '';
-  autoResize(document.getElementById('paste-input'));
-  document.getElementById('f-pass').value = '';
-  renderPassList();
-  update();
-  showMsg('↺ Dados limpos', 'ok');
-}
+      // ═══ MSG ═══
+      function showMsg(t, tp) {
+        const el = document.getElementById('msg');
+        el.textContent = t; el.className = 'msg ' + tp; el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 3000);
+      }
 
-async function exportarPDF() {
-  const btn = document.querySelector('.btn-export');
-  const original = btn.textContent;
-  btn.textContent = 'Gerando PDF...';
-  btn.disabled = true;
+      // ═══ PARSER ═══
+      const DELIMITADORES = [
+        'Passageiro', 'Localizador Geral', 'Cia A[eé]rea Geral', 'Trecho \\d+',
+        'Localizador Específico', 'Cia A[eé]rea Específica',
+        'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
+        'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
+        'Bagagem Específica', 'Bagagem Geral',
+        'C[oó]digo de Confirma[çc][ãa]o', 'Local', 'Cidade',
+        'Data de Entrada', 'Data de Sa[íi]da', 'Incluso',
+        'Informa[çc][õo]es?', 'Valor [àa] Pagar', 'Pagamento'
+      ];
 
-  try {
-    const recibo = document.getElementById('recibo');
-    await document.fonts.ready;
+      function inserirQuebras(raw) {
+        let txt = raw;
+        const ordem = [
+          'Localizador Geral', 'Localizador Específico',
+          'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
+          'C[oó]digo de Confirma[çc][ãa]o',
+          'Data de Entrada', 'Hora de Entrada',
+          'Data de Sa[íi]da', 'Hora de Sa[íi]da',
+          'Data Sa[íi]da', 'Hora Sa[íi]da',
+          'Data Chegada', 'Hora Chegada',
+          'Bagagem Específica', 'Bagagem Geral',
+          'Informa[çc][õo]es?', 'Valor [àa] Pagar',
+          'Passageiro', 'Partida', 'Destino', 'Cidade',
+          'Paradas', 'Dura[çc][ãa]o Total', 'Dura[çc][ãa]o', 'Pagamento',
+          'Incluso', 'Local'
+        ];
+        ordem.forEach(r => {
+          try {
+            txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1');
+          } catch(e) {}
+        });
+        txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
+        txt = txt.replace(/(Hospedagem\s*\d*)(?=\s|C[oó]digo|Local|Cidade|Data|$)/gi, '\n$1\n');
+        return txt;
+      }
 
-    const canvas = await html2canvas(recibo, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false,
-    });
+      function parsear() {
+        const raw = document.getElementById('paste-input').value.trim();
+        if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
 
-    const imgData = canvas.toDataURL('image/png');
+        D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
 
-    const pxToMm = 0.264583;
-    const larguraMm = formato === 'celular' ? 103 : 210;
-    const alturaCanvas = canvas.height / 2;
-    const larguraCanvas = canvas.width / 2;
-    const ratio = larguraMm / (larguraCanvas * pxToMm);
-    const alturaMm = alturaCanvas * pxToMm * ratio;
+        const txt = inserirQuebras(raw);
+        const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: [larguraMm, alturaMm]
-    });
+        let campoAtual = null;
+        let trechoAtual = null;
+        let hospAtual = null;
+        let bufferMulti = [];
 
-    doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
+        const isPlaceholder = v => !v || v.includes('Nesse caso') || v === '""';
 
-    const partes = ['Recibo K&V'];
-    if (D.locGeral) partes.push(D.locGeral.trim());
-    D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
-    const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
-    doc.save(`${nomeArquivo}.pdf`);
+        function flushBuffer() {
+          if (!campoAtual || !bufferMulti.length) return;
+          const vals = bufferMulti.filter(l => l);
+          if (campoAtual === 'bagEspTrecho' && trechoAtual) trechoAtual.bagEsp.push(...vals);
+          else if (campoAtual === 'paradas' && trechoAtual) trechoAtual.paradas.push(...vals);
+          else if (campoAtual === 'bagGeral') D.bagGeral.push(...vals);
+          else if (campoAtual === 'informacoes') D.informacoes = (D.informacoes ? D.informacoes + '\n' : '') + vals.join('\n');
+          else if (campoAtual === 'pagamento') D.pagamento.push(...vals);
+          else if (campoAtual === 'hospIncluso' && hospAtual) hospAtual.incluso = vals.join('\n');
+          bufferMulti = [];
+        }
 
-  } catch(e) {
-    alert('Erro ao gerar PDF: ' + e.message);
-  }
+        function novoTrecho() {
+          trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: [], duracaoTotal: '', bagEsp: [] };
+          D.trechos.push(trechoAtual);
+        }
 
-  btn.textContent = original;
-  btn.disabled = false;
-}
-</script>
-</body>
+        function novaHospedagem() {
+          hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', horaEntrada: '', saida: '', horaSaida: '', incluso: '' };
+          D.hospedagens.push(hospAtual);
+        }
+
+        linhas.forEach(l => {
+          if (/^Passageiro:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'passageiro';
+            const v = l.replace(/^Passageiro:\s*/i, '').trim();
+            if (v) D.passageiros.push(v);
+            return;
+          }
+          if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
+          if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
+          if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; hospAtual = null; return; }
+          if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual = 'hospedagem'; trechoAtual = null; return; }
+          if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCodigo'; if (hospAtual) hospAtual.codigo = l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i, '').trim(); return; }
+          if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
+          if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
+          if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
+          if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraEntrada'; if (hospAtual) hospAtual.horaEntrada = l.replace(/^Hora de Entrada:\s*/i, '').trim(); return; }
+          if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
+          if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraSaida'; if (hospAtual) hospAtual.horaSaida = l.replace(/^Hora de Sa[íi]da:\s*/i, '').trim(); return; }
+          if (/^Incluso:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'hospIncluso';
+            const inline = l.replace(/^Incluso:\s*/i, '').trim();
+            if (inline) bufferMulti.push(inline);
+            return;
+          }
+          if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
+          if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
+          if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
+          if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataPartida'; if (trechoAtual) trechoAtual.dataPartida = l.replace(/^Data Sa[íi]da:\s*/i, '').trim(); return; }
+          if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaPartida'; if (trechoAtual) trechoAtual.horaPartida = l.replace(/^Hora Sa[íi]da:\s*/i, '').trim(); return; }
+          if (/^Destino:\s*/i.test(l)) { flushBuffer(); campoAtual = 'destino'; if (trechoAtual) trechoAtual.destino = l.replace(/^Destino:\s*/i, '').trim(); return; }
+          if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataChegada'; if (trechoAtual) trechoAtual.dataChegada = l.replace(/^Data Chegada:\s*/i, '').trim(); return; }
+          if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaChegada'; if (trechoAtual) trechoAtual.horaChegada = l.replace(/^Hora Chegada:\s*/i, '').trim(); return; }
+          if (/^Paradas:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'paradas';
+            const inline = l.replace(/^Paradas:\s*/i, '').trim();
+            if (inline && trechoAtual) trechoAtual.paradas.push(inline);
+            return;
+          }
+          if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o Total:\s*/i, '').trim(); return; }
+          if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
+          if (/^Bagagem Específica:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'bagEspTrecho';
+            const inline = l.replace(/^Bagagem Específica:\s*/i, '').trim();
+            if (inline && !isPlaceholder(inline)) bufferMulti.push(inline);
+            return;
+          }
+          if (/^Bagagem Geral:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'bagGeral'; trechoAtual = null;
+            const inline = l.replace(/^Bagagem Geral:\s*/i, '').trim();
+            if (inline) bufferMulti.push(inline);
+            return;
+          }
+          if (/^Informa[çc][õo]es?:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'informacoes'; trechoAtual = null;
+            const inline = l.replace(/^Informa[çc][õo]es?:\s*/i, '').trim();
+            if (inline) bufferMulti.push(inline);
+            return;
+          }
+          if (/^Valor [àa] Pagar:\s*/i.test(l)) { flushBuffer(); campoAtual = 'valor'; trechoAtual = null; D.valor = l.replace(/^Valor [àa] Pagar:\s*/i, '').trim(); return; }
+          if (/^Pagamento:\s*/i.test(l)) {
+            flushBuffer(); campoAtual = 'pagamento'; trechoAtual = null;
+            const inline = l.replace(/^Pagamento:\s*/i, '').trim();
+            if (inline) bufferMulti.push(inline);
+            return;
+          }
+          if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso', 'paradas'].includes(campoAtual)) bufferMulti.push(l);
+        });
+        flushBuffer();
+
+        // limpar placeholders
+        D.trechos.forEach(t => {
+          t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b));
+          if (isPlaceholder(t.locEsp)) t.locEsp = '';
+        });
+        if (isPlaceholder(D.locGeral)) D.locGeral = '';
+
+        renderPassList();
+        showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
+        update();
+      }
+
+      // ═══ RENDER ═══
+      function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+      function update() {
+        let html = '';
+
+        // Passageiros
+        if (D.passageiros.length > 0) {
+          const nomes = D.passageiros.filter(p => p.trim());
+          if (nomes.length) {
+            html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length > 1 ? 'Passageiros' : 'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
+          }
+        }
+
+        // Localizador Geral + Cia Aérea Geral
+        if (D.locGeral || D.ciaGeral) {
+          html += `<div class="bloco bloco-loc" style="padding:16px 20px;">`;
+          html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+          if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:22px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
+          if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+          else if (!D.locGeral && D.ciaGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:22px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+          html += `</div></div>`;
+        }
+
+        // Trechos
+        D.trechos.forEach(t => {
+          html += `<div class="trecho"><div class="trecho-titulo">✈️ Trecho ${t.num}</div>`;
+
+          // Linha loc+cia
+          const temLoc = t.locEsp, temCia = t.ciaEsp;
+          if (temLoc || temCia) {
+            html += `<div class="loc-cia-row">`;
+            if (temLoc) {
+              html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+            }
+            if (temCia) {
+              html += `<div class="cia-bloco"><span class="cia-label">CIA AÉREA</span><span class="cia-val">${esc(t.ciaEsp)}</span></div>`;
+            }
+            html += `</div>`;
+          }
+
+          // Grid duas colunas: Partida | Destino
+          html += `<div class="trecho-cols">`;
+
+          // coluna partida
+          html += `<div class="tcol"><div class="tcol-header">Partida</div>`;
+          if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.partida)}</div></div>`;
+          if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataPartida)}</div></div>`;
+          if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaPartida)}</div></div>`;
+          html += `</div>`;
+
+          // coluna destino
+          html += `<div class="tcol"><div class="tcol-header">Destino</div>`;
+          if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.destino)}</div></div>`;
+          if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataChegada)}</div></div>`;
+          if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaChegada)}</div></div>`;
+          html += `</div>`;
+
+          html += `</div>`; // fim trecho-cols
+
+          // inferior: Paradas com duração por parada + Duração Total + Bagagem
+          const temBottom = t.paradas.length || t.duracaoTotal || t.bagEsp.length;
+          if (temBottom) {
+            html += `<div class="trecho-bottom">`;
+
+            if (t.paradas.length) {
+              // verificar se é voo direto (sem " - ")
+              const temDurPorParada = t.paradas.some(p => p.includes(' - '));
+
+              if (temDurPorParada) {
+                // cabeçalho
+                html += `<div class="tbot-header">
+                  <span class="tbot-header-label">Paradas</span>
+                  <span class="tbot-header-label">Duração</span>
+                </div>`;
+                // linhas: "São Paulo GRU - 2h10m" → split em " - "
+                t.paradas.forEach(p => {
+                  const parts = p.split(/\s*-\s*(?=\d)/); // split antes de número (duração)
+                  const local = parts[0] ? parts[0].trim() : p;
+                  const dur   = parts[1] ? parts[1].trim() : '';
+                  html += `<div class="tbot-parada-row">
+                    <span class="tbot-parada-local">${esc(local)}</span>
+                    <span class="tbot-parada-dur">${esc(dur)}</span>
+                  </div>`;
+                });
+              } else {
+                // voo direto ou sem duração por parada
+                html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`;
+              }
+            }
+
+            if (t.duracaoTotal) {
+              html += `<div class="tbot-total">
+                <span class="tbot-total-label">Duração Total da Viagem</span>
+                <span class="tbot-total-val">${esc(t.duracaoTotal)}</span>
+              </div>`;
+            }
+
+            if (t.bagEsp.length) {
+              html += `<div class="bag-esp" style="margin-top:8px;"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+            }
+
+            html += `</div>`;
+          }
+
+          html += `</div>`; // fim trecho
+        });
+
+        // Bagagem Geral
+        if (D.bagGeral.length) {
+          html += `<div class="bloco bloco-bag"><div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+        }
+
+        // Hospedagens (acima de informações)
+        D.hospedagens.forEach((h, i) => {
+          const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
+          html += `<div class="hospedagem">`;
+          html += `<div class="hosp-titulo">${titulo}</div>`;
+          if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
+          html += `<div class="hosp-grid">`;
+          if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
+          if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
+          html += `</div>`;
+          if (h.entrada || h.saida) {
+            html += `<div class="hosp-datas">`;
+            html += `<div class="hosp-item">`;
+            if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div>`;
+            if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaEntrada)}</div>`;
+            html += `</div>`;
+            html += `<div class="hosp-item">`;
+            if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div>`;
+            if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaSaida)}</div>`;
+            html += `</div>`;
+            html += `</div>`;
+          }
+          if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
+          html += `</div>`;
+        });
+
+        // Informações
+        if (D.informacoes) {
+          html += `<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
+        }
+
+        // Valor
+        if (D.valor) {
+          html += `<div class="bloco bloco-valor"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num">${esc(D.valor)}</div></div>`;
+        }
+
+        // Pagamento
+        if (D.pagamento.length) {
+          html += `<div class="bloco bloco-pag"><div class="bloco-titulo">💳 Pagamento</div><p>${D.pagamento.map(esc).join('\n')}</p></div>`;
+        }
+
+        document.getElementById('r-corpo').innerHTML = html;
+      }
+
+      // ═══ INIT ═══
+      window.addEventListener('load', () => {
+        // Carregar config salva
+        const cfg = loadConfig();
+        loadConfigToForm(cfg);
+        applyConfigFromObj(cfg);
+
+        // Dados via URL
+        const params = new URLSearchParams(window.location.search);
+        const dados = params.get('dados');
+        if (dados) {
+          try {
+            document.getElementById('paste-input').value = decodeURIComponent(dados);
+            parsear();
+          } catch(e) {}
+        } else {
+          update();
+        }
+      });
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <script>
+      function copiarLink() {
+        const texto = document.getElementById('paste-input').value.trim();
+        if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
+        const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
+        navigator.clipboard.writeText(url).then(() => {
+          showMsg('✓ Link copiado!', 'ok');
+        }).catch(() => {
+          // fallback para navegadores sem clipboard API
+          const el = document.createElement('textarea');
+          el.value = url;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+          showMsg('✓ Link copiado!', 'ok');
+        });
+      }
+
+      function limparTudo() {
+        if (!confirm('Limpar todos os dados do recibo?')) return;
+        D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+        document.getElementById('paste-input').value = '';
+        autoResize(document.getElementById('paste-input'));
+        document.getElementById('f-pass').value = '';
+        renderPassList();
+        update();
+        showMsg('↺ Dados limpos', 'ok');
+      }
+
+      async function exportarPDF() {
+        const btn = document.querySelector('.btn-export');
+        const original = btn.textContent;
+        btn.textContent = 'Gerando PDF...';
+        btn.disabled = true;
+
+        try {
+          const recibo = document.getElementById('recibo');
+          await document.fonts.ready;
+
+          const canvas = await html2canvas(recibo, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+          });
+
+          const imgData = canvas.toDataURL('image/png');
+
+          const pxToMm = 0.264583;
+          const larguraMm = formato === 'celular' ? 103 : 210;
+          const alturaCanvas = canvas.height / 2;
+          const larguraCanvas = canvas.width / 2;
+          const ratio = larguraMm / (larguraCanvas * pxToMm);
+          const alturaMm = alturaCanvas * pxToMm * ratio;
+
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: [larguraMm, alturaMm]
+          });
+
+          doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
+
+          const partes = ['Recibo K&V'];
+          if (D.locGeral) partes.push(D.locGeral.trim());
+          D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
+          const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
+          doc.save(`${nomeArquivo}.pdf`);
+
+        } catch(e) {
+          alert('Erro ao gerar PDF: ' + e.message);
+        }
+
+        btn.textContent = original;
+        btn.disabled = false;
+      }
+    </script>
+  </body>
 </html>
