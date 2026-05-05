@@ -548,13 +548,38 @@ body {
       📷 Clique para trocar a logo
       <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="loadLogo(event)">
     </div>
+    <div class="fl">
+      <label>Tamanho da logo (px): <span id="logo-size-val">88</span></label>
+      <input type="range" id="logo-size" min="40" max="160" value="88" oninput="updateLogoSize(this.value)" style="width:100%;accent-color:#307082;">
+    </div>
+
+    <div class="sb-section">Ícones personalizados</div>
+    <div class="fl">
+      <label>Ícone WhatsApp</label>
+      <div class="logo-upload" onclick="document.getElementById('icon-wa').click()" id="icon-wa-preview">📤 Subir ícone WhatsApp
+        <input type="file" id="icon-wa" accept="image/*" style="display:none" onchange="loadIcon(event,'wa')">
+      </div>
+    </div>
+    <div class="fl">
+      <label>Ícone Instagram</label>
+      <div class="logo-upload" onclick="document.getElementById('icon-ig').click()" id="icon-ig-preview">📤 Subir ícone Instagram
+        <input type="file" id="icon-ig" accept="image/*" style="display:none" onchange="loadIcon(event,'ig')">
+      </div>
+    </div>
+    <div class="fl">
+      <label>Ícone Gmail (rodapé)</label>
+      <div class="logo-upload" onclick="document.getElementById('icon-gm').click()" id="icon-gm-preview">📤 Subir ícone Gmail
+        <input type="file" id="icon-gm" accept="image/*" style="display:none" onchange="loadIcon(event,'gm')">
+      </div>
+    </div>
 
     <div class="sb-section">Cabeçalho</div>
     <div class="fl"><label>Nome da empresa</label><input id="cfg-nome" value="K&V  Easy Traveling" oninput="applyConfig()"></div>
     <div class="fl"><label>Slogan</label><input id="cfg-slogan" value='✨ "Viaje hoje, viaje barato, viaje sempre" ✨' oninput="applyConfig()"></div>
-    <div class="fl"><label>Telefone</label><input id="cfg-tel" value="📱 (38) 9 8815-5417" oninput="applyConfig()"></div>
+    <div class="fl"><label>Telefone (número)</label><input id="cfg-tel" value="(38) 9 8815-5417" oninput="applyConfig()"></div>
     <div class="fl"><label>CNPJ</label><input id="cfg-cnpj" value="65.597.589/0001-00" oninput="applyConfig()"></div>
-    <div class="fl"><label>Rodapé</label><input id="cfg-rodape" value="keveasytraveling@gmail.com  |  Informações CANVAS" oninput="applyConfig()"></div>
+    <div class="fl"><label>Rodapé (texto esquerdo)</label><input id="cfg-rodape" value="Recibo gerado pela K&V Easy Traveling" oninput="applyConfig()"></div>
+    <div class="fl"><label>Gmail (rodapé direito)</label><input id="cfg-gmail" value="keveasytraveling@gmail.com" oninput="applyConfig()"></div>
 
     <div class="sb-section">Cores</div>
     <div class="color-row"><label>Cor principal</label><input type="color" id="c-primary" value="#307082" oninput="applyConfig()"></div>
@@ -584,9 +609,16 @@ body {
       <div class="rec-company">
         <h1 id="r-nome">K&amp;V&nbsp; Easy Traveling</h1>
         <div class="rec-slogan" id="r-slogan">✨ "Viaje hoje, viaje barato, viaje sempre" ✨</div>
-        <div class="rec-tel" id="r-tel">📱 (38) 9 8815-5417</div>
-        <div class="rec-contacts">
-          <div class="rec-contact-item">
+        <div class="rec-tel" id="r-tel" style="display:flex;align-items:center;gap:12px;margin-top:4px;">
+          <span class="rec-contact-item">
+            <!-- WhatsApp SVG -->
+            <svg width="13" height="13" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="12" fill="#25D366"/>
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#fff"/>
+            </svg>
+            <span id="r-tel-num">(38) 9 8815-5417</span>
+          </span>
+          <span class="rec-contact-item">
             <!-- Instagram SVG oficial -->
             <svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -604,14 +636,27 @@ body {
               <circle cx="17.5" cy="6.5" r="1" fill="#fff"/>
             </svg>
             @kevviagens
-          </div>
+          </span>
         </div>
+        <div class="rec-contacts" style="display:none;"></div>
       </div>
     </div>
     <div class="rec-cnpj">CNPJ:<strong id="r-cnpj">65.597.589/0001-00</strong></div>
   </div>
   <div id="r-corpo"></div>
-  <div class="rec-footer" id="r-rodape">Recibo gerado pela K&amp;V Easy Traveling &nbsp;|&nbsp; Informações CANVAS</div>
+  <div class="rec-footer" style="display:flex;justify-content:space-between;align-items:center;">
+    <span id="r-rodape">Recibo gerado pela K&amp;V Easy Traveling</span>
+    <span style="display:flex;align-items:center;gap:5px;">
+      <!-- Google G SVG -->
+      <svg id="footer-gmail-icon" width="13" height="13" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      <span id="r-gmail">keveasytraveling@gmail.com</span>
+    </span>
+  </div>
 </div>
 </div>
 </div>
@@ -649,7 +694,8 @@ const CFG_DEFAULT = {
   slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
   tel: '📱 (38) 9 8815-5417',
   cnpj: '65.597.589/0001-00',
-  rodape: 'keveasytraveling@gmail.com  |  Informações CANVAS',
+  rodape: 'Recibo gerado pela K&V Easy Traveling',
+  gmail: 'keveasytraveling@gmail.com',
   primary: '#307082',
   loc: '#307082',
   bagBg: '#fdf0e0',
@@ -689,6 +735,7 @@ function getCurrentConfig() {
     tel: document.getElementById('cfg-tel').value,
     cnpj: document.getElementById('cfg-cnpj').value,
     rodape: document.getElementById('cfg-rodape').value,
+    gmail: document.getElementById('cfg-gmail').value,
     primary: document.getElementById('c-primary').value,
     loc: document.getElementById('c-loc').value,
     bagBg: document.getElementById('c-bag-bg').value,
@@ -697,6 +744,7 @@ function getCurrentConfig() {
     infoBorder: document.getElementById('c-info-border').value,
     bagEspBg: document.getElementById('c-bagesp-bg').value,
     bagEspBorder: document.getElementById('c-bagesp-border').value,
+    logoSize: parseInt(document.getElementById('logo-size').value) || 88,
     logo: document.getElementById('logo-img-wrap').querySelector('img')?.src || null
   };
 }
@@ -707,14 +755,20 @@ function loadConfigToForm(cfg) {
   document.getElementById('cfg-tel').value = cfg.tel;
   document.getElementById('cfg-cnpj').value = cfg.cnpj;
   document.getElementById('cfg-rodape').value = cfg.rodape;
+  const gmailInput = document.getElementById('cfg-gmail');
+  if (gmailInput) gmailInput.value = cfg.gmail || 'keveasytraveling@gmail.com';
   document.getElementById('c-primary').value = cfg.primary;
   document.getElementById('c-loc').value = cfg.loc;
   document.getElementById('c-bag-bg').value = cfg.bagBg;
   document.getElementById('c-bag-accent').value = cfg.bagAccent;
   document.getElementById('c-info-bg').value = cfg.infoBg;
   document.getElementById('c-info-border').value = cfg.infoBorder;
-  document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#f0f4fa';
-  document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#1a3a5c';
+  document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#e0dbd0';
+  document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#307082';
+  if (cfg.logoSize) {
+    document.getElementById('logo-size').value = cfg.logoSize;
+    document.getElementById('logo-size-val').textContent = cfg.logoSize;
+  }
 }
 
 function applyConfigFromObj(cfg) {
@@ -726,19 +780,56 @@ function applyConfigFromObj(cfg) {
   r.style.setProperty('--r-bag-text', cfg.bagAccent);
   r.style.setProperty('--r-info-bg', cfg.infoBg);
   r.style.setProperty('--r-info-border', cfg.infoBorder);
-  r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#f0f4fa');
-  r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#1a3a5c');
+  r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#e0dbd0');
+  r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#307082');
   document.getElementById('r-nome').textContent = cfg.nome;
   document.getElementById('r-slogan').textContent = cfg.slogan;
-  document.getElementById('r-tel').textContent = cfg.tel;
+  const telNum = document.getElementById('r-tel-num');
+  if (telNum) telNum.textContent = cfg.tel;
   document.getElementById('r-cnpj').textContent = cfg.cnpj;
   document.getElementById('r-rodape').textContent = cfg.rodape;
+  const gmail = document.getElementById('r-gmail');
+  if (gmail) gmail.textContent = cfg.gmail || 'keveasytraveling@gmail.com';
+  const size = cfg.logoSize || 88;
   if (cfg.logo) {
-    document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
+    document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;">`;
+  } else {
+    const ph = document.getElementById('logo-img-wrap').querySelector('.logo-ph');
+    if (ph) { ph.style.width = size + 'px'; ph.style.height = size + 'px'; }
   }
 }
 
 function applyConfig() { applyConfigFromObj(getCurrentConfig()); }
+
+function updateLogoSize(val) {
+  document.getElementById('logo-size-val').textContent = val;
+  const img = document.getElementById('logo-img-wrap').querySelector('img');
+  if (img) { img.style.width = val + 'px'; img.style.height = val + 'px'; }
+  const ph = document.getElementById('logo-img-wrap').querySelector('.logo-ph');
+  if (ph) { ph.style.width = val + 'px'; ph.style.height = val + 'px'; }
+}
+
+function loadIcon(e, type) {
+  const f = e.target.files[0]; if (!f) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const src = ev.target.result;
+    if (type === 'wa') {
+      const waIcon = document.querySelector('#r-tel svg');
+      if (waIcon) waIcon.outerHTML = `<img src="${src}" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;">`;
+      document.getElementById('icon-wa-preview').innerHTML = `<img src="${src}" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> ✓ Ícone WhatsApp atualizado`;
+    } else if (type === 'ig') {
+      const igIcon = document.querySelector('#r-tel .rec-contact-item:last-child svg');
+      if (igIcon) igIcon.outerHTML = `<img src="${src}" style="width:12px;height:12px;object-fit:contain;vertical-align:middle;">`;
+      document.getElementById('icon-ig-preview').innerHTML = `<img src="${src}" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> ✓ Ícone Instagram atualizado`;
+    } else if (type === 'gm') {
+      const gmIcon = document.getElementById('footer-gmail-icon');
+      if (gmIcon) gmIcon.outerHTML = `<img id="footer-gmail-icon" src="${src}" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;">`;
+      document.getElementById('icon-gm-preview').innerHTML = `<img src="${src}" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> ✓ Ícone Gmail atualizado`;
+    }
+  };
+  reader.readAsDataURL(f);
+}
 
 // ═══ LOGO ═══
 function loadLogo(e) {
