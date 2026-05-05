@@ -7,24 +7,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #1a3a5c;
-  --primary-light: #1e4a7a;
-  --accent: #e8a020;
-  --bg: #0c1520;
-  --bg2: #111d2a;
-  --bg3: #162030;
-  --border: #1e2e40;
-  --text: #e0e8f0;
-  --text2: #7a9ab5;
-  --text3: #4a6a85;
+  --primary: #307082;
+  --primary-light: #3d8a9e;
+  --accent: #EA9940;
+  --bg: #12212E;
+  --bg2: #0e1c27;
+  --bg3: #162330;
+  --border: #1e3040;
+  --text: #ECE7DC;
+  --text2: #6CA3A2;
+  --text3: #4a7a80;
   --success: #1a7a3a;
-  --loc-bg: #1e3f6e;
-  --bag-bg: #2a1f00;
-  --bag-border: #c8860a;
-  --bag-text: #f0c060;
-  --info-bg: #0a1e30;
-  --info-border: #1a4a70;
-  --valor-bg: #1a3a5c;
+  --loc-bg: #307082;
+  --bag-bg: #2a1a00;
+  --bag-border: #EA9940;
+  --bag-text: #EA9940;
+  --info-bg: #0e1c27;
+  --info-border: #307082;
+  --valor-bg: #307082;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -179,7 +179,7 @@ body {
 
 /* ─── RECIBO ─── */
 #recibo {
-  width: 680px; background: #fff; color: #111;
+  width: 680px; background: #ECE7DC; color: #12212E;
   font-family: 'Sora', sans-serif; font-size: 13px;
   padding: 32px 36px; border-radius: 10px;
   box-shadow: 0 8px 40px rgba(0,0,0,.5);
@@ -189,63 +189,66 @@ body {
 }
 
 .rec-header {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: flex-end; justify-content: space-between;
   margin-bottom: 20px; padding-bottom: 16px;
-  border-bottom: 3px solid var(--r-primary, #1a3a5c);
+  border-bottom: 3px solid var(--r-primary, #307082);
 }
-.rec-logo-area { display: flex; align-items: center; gap: 14px; }
+.rec-logo-area { display: flex; align-items: center; gap: 16px; }
 #logo-img-wrap img, #logo-img-wrap .logo-ph {
-  width: 72px; height: 72px; object-fit: cover; border-radius: 8px; display: block;
+  width: 88px; height: 88px; object-fit: cover; border-radius: 8px; display: block;
 }
 #logo-img-wrap .logo-ph {
-  background: linear-gradient(135deg, #1a3a5c 60%, #e8a020 100%);
+  background: linear-gradient(135deg, #307082 60%, #EA9940 100%);
   display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 9px; font-weight: 700; text-align: center; line-height: 1.4;
+  color: #fff; font-size: 10px; font-weight: 700; text-align: center; line-height: 1.4;
 }
-.rec-company h1 { font-size: 20px; font-weight: 700; color: var(--r-primary, #1a3a5c); }
+.rec-company h1 { font-size: 20px; font-weight: 700; color: var(--r-primary, #307082); }
 .rec-slogan {
-  font-size: 10px; color: #555; margin-top: 3px;
-  border: .5px solid #ccc; border-radius: 4px; padding: 3px 8px; display: inline-block;
+  font-size: 10px; color: #4a5a50; margin-top: 3px;
+  border: .5px solid #b0a898; border-radius: 4px; padding: 3px 8px; display: inline-block;
 }
-.rec-tel { font-size: 10px; color: #888; margin-top: 4px; }
-.rec-cnpj { text-align: right; font-size: 11px; color: #555; }
-.rec-cnpj strong { color: var(--r-primary, #1a3a5c); font-size: 12px; display: block; }
+.rec-tel { font-size: 10px; color: #5a6a60; margin-top: 4px; }
+.rec-contacts { display: flex; flex-direction: row; gap: 14px; margin-top: 5px; }
+.rec-contact-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #4a5a50; }
+.rec-contact-item svg { flex-shrink: 0; }
+.rec-cnpj { text-align: right; font-size: 11px; color: #4a5a50; align-self: flex-end; }
+.rec-cnpj strong { color: var(--r-primary, #307082); font-size: 12px; display: block; }
 
 /* blocos genéricos */
 .bloco {
-  border: 1px solid #d0d8e4; border-radius: 8px;
+  border: 1px solid #b8b0a0; border-radius: 8px;
   padding: 11px 15px; margin-bottom: 12px;
-  background: #f7f9fc;
+  background: #f5f0e8;
   break-inside: avoid; page-break-inside: avoid;
 }
 .bloco-titulo {
-  font-weight: 700; font-size: 13px; color: var(--r-primary, #1a3a5c);
+  font-weight: 700; font-size: 13px; color: var(--r-primary, #307082);
   margin-bottom: 5px; display: flex; align-items: center; gap: 6px;
 }
-.bloco p { color: #333; font-size: 12px; line-height: 1.8; }
+.bloco p { color: #2a3a35; font-size: 12px; line-height: 1.8; }
 
 /* passageiro */
 .bloco-pass p { font-size: 13px; font-weight: 500; }
 
 /* localizador geral */
 .bloco-loc {
-  background: var(--r-loc-bg, #1e3f6e) !important;
-  border-color: var(--r-loc-bg, #1e3f6e) !important;
+  background: var(--r-loc-bg, #307082) !important;
+  border-color: var(--r-loc-bg, #307082) !important;
 }
 .bloco-loc .bloco-titulo { color: rgba(255,255,255,.7) !important; font-size: 11px !important; font-weight: 500 !important; }
 .bloco-loc p { color: #fff !important; font-size: 14px !important; font-weight: 700 !important; }
 
 /* trecho */
 .trecho {
-  background: #fff; border: 1px solid #d0d8e4; border-radius: 8px;
+  background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px;
   padding: 12px 15px; margin-bottom: 12px;
   break-inside: avoid; page-break-inside: avoid;
 }
 .trecho-titulo {
-  font-weight: 700; font-size: 14px; color: var(--r-primary, #1a3a5c);
+  font-weight: 700; font-size: 14px; color: var(--r-primary, #307082);
   display: flex; align-items: center; gap: 6px;
   margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 1px solid #e8eef5;
+  border-bottom: 1px solid #c8c0b0;
 }
 
 /* localizador específico + cia aérea na mesma linha */
@@ -254,20 +257,20 @@ body {
   gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
 }
 .loc-esp-bloco {
-  background: var(--r-loc-bg, #1e3f6e);
+  background: var(--r-loc-bg, #307082);
   border-radius: 6px; padding: 7px 12px;
   display: inline-flex; align-items: center; gap: 8px;
 }
 .loc-esp-label { font-size: 10px; color: rgba(255,255,255,.6); font-weight: 500; }
-.loc-esp-val { font-size: 13px; color: #fff; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.loc-esp-val { font-size: 13px; color: #fff; font-weight: 700; }
 
 .cia-bloco {
-  border: 1px solid var(--r-loc-bg, #1e3f6e);
+  border: 1px solid var(--r-loc-bg, #307082);
   border-radius: 6px; padding: 7px 12px;
   display: inline-flex; align-items: center; gap: 8px;
 }
-.cia-label { font-size: 10px; color: var(--r-loc-bg, #1e3f6e); font-weight: 500; }
-.cia-val { font-size: 13px; color: var(--r-loc-bg, #1e3f6e); font-weight: 700; }
+.cia-label { font-size: 10px; color: var(--r-loc-bg, #307082); font-weight: 500; }
+.cia-val { font-size: 13px; color: var(--r-loc-bg, #307082); font-weight: 700; }
 
 /* grid partida/destino */
 .trecho-cols {
@@ -276,14 +279,14 @@ body {
 }
 .tcol { display: flex; flex-direction: column; gap: 5px; }
 .tcol-header {
-  font-size: 10px; font-weight: 700; color: var(--r-primary, #1a3a5c);
+  font-size: 10px; font-weight: 700; color: var(--r-primary, #307082);
   text-transform: uppercase; letter-spacing: .06em;
-  padding-bottom: 4px; border-bottom: 2px solid var(--r-primary, #1a3a5c);
+  padding-bottom: 4px; border-bottom: 2px solid var(--r-primary, #307082);
   margin-bottom: 3px;
 }
 .trow { display: flex; flex-direction: column; }
-.trow-label { font-size: 10px; color: #888; }
-.trow-val { font-size: 12px; color: #222; font-weight: 600; }
+.trow-label { font-size: 10px; color: #6a7a70; }
+.trow-val { font-size: 12px; color: #12212E; font-weight: 600; }
 
 /* linha inferior do trecho — coluna vertical */
 .trecho-bottom {
@@ -296,11 +299,11 @@ body {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 8px 20px;
   padding: 4px 0 6px;
-  border-bottom: 1px solid #d0d8e4;
+  border-bottom: 1px solid #b8b0a0;
   margin-bottom: 4px;
 }
 .tbot-header-label {
-  font-size: 10px; font-weight: 700; color: #1a3a5c;
+  font-size: 10px; font-weight: 700; color: #307082;
   text-transform: uppercase; letter-spacing: .06em;
 }
 /* linhas de parada — mesmo grid */
@@ -309,104 +312,104 @@ body {
   gap: 8px 20px;
   padding: 3px 0;
 }
-.tbot-parada-row + .tbot-parada-row { border-top: .5px solid #f0f0f0; }
-.tbot-parada-local { font-size: 12px; color: #222; font-weight: 500; }
-.tbot-parada-dur { font-size: 12px; color: #555; }
+.tbot-parada-row + .tbot-parada-row { border-top: .5px solid #c8c0b0; }
+.tbot-parada-local { font-size: 12px; color: #12212E; font-weight: 500; }
+.tbot-parada-dur { font-size: 12px; color: #4a5a50; }
 /* duração total da viagem — mesmo grid que paradas */
 .tbot-total {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 8px 20px;
   margin-top: 8px; padding-top: 8px;
-  border-top: 1px solid #d0d8e4;
+  border-top: 1px solid #b8b0a0;
 }
-.tbot-total-label { font-size: 10px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-.tbot-total-val { font-size: 13px; color: #1a3a5c; font-weight: 700; }
-.tbot-direto { font-size: 12px; color: #555; padding: 4px 0; }
+.tbot-total-label { font-size: 10px; color: #6a7a70; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.tbot-total-val { font-size: 13px; color: #307082; font-weight: 700; }
+.tbot-direto { font-size: 12px; color: #4a5a50; padding: 4px 0; }
 .tbot-item { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
-.tbot-label { font-size: 10px; color: #888; }
-.tbot-val { font-size: 12px; color: #222; font-weight: 600; }
+.tbot-label { font-size: 10px; color: #6a7a70; }
+.tbot-val { font-size: 12px; color: #12212E; font-weight: 600; }
 
 /* bagagem específica dentro do trecho */
 .bag-esp {
   padding: 8px 11px;
-  background: var(--r-bag-esp-bg, #f0f4fa);
+  background: var(--r-bag-esp-bg, #e0dbd0);
   border-radius: 6px;
-  border-left: 3px solid var(--r-bag-esp-border, #1a3a5c);
+  border-left: 3px solid var(--r-bag-esp-border, #307082);
 }
-.bag-esp-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-esp-border, #1a3a5c); margin-bottom: 4px; }
+.bag-esp-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-esp-border, #307082); margin-bottom: 4px; }
 .bag-esp ul { list-style: none; }
-.bag-esp li { font-size: 11px; color: #333; line-height: 1.75; }
-.bag-esp li::before { content: "✓ "; color: var(--r-bag-esp-border, #1a3a5c); font-weight: 700; }
+.bag-esp li { font-size: 11px; color: #2a3a35; line-height: 1.75; }
+.bag-esp li::before { content: "✓ "; color: var(--r-bag-esp-border, #307082); font-weight: 700; }
 
 /* bagagem geral */
 .bloco-bag {
-  background: var(--r-bag-bg, #fff8ee) !important;
-  border-color: var(--r-bag-border, #e8c97a) !important;
+  background: var(--r-bag-bg, #fdf0e0) !important;
+  border-color: var(--r-bag-border, #EA9940) !important;
 }
-.bloco-bag .bloco-titulo { color: var(--r-bag-text, #8a6000) !important; }
+.bloco-bag .bloco-titulo { color: var(--r-bag-text, #b06010) !important; }
 .bloco-bag ul { list-style: none; }
-.bloco-bag li { font-size: 12px; color: #333; line-height: 1.85; }
-.bloco-bag li::before { content: "✓ "; color: var(--r-bag-text, #8a6000); font-weight: 700; }
+.bloco-bag li { font-size: 12px; color: #2a3a35; line-height: 1.85; }
+.bloco-bag li::before { content: "✓ "; color: var(--r-bag-text, #b06010); font-weight: 700; }
 
 /* informações */
 .bloco-info {
-  background: var(--r-info-bg, #f0f7ff) !important;
-  border-color: var(--r-info-border, #b0cff5) !important;
+  background: var(--r-info-bg, #e5eeec) !important;
+  border-color: var(--r-info-border, #6CA3A2) !important;
 }
-.bloco-info .bloco-titulo { color: var(--r-primary, #1a3a5c) !important; }
-.bloco-info p { white-space: pre-wrap; font-size: 12px; color: #333; line-height: 1.75; }
+.bloco-info .bloco-titulo { color: var(--r-primary, #307082) !important; }
+.bloco-info p { white-space: pre-wrap; font-size: 12px; color: #2a3a35; line-height: 1.75; }
 
 /* valor */
 .bloco-valor {
-  background: var(--r-primary, #1a3a5c) !important;
-  border-color: var(--r-primary, #1a3a5c) !important;
+  background: var(--r-primary, #307082) !important;
+  border-color: var(--r-primary, #307082) !important;
   display: flex; justify-content: space-between; align-items: center;
 }
 .bloco-valor .bloco-titulo { color: rgba(255,255,255,.7) !important; margin-bottom: 0; font-size: 11px !important; font-weight: 500 !important; }
-.valor-num { font-size: 24px; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
+.valor-num { font-size: 24px; font-weight: 700; color: #fff; }
 
 /* hospedagem — Modelo A */
 .hospedagem {
-  background: #fff; border: 1px solid #d0d8e4; border-radius: 8px;
+  background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px;
   padding: 12px 15px; margin-bottom: 12px;
   break-inside: avoid; page-break-inside: avoid;
 }
 .hosp-titulo {
-  font-weight: 700; font-size: 13px; color: #1a3a5c;
+  font-weight: 700; font-size: 13px; color: #307082;
   display: flex; align-items: center; gap: 6px;
   margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 1px solid #e8eef5;
+  border-bottom: 1px solid #c8c0b0;
 }
 .hosp-conf {
   display: inline-flex; align-items: center; gap: 8px;
-  border: 1.5px solid #1a3a5c; border-radius: 6px;
+  background: #e8e0d0; border-radius: 6px;
   padding: 5px 12px; margin-bottom: 10px;
 }
-.hosp-conf-label { font-size: 10px; color: #1a3a5c; font-weight: 600; letter-spacing: .06em; opacity: .6; }
-.hosp-conf-val { font-size: 13px; color: #1a3a5c; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: .05em; }
+.hosp-conf-label { font-size: 10px; color: #307082; font-weight: 600; letter-spacing: .06em; opacity: .7; }
+.hosp-conf-val { font-size: 13px; color: #307082; font-weight: 700; letter-spacing: .05em; }
 .hosp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
 .hosp-item { display: flex; flex-direction: column; }
 .hosp-full { grid-column: 1/-1; }
 /* entrada | saída | vazia — 3 colunas iguais */
 .hosp-datas { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
-.hosp-label { font-size: 10px; color: #888; margin-bottom: 1px; }
-.hosp-val { font-size: 12px; color: #222; font-weight: 600; }
+.hosp-label { font-size: 10px; color: #6a7a70; margin-bottom: 1px; }
+.hosp-val { font-size: 12px; color: #12212E; font-weight: 600; }
 .hosp-incluso {
   margin-top: 8px; padding: 7px 10px;
-  background: #fff8ee; border-radius: 5px;
-  border-left: 3px solid #c8860a;
+  background: #fdf0e0; border-radius: 5px;
+  border-left: 3px solid #EA9940;
 }
-.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: #c8860a; margin-bottom: 3px; }
-.hosp-incluso p { font-size: 11px; color: #333; line-height: 1.7; white-space: pre-wrap; }
+.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: #b06010; margin-bottom: 3px; }
+.hosp-incluso p { font-size: 11px; color: #2a3a35; line-height: 1.7; white-space: pre-wrap; }
 
 /* pagamento */
-.bloco-pag .bloco-titulo { color: var(--r-primary, #1a3a5c); }
-.bloco-pag p { font-size: 12px; color: #333; white-space: pre-wrap; }
+.bloco-pag .bloco-titulo { color: var(--r-primary, #307082); }
+.bloco-pag p { font-size: 12px; color: #2a3a35; white-space: pre-wrap; }
 
 .rec-footer {
   margin-top: 20px; padding-top: 12px;
-  border-top: 1px solid #d0d8e4;
-  font-size: 10px; color: #aaa; text-align: center;
+  border-top: 1px solid #b8b0a0;
+  font-size: 10px; color: #7a8a80; text-align: center;
 }
 
 /* ─── MODO CELULAR ─── */
@@ -507,7 +510,7 @@ body {
 <!-- ═══ SIDEBAR ═══ -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <div style="width:32px;height:32px;background:linear-gradient(135deg,#1a3a5c,#e8a020);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;text-align:center;line-height:1.2;">K&V</div>
+    <div style="width:32px;height:32px;background:linear-gradient(135deg,#307082,#EA9940);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;text-align:center;line-height:1.2;">K&V</div>
     <div><span>K&V Easy Traveling</span><small>Gerador de Recibo</small></div>
   </div>
 
@@ -551,17 +554,17 @@ body {
     <div class="fl"><label>Slogan</label><input id="cfg-slogan" value='✨ "Viaje hoje, viaje barato, viaje sempre" ✨' oninput="applyConfig()"></div>
     <div class="fl"><label>Telefone</label><input id="cfg-tel" value="📱 (38) 9 8815-5417" oninput="applyConfig()"></div>
     <div class="fl"><label>CNPJ</label><input id="cfg-cnpj" value="65.597.589/0001-00" oninput="applyConfig()"></div>
-    <div class="fl"><label>Rodapé</label><input id="cfg-rodape" value="Recibo gerado pela K&V Easy Traveling  |  Todos os direitos reservados" oninput="applyConfig()"></div>
+    <div class="fl"><label>Rodapé</label><input id="cfg-rodape" value="keveasytraveling@gmail.com  |  Informações CANVAS" oninput="applyConfig()"></div>
 
     <div class="sb-section">Cores</div>
-    <div class="color-row"><label>Cor principal</label><input type="color" id="c-primary" value="#1a3a5c" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Localizador (fundo)</label><input type="color" id="c-loc" value="#1e3f6e" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bagagem (fundo)</label><input type="color" id="c-bag-bg" value="#fff8ee" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bagagem (borda/texto)</label><input type="color" id="c-bag-accent" value="#c8860a" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Informações (fundo)</label><input type="color" id="c-info-bg" value="#f0f7ff" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Informações (borda)</label><input type="color" id="c-info-border" value="#b0cff5" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bag. específica (fundo)</label><input type="color" id="c-bagesp-bg" value="#f0f4fa" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bag. específica (borda)</label><input type="color" id="c-bagesp-border" value="#1a3a5c" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Cor principal</label><input type="color" id="c-primary" value="#307082" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Localizador (fundo)</label><input type="color" id="c-loc" value="#307082" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Bagagem (fundo)</label><input type="color" id="c-bag-bg" value="#fdf0e0" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Bagagem (borda/texto)</label><input type="color" id="c-bag-accent" value="#EA9940" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Informações (fundo)</label><input type="color" id="c-info-bg" value="#e5eeec" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Informações (borda)</label><input type="color" id="c-info-border" value="#6CA3A2" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Bag. específica (fundo)</label><input type="color" id="c-bagesp-bg" value="#e0dbd0" oninput="applyConfig()"></div>
+    <div class="color-row"><label>Bag. específica (borda)</label><input type="color" id="c-bagesp-border" value="#307082" oninput="applyConfig()"></div>
 
     <button class="btn-primary" onclick="saveConfig()">💾 Salvar configuração</button>
     <button class="btn-secondary" onclick="resetConfig()">↺ Restaurar padrão</button>
@@ -582,604 +585,625 @@ body {
         <h1 id="r-nome">K&amp;V&nbsp; Easy Traveling</h1>
         <div class="rec-slogan" id="r-slogan">✨ "Viaje hoje, viaje barato, viaje sempre" ✨</div>
         <div class="rec-tel" id="r-tel">📱 (38) 9 8815-5417</div>
+        <div class="rec-contacts">
+          <div class="rec-contact-item">
+            <!-- Instagram SVG oficial -->
+            <svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+                  <stop offset="0%" stop-color="#fdf497"/>
+                  <stop offset="5%" stop-color="#fdf497"/>
+                  <stop offset="45%" stop-color="#fd5949"/>
+                  <stop offset="60%" stop-color="#d6249f"/>
+                  <stop offset="90%" stop-color="#285AEB"/>
+                </radialGradient>
+              </defs>
+              <rect width="24" height="24" rx="5.5" fill="url(#ig-grad)"/>
+              <rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="4.5" fill="none" stroke="#fff" stroke-width="1.5"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="#fff"/>
+            </svg>
+            @kevviagens
+          </div>
+        </div>
       </div>
     </div>
     <div class="rec-cnpj">CNPJ:<strong id="r-cnpj">65.597.589/0001-00</strong></div>
   </div>
   <div id="r-corpo"></div>
-  <div class="rec-footer" id="r-rodape">Recibo gerado pela K&amp;V Easy Traveling &nbsp;|&nbsp; Todos os direitos reservados</div>
+  <div class="rec-footer" id="r-rodape">Recibo gerado pela K&amp;V Easy Traveling &nbsp;|&nbsp; Informações CANVAS</div>
 </div>
 </div>
 </div>
 
-      <script>
-      // ═══ AUTO RESIZE TEXTAREA ═══
-      // Faz a textarea crescer conforme o usuário cola texto
-      // scrollHeight = altura total do conteúdo interno
-      function autoResize(el) {
-        el.style.height = 'auto';         // reseta para recalcular
-        el.style.height = el.scrollHeight + 'px'; // aplica altura real do conteúdo
+<script>
+// ═══ AUTO RESIZE TEXTAREA ═══
+// Faz a textarea crescer conforme o usuário cola texto
+// scrollHeight = altura total do conteúdo interno
+function autoResize(el) {
+  el.style.height = 'auto';         // reseta para recalcular
+  el.style.height = el.scrollHeight + 'px'; // aplica altura real do conteúdo
+}
+
+// ═══ STATE ═══
+let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+let formato = 'pdf'; // 'pdf' | 'celular'
+
+function setFormato(f) {
+  formato = f;
+  const recibo = document.getElementById('recibo');
+  if (f === 'celular') {
+    recibo.classList.add('modo-celular');
+    document.getElementById('fmt-cel').classList.add('active');
+    document.getElementById('fmt-pdf').classList.remove('active');
+  } else {
+    recibo.classList.remove('modo-celular');
+    document.getElementById('fmt-pdf').classList.add('active');
+    document.getElementById('fmt-cel').classList.remove('active');
+  }
+}
+
+// ═══ CONFIG ═══
+const CFG_DEFAULT = {
+  nome: 'K&V  Easy Traveling',
+  slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
+  tel: '📱 (38) 9 8815-5417',
+  cnpj: '65.597.589/0001-00',
+  rodape: 'keveasytraveling@gmail.com  |  Informações CANVAS',
+  primary: '#307082',
+  loc: '#307082',
+  bagBg: '#fdf0e0',
+  bagAccent: '#EA9940',
+  infoBg: '#e5eeec',
+  infoBorder: '#6CA3A2',
+  bagEspBg: '#e0dbd0',
+  bagEspBorder: '#307082',
+  logo: null
+};
+
+function loadConfig() {
+  try {
+    const saved = localStorage.getItem('kv-config');
+    if (saved) return { ...CFG_DEFAULT, ...JSON.parse(saved) };
+  } catch(e) {}
+  return { ...CFG_DEFAULT };
+}
+
+function saveConfig() {
+  const cfg = getCurrentConfig();
+  localStorage.setItem('kv-config', JSON.stringify(cfg));
+  showMsg('✓ Configuração salva!', 'ok');
+}
+
+function resetConfig() {
+  localStorage.removeItem('kv-config');
+  applyConfigFromObj(CFG_DEFAULT);
+  loadConfigToForm(CFG_DEFAULT);
+  showMsg('↺ Configuração restaurada', 'ok');
+}
+
+function getCurrentConfig() {
+  return {
+    nome: document.getElementById('cfg-nome').value,
+    slogan: document.getElementById('cfg-slogan').value,
+    tel: document.getElementById('cfg-tel').value,
+    cnpj: document.getElementById('cfg-cnpj').value,
+    rodape: document.getElementById('cfg-rodape').value,
+    primary: document.getElementById('c-primary').value,
+    loc: document.getElementById('c-loc').value,
+    bagBg: document.getElementById('c-bag-bg').value,
+    bagAccent: document.getElementById('c-bag-accent').value,
+    infoBg: document.getElementById('c-info-bg').value,
+    infoBorder: document.getElementById('c-info-border').value,
+    bagEspBg: document.getElementById('c-bagesp-bg').value,
+    bagEspBorder: document.getElementById('c-bagesp-border').value,
+    logo: document.getElementById('logo-img-wrap').querySelector('img')?.src || null
+  };
+}
+
+function loadConfigToForm(cfg) {
+  document.getElementById('cfg-nome').value = cfg.nome;
+  document.getElementById('cfg-slogan').value = cfg.slogan;
+  document.getElementById('cfg-tel').value = cfg.tel;
+  document.getElementById('cfg-cnpj').value = cfg.cnpj;
+  document.getElementById('cfg-rodape').value = cfg.rodape;
+  document.getElementById('c-primary').value = cfg.primary;
+  document.getElementById('c-loc').value = cfg.loc;
+  document.getElementById('c-bag-bg').value = cfg.bagBg;
+  document.getElementById('c-bag-accent').value = cfg.bagAccent;
+  document.getElementById('c-info-bg').value = cfg.infoBg;
+  document.getElementById('c-info-border').value = cfg.infoBorder;
+  document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#f0f4fa';
+  document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#1a3a5c';
+}
+
+function applyConfigFromObj(cfg) {
+  const r = document.getElementById('recibo');
+  r.style.setProperty('--r-primary', cfg.primary);
+  r.style.setProperty('--r-loc-bg', cfg.loc);
+  r.style.setProperty('--r-bag-bg', cfg.bagBg);
+  r.style.setProperty('--r-bag-border', cfg.bagAccent);
+  r.style.setProperty('--r-bag-text', cfg.bagAccent);
+  r.style.setProperty('--r-info-bg', cfg.infoBg);
+  r.style.setProperty('--r-info-border', cfg.infoBorder);
+  r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#f0f4fa');
+  r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#1a3a5c');
+  document.getElementById('r-nome').textContent = cfg.nome;
+  document.getElementById('r-slogan').textContent = cfg.slogan;
+  document.getElementById('r-tel').textContent = cfg.tel;
+  document.getElementById('r-cnpj').textContent = cfg.cnpj;
+  document.getElementById('r-rodape').textContent = cfg.rodape;
+  if (cfg.logo) {
+    document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
+  }
+}
+
+function applyConfig() { applyConfigFromObj(getCurrentConfig()); }
+
+// ═══ LOGO ═══
+function loadLogo(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    document.getElementById('logo-img-wrap').innerHTML = `<img src="${ev.target.result}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
+  };
+  r.readAsDataURL(f);
+}
+
+// ═══ PASSAGEIROS ═══
+function addPassageiro(nome = '') {
+  D.passageiros.push(nome);
+  renderPassList();
+  update();
+}
+
+function removePassageiro(i) {
+  D.passageiros.splice(i, 1);
+  renderPassList();
+  update();
+}
+
+function renderPassList() {
+  const c = document.getElementById('pass-list');
+  c.innerHTML = '';
+  D.passageiros.forEach((p, i) => {
+    const d = document.createElement('div');
+    d.className = 'pass-item';
+    d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;update()">
+      <button onclick="removePassageiro(${i})">✕</button>`;
+    c.appendChild(d);
+  });
+}
+
+// ═══ TABS ═══
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ═══ MSG ═══
+function showMsg(t, tp) {
+  const el = document.getElementById('msg');
+  el.textContent = t; el.className = 'msg ' + tp; el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+}
+
+// ═══ PARSER ═══
+const DELIMITADORES = [
+  'Passageiro', 'Localizador Geral', 'Cia A[eé]rea Geral', 'Trecho \\d+',
+  'Localizador Específico', 'Cia A[eé]rea Específica',
+  'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
+  'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
+  'Bagagem Específica', 'Bagagem Geral',
+  'C[oó]digo de Confirma[çc][ãa]o', 'Local', 'Cidade',
+  'Data de Entrada', 'Data de Sa[íi]da', 'Incluso',
+  'Informa[çc][õo]es?', 'Valor [àa] Pagar', 'Pagamento'
+];
+
+function inserirQuebras(raw) {
+  let txt = raw;
+  const ordem = [
+    'Localizador Geral', 'Localizador Específico',
+    'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
+    'C[oó]digo de Confirma[çc][ãa]o',
+    'Data de Entrada', 'Hora de Entrada',
+    'Data de Sa[íi]da', 'Hora de Sa[íi]da',
+    'Data Sa[íi]da', 'Hora Sa[íi]da',
+    'Data Chegada', 'Hora Chegada',
+    'Bagagem Específica', 'Bagagem Geral',
+    'Informa[çc][õo]es?', 'Valor [àa] Pagar',
+    'Passageiro', 'Partida', 'Destino', 'Cidade',
+    'Paradas', 'Dura[çc][ãa]o Total', 'Dura[çc][ãa]o', 'Pagamento',
+    'Incluso', 'Local'
+  ];
+  ordem.forEach(r => {
+    try {
+      txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1');
+    } catch(e) {}
+  });
+  txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
+  txt = txt.replace(/(Hospedagem\s*\d*)(?=\s|C[oó]digo|Local|Cidade|Data|$)/gi, '\n$1\n');
+  return txt;
+}
+
+function parsear() {
+  const raw = document.getElementById('paste-input').value.trim();
+  if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
+
+  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+
+  const txt = inserirQuebras(raw);
+  const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
+
+  let campoAtual = null;
+  let trechoAtual = null;
+  let hospAtual = null;
+  let bufferMulti = [];
+
+  const isPlaceholder = v => !v || v.includes('Nesse caso') || v === '""';
+
+  function flushBuffer() {
+    if (!campoAtual || !bufferMulti.length) return;
+    const vals = bufferMulti.filter(l => l);
+    if (campoAtual === 'bagEspTrecho' && trechoAtual) trechoAtual.bagEsp.push(...vals);
+    else if (campoAtual === 'paradas' && trechoAtual) trechoAtual.paradas.push(...vals);
+    else if (campoAtual === 'bagGeral') D.bagGeral.push(...vals);
+    else if (campoAtual === 'informacoes') D.informacoes = (D.informacoes ? D.informacoes + '\n' : '') + vals.join('\n');
+    else if (campoAtual === 'pagamento') D.pagamento.push(...vals);
+    else if (campoAtual === 'hospIncluso' && hospAtual) hospAtual.incluso = vals.join('\n');
+    bufferMulti = [];
+  }
+
+  function novoTrecho() {
+    trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: [], duracaoTotal: '', bagEsp: [] };
+    D.trechos.push(trechoAtual);
+  }
+
+  function novaHospedagem() {
+    hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', horaEntrada: '', saida: '', horaSaida: '', incluso: '' };
+    D.hospedagens.push(hospAtual);
+  }
+
+  linhas.forEach(l => {
+    if (/^Passageiro:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'passageiro';
+      const v = l.replace(/^Passageiro:\s*/i, '').trim();
+      if (v) D.passageiros.push(v);
+      return;
+    }
+    if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
+    if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
+    if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; hospAtual = null; return; }
+    if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual = 'hospedagem'; trechoAtual = null; return; }
+    if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCodigo'; if (hospAtual) hospAtual.codigo = l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i, '').trim(); return; }
+    if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
+    if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
+    if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
+    if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraEntrada'; if (hospAtual) hospAtual.horaEntrada = l.replace(/^Hora de Entrada:\s*/i, '').trim(); return; }
+    if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
+    if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraSaida'; if (hospAtual) hospAtual.horaSaida = l.replace(/^Hora de Sa[íi]da:\s*/i, '').trim(); return; }
+    if (/^Incluso:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'hospIncluso';
+      const inline = l.replace(/^Incluso:\s*/i, '').trim();
+      if (inline) bufferMulti.push(inline);
+      return;
+    }
+    if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
+    if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
+    if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
+    if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataPartida'; if (trechoAtual) trechoAtual.dataPartida = l.replace(/^Data Sa[íi]da:\s*/i, '').trim(); return; }
+    if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaPartida'; if (trechoAtual) trechoAtual.horaPartida = l.replace(/^Hora Sa[íi]da:\s*/i, '').trim(); return; }
+    if (/^Destino:\s*/i.test(l)) { flushBuffer(); campoAtual = 'destino'; if (trechoAtual) trechoAtual.destino = l.replace(/^Destino:\s*/i, '').trim(); return; }
+    if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataChegada'; if (trechoAtual) trechoAtual.dataChegada = l.replace(/^Data Chegada:\s*/i, '').trim(); return; }
+    if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaChegada'; if (trechoAtual) trechoAtual.horaChegada = l.replace(/^Hora Chegada:\s*/i, '').trim(); return; }
+    if (/^Paradas:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'paradas';
+      const inline = l.replace(/^Paradas:\s*/i, '').trim();
+      if (inline && trechoAtual) trechoAtual.paradas.push(inline);
+      return;
+    }
+    if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o Total:\s*/i, '').trim(); return; }
+    if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
+    if (/^Bagagem Específica:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'bagEspTrecho';
+      const inline = l.replace(/^Bagagem Específica:\s*/i, '').trim();
+      if (inline && !isPlaceholder(inline)) bufferMulti.push(inline);
+      return;
+    }
+    if (/^Bagagem Geral:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'bagGeral'; trechoAtual = null;
+      const inline = l.replace(/^Bagagem Geral:\s*/i, '').trim();
+      if (inline) bufferMulti.push(inline);
+      return;
+    }
+    if (/^Informa[çc][õo]es?:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'informacoes'; trechoAtual = null;
+      const inline = l.replace(/^Informa[çc][õo]es?:\s*/i, '').trim();
+      if (inline) bufferMulti.push(inline);
+      return;
+    }
+    if (/^Valor [àa] Pagar:\s*/i.test(l)) { flushBuffer(); campoAtual = 'valor'; trechoAtual = null; D.valor = l.replace(/^Valor [àa] Pagar:\s*/i, '').trim(); return; }
+    if (/^Pagamento:\s*/i.test(l)) {
+      flushBuffer(); campoAtual = 'pagamento'; trechoAtual = null;
+      const inline = l.replace(/^Pagamento:\s*/i, '').trim();
+      if (inline) bufferMulti.push(inline);
+      return;
+    }
+    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso', 'paradas'].includes(campoAtual)) bufferMulti.push(l);
+  });
+  flushBuffer();
+
+  // limpar placeholders
+  D.trechos.forEach(t => {
+    t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b));
+    if (isPlaceholder(t.locEsp)) t.locEsp = '';
+  });
+  if (isPlaceholder(D.locGeral)) D.locGeral = '';
+
+  renderPassList();
+  showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
+  update();
+}
+
+// ═══ RENDER ═══
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function update() {
+  let html = '';
+
+  // Passageiros
+  if (D.passageiros.length > 0) {
+    const nomes = D.passageiros.filter(p => p.trim());
+    if (nomes.length) {
+      html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length > 1 ? 'Passageiros' : 'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
+    }
+  }
+
+  // Localizador Geral + Cia Aérea Geral
+  if (D.locGeral || D.ciaGeral) {
+    html += `<div class="bloco bloco-loc" style="padding:16px 20px;">`;
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+    if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:22px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
+    if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+    else if (!D.locGeral && D.ciaGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:22px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+    html += `</div></div>`;
+  }
+
+  // Trechos
+  D.trechos.forEach(t => {
+    html += `<div class="trecho"><div class="trecho-titulo">✈️ Trecho ${t.num}</div>`;
+
+    // Linha loc+cia
+    const temLoc = t.locEsp, temCia = t.ciaEsp;
+    if (temLoc || temCia) {
+      html += `<div class="loc-cia-row">`;
+      if (temLoc) {
+        html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
       }
-
-      // ═══ STATE ═══
-      let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-      let formato = 'pdf'; // 'pdf' | 'celular'
-
-      function setFormato(f) {
-        formato = f;
-        const recibo = document.getElementById('recibo');
-        if (f === 'celular') {
-          recibo.classList.add('modo-celular');
-          document.getElementById('fmt-cel').classList.add('active');
-          document.getElementById('fmt-pdf').classList.remove('active');
-        } else {
-          recibo.classList.remove('modo-celular');
-          document.getElementById('fmt-pdf').classList.add('active');
-          document.getElementById('fmt-cel').classList.remove('active');
-        }
+      if (temCia) {
+        html += `<div class="cia-bloco"><span class="cia-label">CIA AÉREA</span><span class="cia-val">${esc(t.ciaEsp)}</span></div>`;
       }
+      html += `</div>`;
+    }
 
-      // ═══ CONFIG ═══
-      const CFG_DEFAULT = {
-        nome: 'K&V  Easy Traveling',
-        slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
-        tel: '📱 (38) 9 8815-5417',
-        cnpj: '65.597.589/0001-00',
-        rodape: 'Recibo gerado pela K&V Easy Traveling  |  Todos os direitos reservados',
-        primary: '#1a3a5c',
-        loc: '#1e3f6e',
-        bagBg: '#fff8ee',
-        bagAccent: '#c8860a',
-        infoBg: '#f0f7ff',
-        infoBorder: '#b0cff5',
-        bagEspBg: '#f0f4fa',
-        bagEspBorder: '#1a3a5c',
-        logo: null
-      };
+    // Grid duas colunas: Partida | Destino
+    html += `<div class="trecho-cols">`;
 
-      function loadConfig() {
-        try {
-          const saved = localStorage.getItem('kv-config');
-          if (saved) return { ...CFG_DEFAULT, ...JSON.parse(saved) };
-        } catch(e) {}
-        return { ...CFG_DEFAULT };
-      }
+    // coluna partida
+    html += `<div class="tcol"><div class="tcol-header">Partida</div>`;
+    if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.partida)}</div></div>`;
+    if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataPartida)}</div></div>`;
+    if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaPartida)}</div></div>`;
+    html += `</div>`;
 
-      function saveConfig() {
-        const cfg = getCurrentConfig();
-        localStorage.setItem('kv-config', JSON.stringify(cfg));
-        showMsg('✓ Configuração salva!', 'ok');
-      }
+    // coluna destino
+    html += `<div class="tcol"><div class="tcol-header">Destino</div>`;
+    if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.destino)}</div></div>`;
+    if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataChegada)}</div></div>`;
+    if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaChegada)}</div></div>`;
+    html += `</div>`;
 
-      function resetConfig() {
-        localStorage.removeItem('kv-config');
-        applyConfigFromObj(CFG_DEFAULT);
-        loadConfigToForm(CFG_DEFAULT);
-        showMsg('↺ Configuração restaurada', 'ok');
-      }
+    html += `</div>`; // fim trecho-cols
 
-      function getCurrentConfig() {
-        return {
-          nome: document.getElementById('cfg-nome').value,
-          slogan: document.getElementById('cfg-slogan').value,
-          tel: document.getElementById('cfg-tel').value,
-          cnpj: document.getElementById('cfg-cnpj').value,
-          rodape: document.getElementById('cfg-rodape').value,
-          primary: document.getElementById('c-primary').value,
-          loc: document.getElementById('c-loc').value,
-          bagBg: document.getElementById('c-bag-bg').value,
-          bagAccent: document.getElementById('c-bag-accent').value,
-          infoBg: document.getElementById('c-info-bg').value,
-          infoBorder: document.getElementById('c-info-border').value,
-          bagEspBg: document.getElementById('c-bagesp-bg').value,
-          bagEspBorder: document.getElementById('c-bagesp-border').value,
-          logo: document.getElementById('logo-img-wrap').querySelector('img')?.src || null
-        };
-      }
+    // inferior: Paradas com duração por parada + Duração Total + Bagagem
+    const temBottom = t.paradas.length || t.duracaoTotal || t.bagEsp.length;
+    if (temBottom) {
+      html += `<div class="trecho-bottom">`;
 
-      function loadConfigToForm(cfg) {
-        document.getElementById('cfg-nome').value = cfg.nome;
-        document.getElementById('cfg-slogan').value = cfg.slogan;
-        document.getElementById('cfg-tel').value = cfg.tel;
-        document.getElementById('cfg-cnpj').value = cfg.cnpj;
-        document.getElementById('cfg-rodape').value = cfg.rodape;
-        document.getElementById('c-primary').value = cfg.primary;
-        document.getElementById('c-loc').value = cfg.loc;
-        document.getElementById('c-bag-bg').value = cfg.bagBg;
-        document.getElementById('c-bag-accent').value = cfg.bagAccent;
-        document.getElementById('c-info-bg').value = cfg.infoBg;
-        document.getElementById('c-info-border').value = cfg.infoBorder;
-        document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#f0f4fa';
-        document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#1a3a5c';
-      }
+      if (t.paradas.length) {
+        // verificar se é voo direto (sem " - ")
+        const temDurPorParada = t.paradas.some(p => p.includes(' - '));
 
-      function applyConfigFromObj(cfg) {
-        const r = document.getElementById('recibo');
-        r.style.setProperty('--r-primary', cfg.primary);
-        r.style.setProperty('--r-loc-bg', cfg.loc);
-        r.style.setProperty('--r-bag-bg', cfg.bagBg);
-        r.style.setProperty('--r-bag-border', cfg.bagAccent);
-        r.style.setProperty('--r-bag-text', cfg.bagAccent);
-        r.style.setProperty('--r-info-bg', cfg.infoBg);
-        r.style.setProperty('--r-info-border', cfg.infoBorder);
-        r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#f0f4fa');
-        r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#1a3a5c');
-        document.getElementById('r-nome').textContent = cfg.nome;
-        document.getElementById('r-slogan').textContent = cfg.slogan;
-        document.getElementById('r-tel').textContent = cfg.tel;
-        document.getElementById('r-cnpj').textContent = cfg.cnpj;
-        document.getElementById('r-rodape').textContent = cfg.rodape;
-        if (cfg.logo) {
-          document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
-        }
-      }
-
-      function applyConfig() { applyConfigFromObj(getCurrentConfig()); }
-
-      // ═══ LOGO ═══
-      function loadLogo(e) {
-        const f = e.target.files[0]; if (!f) return;
-        const r = new FileReader();
-        r.onload = ev => {
-          document.getElementById('logo-img-wrap').innerHTML = `<img src="${ev.target.result}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
-        };
-        r.readAsDataURL(f);
-      }
-
-      // ═══ PASSAGEIROS ═══
-      function addPassageiro(nome = '') {
-        D.passageiros.push(nome);
-        renderPassList();
-        update();
-      }
-
-      function removePassageiro(i) {
-        D.passageiros.splice(i, 1);
-        renderPassList();
-        update();
-      }
-
-      function renderPassList() {
-        const c = document.getElementById('pass-list');
-        c.innerHTML = '';
-        D.passageiros.forEach((p, i) => {
-          const d = document.createElement('div');
-          d.className = 'pass-item';
-          d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;update()">
-            <button onclick="removePassageiro(${i})">✕</button>`;
-          c.appendChild(d);
-        });
-      }
-
-      // ═══ TABS ═══
-      function showTab(id) {
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('tab-' + id).classList.add('active');
-        event.target.classList.add('active');
-      }
-
-      // ═══ MSG ═══
-      function showMsg(t, tp) {
-        const el = document.getElementById('msg');
-        el.textContent = t; el.className = 'msg ' + tp; el.style.display = 'block';
-        setTimeout(() => el.style.display = 'none', 3000);
-      }
-
-      // ═══ PARSER ═══
-      const DELIMITADORES = [
-        'Passageiro', 'Localizador Geral', 'Cia A[eé]rea Geral', 'Trecho \\d+',
-        'Localizador Específico', 'Cia A[eé]rea Específica',
-        'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
-        'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
-        'Bagagem Específica', 'Bagagem Geral',
-        'C[oó]digo de Confirma[çc][ãa]o', 'Local', 'Cidade',
-        'Data de Entrada', 'Data de Sa[íi]da', 'Incluso',
-        'Informa[çc][õo]es?', 'Valor [àa] Pagar', 'Pagamento'
-      ];
-
-      function inserirQuebras(raw) {
-        let txt = raw;
-        const ordem = [
-          'Localizador Geral', 'Localizador Específico',
-          'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
-          'C[oó]digo de Confirma[çc][ãa]o',
-          'Data de Entrada', 'Hora de Entrada',
-          'Data de Sa[íi]da', 'Hora de Sa[íi]da',
-          'Data Sa[íi]da', 'Hora Sa[íi]da',
-          'Data Chegada', 'Hora Chegada',
-          'Bagagem Específica', 'Bagagem Geral',
-          'Informa[çc][õo]es?', 'Valor [àa] Pagar',
-          'Passageiro', 'Partida', 'Destino', 'Cidade',
-          'Paradas', 'Dura[çc][ãa]o Total', 'Dura[çc][ãa]o', 'Pagamento',
-          'Incluso', 'Local'
-        ];
-        ordem.forEach(r => {
-          try {
-            txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1');
-          } catch(e) {}
-        });
-        txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
-        txt = txt.replace(/(Hospedagem\s*\d*)(?=\s|C[oó]digo|Local|Cidade|Data|$)/gi, '\n$1\n');
-        return txt;
-      }
-
-      function parsear() {
-        const raw = document.getElementById('paste-input').value.trim();
-        if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
-
-        D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-
-        const txt = inserirQuebras(raw);
-        const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
-
-        let campoAtual = null;
-        let trechoAtual = null;
-        let hospAtual = null;
-        let bufferMulti = [];
-
-        const isPlaceholder = v => !v || v.includes('Nesse caso') || v === '""';
-
-        function flushBuffer() {
-          if (!campoAtual || !bufferMulti.length) return;
-          const vals = bufferMulti.filter(l => l);
-          if (campoAtual === 'bagEspTrecho' && trechoAtual) trechoAtual.bagEsp.push(...vals);
-          else if (campoAtual === 'paradas' && trechoAtual) trechoAtual.paradas.push(...vals);
-          else if (campoAtual === 'bagGeral') D.bagGeral.push(...vals);
-          else if (campoAtual === 'informacoes') D.informacoes = (D.informacoes ? D.informacoes + '\n' : '') + vals.join('\n');
-          else if (campoAtual === 'pagamento') D.pagamento.push(...vals);
-          else if (campoAtual === 'hospIncluso' && hospAtual) hospAtual.incluso = vals.join('\n');
-          bufferMulti = [];
-        }
-
-        function novoTrecho() {
-          trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: [], duracaoTotal: '', bagEsp: [] };
-          D.trechos.push(trechoAtual);
-        }
-
-        function novaHospedagem() {
-          hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', horaEntrada: '', saida: '', horaSaida: '', incluso: '' };
-          D.hospedagens.push(hospAtual);
-        }
-
-        linhas.forEach(l => {
-          if (/^Passageiro:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'passageiro';
-            const v = l.replace(/^Passageiro:\s*/i, '').trim();
-            if (v) D.passageiros.push(v);
-            return;
-          }
-          if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
-          if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
-          if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; hospAtual = null; return; }
-          if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual = 'hospedagem'; trechoAtual = null; return; }
-          if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCodigo'; if (hospAtual) hospAtual.codigo = l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i, '').trim(); return; }
-          if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
-          if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
-          if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
-          if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraEntrada'; if (hospAtual) hospAtual.horaEntrada = l.replace(/^Hora de Entrada:\s*/i, '').trim(); return; }
-          if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
-          if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraSaida'; if (hospAtual) hospAtual.horaSaida = l.replace(/^Hora de Sa[íi]da:\s*/i, '').trim(); return; }
-          if (/^Incluso:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'hospIncluso';
-            const inline = l.replace(/^Incluso:\s*/i, '').trim();
-            if (inline) bufferMulti.push(inline);
-            return;
-          }
-          if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
-          if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
-          if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
-          if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataPartida'; if (trechoAtual) trechoAtual.dataPartida = l.replace(/^Data Sa[íi]da:\s*/i, '').trim(); return; }
-          if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaPartida'; if (trechoAtual) trechoAtual.horaPartida = l.replace(/^Hora Sa[íi]da:\s*/i, '').trim(); return; }
-          if (/^Destino:\s*/i.test(l)) { flushBuffer(); campoAtual = 'destino'; if (trechoAtual) trechoAtual.destino = l.replace(/^Destino:\s*/i, '').trim(); return; }
-          if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataChegada'; if (trechoAtual) trechoAtual.dataChegada = l.replace(/^Data Chegada:\s*/i, '').trim(); return; }
-          if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaChegada'; if (trechoAtual) trechoAtual.horaChegada = l.replace(/^Hora Chegada:\s*/i, '').trim(); return; }
-          if (/^Paradas:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'paradas';
-            const inline = l.replace(/^Paradas:\s*/i, '').trim();
-            if (inline && trechoAtual) trechoAtual.paradas.push(inline);
-            return;
-          }
-          if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o Total:\s*/i, '').trim(); return; }
-          if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
-          if (/^Bagagem Específica:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'bagEspTrecho';
-            const inline = l.replace(/^Bagagem Específica:\s*/i, '').trim();
-            if (inline && !isPlaceholder(inline)) bufferMulti.push(inline);
-            return;
-          }
-          if (/^Bagagem Geral:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'bagGeral'; trechoAtual = null;
-            const inline = l.replace(/^Bagagem Geral:\s*/i, '').trim();
-            if (inline) bufferMulti.push(inline);
-            return;
-          }
-          if (/^Informa[çc][õo]es?:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'informacoes'; trechoAtual = null;
-            const inline = l.replace(/^Informa[çc][õo]es?:\s*/i, '').trim();
-            if (inline) bufferMulti.push(inline);
-            return;
-          }
-          if (/^Valor [àa] Pagar:\s*/i.test(l)) { flushBuffer(); campoAtual = 'valor'; trechoAtual = null; D.valor = l.replace(/^Valor [àa] Pagar:\s*/i, '').trim(); return; }
-          if (/^Pagamento:\s*/i.test(l)) {
-            flushBuffer(); campoAtual = 'pagamento'; trechoAtual = null;
-            const inline = l.replace(/^Pagamento:\s*/i, '').trim();
-            if (inline) bufferMulti.push(inline);
-            return;
-          }
-          if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso', 'paradas'].includes(campoAtual)) bufferMulti.push(l);
-        });
-        flushBuffer();
-
-        // limpar placeholders
-        D.trechos.forEach(t => {
-          t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b));
-          if (isPlaceholder(t.locEsp)) t.locEsp = '';
-        });
-        if (isPlaceholder(D.locGeral)) D.locGeral = '';
-
-        renderPassList();
-        showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
-        update();
-      }
-
-      // ═══ RENDER ═══
-      function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
-      function update() {
-        let html = '';
-
-        // Passageiros
-        if (D.passageiros.length > 0) {
-          const nomes = D.passageiros.filter(p => p.trim());
-          if (nomes.length) {
-            html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length > 1 ? 'Passageiros' : 'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
-          }
-        }
-
-        // Localizador Geral + Cia Aérea Geral
-        if (D.locGeral || D.ciaGeral) {
-          html += `<div class="bloco bloco-loc" style="padding:16px 20px;">`;
-          html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-          if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:22px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
-          if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
-          else if (!D.locGeral && D.ciaGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:22px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
-          html += `</div></div>`;
-        }
-
-        // Trechos
-        D.trechos.forEach(t => {
-          html += `<div class="trecho"><div class="trecho-titulo">✈️ Trecho ${t.num}</div>`;
-
-          // Linha loc+cia
-          const temLoc = t.locEsp, temCia = t.ciaEsp;
-          if (temLoc || temCia) {
-            html += `<div class="loc-cia-row">`;
-            if (temLoc) {
-              html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
-            }
-            if (temCia) {
-              html += `<div class="cia-bloco"><span class="cia-label">CIA AÉREA</span><span class="cia-val">${esc(t.ciaEsp)}</span></div>`;
-            }
-            html += `</div>`;
-          }
-
-          // Grid duas colunas: Partida | Destino
-          html += `<div class="trecho-cols">`;
-
-          // coluna partida
-          html += `<div class="tcol"><div class="tcol-header">Partida</div>`;
-          if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.partida)}</div></div>`;
-          if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataPartida)}</div></div>`;
-          if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaPartida)}</div></div>`;
-          html += `</div>`;
-
-          // coluna destino
-          html += `<div class="tcol"><div class="tcol-header">Destino</div>`;
-          if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.destino)}</div></div>`;
-          if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataChegada)}</div></div>`;
-          if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaChegada)}</div></div>`;
-          html += `</div>`;
-
-          html += `</div>`; // fim trecho-cols
-
-          // inferior: Paradas com duração por parada + Duração Total + Bagagem
-          const temBottom = t.paradas.length || t.duracaoTotal || t.bagEsp.length;
-          if (temBottom) {
-            html += `<div class="trecho-bottom">`;
-
-            if (t.paradas.length) {
-              // verificar se é voo direto (sem " - ")
-              const temDurPorParada = t.paradas.some(p => p.includes(' - '));
-
-              if (temDurPorParada) {
-                // cabeçalho
-                html += `<div class="tbot-header">
-                  <span class="tbot-header-label">Paradas</span>
-                  <span class="tbot-header-label">Duração</span>
-                </div>`;
-                // linhas: "São Paulo GRU - 2h10m" → split em " - "
-                t.paradas.forEach(p => {
-                  const parts = p.split(/\s*-\s*(?=\d)/); // split antes de número (duração)
-                  const local = parts[0] ? parts[0].trim() : p;
-                  const dur   = parts[1] ? parts[1].trim() : '';
-                  html += `<div class="tbot-parada-row">
-                    <span class="tbot-parada-local">${esc(local)}</span>
-                    <span class="tbot-parada-dur">${esc(dur)}</span>
-                  </div>`;
-                });
-              } else {
-                // voo direto ou sem duração por parada
-                html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`;
-              }
-            }
-
-            if (t.duracaoTotal) {
-              html += `<div class="tbot-total">
-                <span class="tbot-total-label">Duração Total da Viagem</span>
-                <span class="tbot-total-val">${esc(t.duracaoTotal)}</span>
-              </div>`;
-            }
-
-            if (t.bagEsp.length) {
-              html += `<div class="bag-esp" style="margin-top:8px;"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
-            }
-
-            html += `</div>`;
-          }
-
-          html += `</div>`; // fim trecho
-        });
-
-        // Bagagem Geral
-        if (D.bagGeral.length) {
-          html += `<div class="bloco bloco-bag"><div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
-        }
-
-        // Hospedagens (acima de informações)
-        D.hospedagens.forEach((h, i) => {
-          const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
-          html += `<div class="hospedagem">`;
-          html += `<div class="hosp-titulo">${titulo}</div>`;
-          if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
-          html += `<div class="hosp-grid">`;
-          if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
-          if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
-          html += `</div>`;
-          if (h.entrada || h.saida) {
-            html += `<div class="hosp-datas">`;
-            html += `<div class="hosp-item">`;
-            if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div>`;
-            if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaEntrada)}</div>`;
-            html += `</div>`;
-            html += `<div class="hosp-item">`;
-            if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div>`;
-            if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaSaida)}</div>`;
-            html += `</div>`;
-            html += `</div>`;
-          }
-          if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
-          html += `</div>`;
-        });
-
-        // Informações
-        if (D.informacoes) {
-          html += `<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
-        }
-
-        // Valor
-        if (D.valor) {
-          html += `<div class="bloco bloco-valor"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num">${esc(D.valor)}</div></div>`;
-        }
-
-        // Pagamento
-        if (D.pagamento.length) {
-          html += `<div class="bloco bloco-pag"><div class="bloco-titulo">💳 Pagamento</div><p>${D.pagamento.map(esc).join('\n')}</p></div>`;
-        }
-
-        document.getElementById('r-corpo').innerHTML = html;
-      }
-
-      // ═══ INIT ═══
-      window.addEventListener('load', () => {
-        // Carregar config salva
-        const cfg = loadConfig();
-        loadConfigToForm(cfg);
-        applyConfigFromObj(cfg);
-
-        // Dados via URL
-        const params = new URLSearchParams(window.location.search);
-        const dados = params.get('dados');
-        if (dados) {
-          try {
-            document.getElementById('paste-input').value = decodeURIComponent(dados);
-            parsear();
-          } catch(e) {}
-        } else {
-          update();
-        }
-      });
-      </script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-      <script>
-      function copiarLink() {
-        const texto = document.getElementById('paste-input').value.trim();
-        if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
-        const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
-        navigator.clipboard.writeText(url).then(() => {
-          showMsg('✓ Link copiado!', 'ok');
-        }).catch(() => {
-          // fallback para navegadores sem clipboard API
-          const el = document.createElement('textarea');
-          el.value = url;
-          document.body.appendChild(el);
-          el.select();
-          document.execCommand('copy');
-          document.body.removeChild(el);
-          showMsg('✓ Link copiado!', 'ok');
-        });
-      }
-
-      function limparTudo() {
-        if (!confirm('Limpar todos os dados do recibo?')) return;
-        D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-        document.getElementById('paste-input').value = '';
-        autoResize(document.getElementById('paste-input'));
-        document.getElementById('f-pass').value = '';
-        renderPassList();
-        update();
-        showMsg('↺ Dados limpos', 'ok');
-      }
-
-      async function exportarPDF() {
-        const btn = document.querySelector('.btn-export');
-        const original = btn.textContent;
-        btn.textContent = 'Gerando PDF...';
-        btn.disabled = true;
-
-        try {
-          const recibo = document.getElementById('recibo');
-          await document.fonts.ready;
-
-          const canvas = await html2canvas(recibo, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff',
-            logging: false,
+        if (temDurPorParada) {
+          // cabeçalho
+          html += `<div class="tbot-header">
+            <span class="tbot-header-label">Paradas</span>
+            <span class="tbot-header-label">Duração</span>
+          </div>`;
+          // linhas: "São Paulo GRU - 2h10m" → split em " - "
+          t.paradas.forEach(p => {
+            const parts = p.split(/\s*-\s*(?=\d)/); // split antes de número (duração)
+            const local = parts[0] ? parts[0].trim() : p;
+            const dur   = parts[1] ? parts[1].trim() : '';
+            html += `<div class="tbot-parada-row">
+              <span class="tbot-parada-local">${esc(local)}</span>
+              <span class="tbot-parada-dur">${esc(dur)}</span>
+            </div>`;
           });
-
-          const imgData = canvas.toDataURL('image/png');
-
-          const pxToMm = 0.264583;
-          const larguraMm = formato === 'celular' ? 103 : 210;
-          const alturaCanvas = canvas.height / 2;
-          const larguraCanvas = canvas.width / 2;
-          const ratio = larguraMm / (larguraCanvas * pxToMm);
-          const alturaMm = alturaCanvas * pxToMm * ratio;
-
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: [larguraMm, alturaMm]
-          });
-
-          doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
-
-          const partes = ['Recibo K&V'];
-          if (D.locGeral) partes.push(D.locGeral.trim());
-          D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
-          const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
-          doc.save(`${nomeArquivo}.pdf`);
-
-        } catch(e) {
-          alert('Erro ao gerar PDF: ' + e.message);
+        } else {
+          // voo direto ou sem duração por parada
+          html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`;
         }
-
-        btn.textContent = original;
-        btn.disabled = false;
       }
-    </script>
-  </body>
+
+      if (t.duracaoTotal) {
+        html += `<div class="tbot-total">
+          <span class="tbot-total-label">Duração Total da Viagem</span>
+          <span class="tbot-total-val">${esc(t.duracaoTotal)}</span>
+        </div>`;
+      }
+
+      if (t.bagEsp.length) {
+        html += `<div class="bag-esp" style="margin-top:8px;"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+      }
+
+      html += `</div>`;
+    }
+
+    html += `</div>`; // fim trecho
+  });
+
+  // Bagagem Geral
+  if (D.bagGeral.length) {
+    html += `<div class="bloco bloco-bag"><div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+  }
+
+  // Hospedagens (acima de informações)
+  D.hospedagens.forEach((h, i) => {
+    const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
+    html += `<div class="hospedagem">`;
+    html += `<div class="hosp-titulo">${titulo}</div>`;
+    if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
+    html += `<div class="hosp-grid">`;
+    if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
+    if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
+    html += `</div>`;
+    if (h.entrada || h.saida) {
+      html += `<div class="hosp-datas">`;
+      html += `<div class="hosp-item">`;
+      if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div>`;
+      if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaEntrada)}</div>`;
+      html += `</div>`;
+      html += `<div class="hosp-item">`;
+      if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div>`;
+      if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaSaida)}</div>`;
+      html += `</div>`;
+      html += `</div>`;
+    }
+    if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
+    html += `</div>`;
+  });
+
+  // Informações
+  if (D.informacoes) {
+    html += `<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
+  }
+
+  // Valor
+  if (D.valor) {
+    html += `<div class="bloco bloco-valor"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num">${esc(D.valor)}</div></div>`;
+  }
+
+  // Pagamento
+  if (D.pagamento.length) {
+    html += `<div class="bloco bloco-pag"><div class="bloco-titulo">💳 Pagamento</div><p>${D.pagamento.map(esc).join('\n')}</p></div>`;
+  }
+
+  document.getElementById('r-corpo').innerHTML = html;
+}
+
+// ═══ INIT ═══
+window.addEventListener('load', () => {
+  // Carregar config salva
+  const cfg = loadConfig();
+  loadConfigToForm(cfg);
+  applyConfigFromObj(cfg);
+
+  // Dados via URL
+  const params = new URLSearchParams(window.location.search);
+  const dados = params.get('dados');
+  if (dados) {
+    try {
+      document.getElementById('paste-input').value = decodeURIComponent(dados);
+      parsear();
+    } catch(e) {}
+  } else {
+    update();
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function copiarLink() {
+  const texto = document.getElementById('paste-input').value.trim();
+  if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
+  const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
+  navigator.clipboard.writeText(url).then(() => {
+    showMsg('✓ Link copiado!', 'ok');
+  }).catch(() => {
+    // fallback para navegadores sem clipboard API
+    const el = document.createElement('textarea');
+    el.value = url;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    showMsg('✓ Link copiado!', 'ok');
+  });
+}
+
+function limparTudo() {
+  if (!confirm('Limpar todos os dados do recibo?')) return;
+  D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+  document.getElementById('paste-input').value = '';
+  autoResize(document.getElementById('paste-input'));
+  document.getElementById('f-pass').value = '';
+  renderPassList();
+  update();
+  showMsg('↺ Dados limpos', 'ok');
+}
+
+async function exportarPDF() {
+  const btn = document.querySelector('.btn-export');
+  const original = btn.textContent;
+  btn.textContent = 'Gerando PDF...';
+  btn.disabled = true;
+
+  try {
+    const recibo = document.getElementById('recibo');
+    await document.fonts.ready;
+
+    const canvas = await html2canvas(recibo, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+
+    const pxToMm = 0.264583;
+    const larguraMm = formato === 'celular' ? 103 : 210;
+    const alturaCanvas = canvas.height / 2;
+    const larguraCanvas = canvas.width / 2;
+    const ratio = larguraMm / (larguraCanvas * pxToMm);
+    const alturaMm = alturaCanvas * pxToMm * ratio;
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: [larguraMm, alturaMm]
+    });
+
+    doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
+
+    const partes = ['Recibo K&V'];
+    if (D.locGeral) partes.push(D.locGeral.trim());
+    D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
+    const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
+    doc.save(`${nomeArquivo}.pdf`);
+
+  } catch(e) {
+    alert('Erro ao gerar PDF: ' + e.message);
+  }
+
+  btn.textContent = original;
+  btn.disabled = false;
+}
+</script>
+</body>
 </html>
