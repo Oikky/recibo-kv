@@ -18,49 +18,26 @@
   --text2: #6CA3A2;
   --text3: #4a7a80;
   --success: #1a7a3a;
-  --loc-bg: #307082;
-  --bag-bg: #2a1a00;
-  --bag-border: #EA9940;
-  --bag-text: #EA9940;
-  --info-bg: #0e1c27;
-  --info-border: #307082;
-  --valor-bg: #307082;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Sora', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* ─── LAYOUT ─── */
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 .app { display: flex; min-height: 100vh; }
 
 /* ─── SIDEBAR ─── */
 .sidebar {
-  width: 320px; min-width: 320px;
+  width: 340px; min-width: 340px;
   background: var(--bg2);
   border-right: 1px solid var(--border);
   padding: 1.25rem;
-  display: flex; flex-direction: column; gap: .85rem;
+  display: flex; flex-direction: column; gap: .75rem;
   overflow-y: auto; height: 100vh; position: sticky; top: 0;
 }
-
-.sidebar-logo {
-  display: flex; align-items: center; gap: 10px;
-  padding-bottom: 12px; border-bottom: 1px solid var(--border);
-}
-.sidebar-logo span { font-size: 13px; font-weight: 600; color: var(--text); }
+.sidebar-logo { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.sidebar-logo span { font-size: 13px; font-weight: 600; }
 .sidebar-logo small { display: block; font-size: 10px; color: var(--text2); font-weight: 300; }
 
-.sb-section {
-  font-size: 10px; font-weight: 600; color: var(--text3);
-  text-transform: uppercase; letter-spacing: .1em;
-  padding-bottom: 5px; border-bottom: 1px solid var(--border);
-}
+.sb-section { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
 
 .fl { display: flex; flex-direction: column; gap: 4px; }
 .fl label { font-size: 11px; color: var(--text2); }
@@ -69,113 +46,98 @@ body {
   border: 1px solid var(--border); border-radius: 6px;
   background: var(--bg3); color: var(--text);
   width: 100%; font-family: 'Sora', sans-serif;
-  transition: border-color .15s;
 }
 .fl input:focus, .fl textarea:focus { outline: none; border-color: var(--primary-light); }
 .fl textarea { resize: vertical; min-height: 50px; }
 
-.paste-box {
-  border: 1.5px dashed #1a4a70;
-  border-radius: 8px; padding: 10px;
-  background: var(--bg3);
-}
+.paste-box { border: 1.5px dashed #1a4a70; border-radius: 8px; padding: 10px; background: var(--bg3); }
 .paste-box label { font-size: 11px; color: #5a9fd4; display: block; margin-bottom: 5px; font-weight: 500; }
 .paste-box textarea {
-  font-size: 11px;
-  min-height: calc(100vh / 3);
-  max-height: none;
-  overflow: hidden;
+  font-size: 11px; min-height: calc(100vh / 3); overflow: hidden;
   border: 1px solid var(--border); border-radius: 5px;
   background: var(--bg); color: #c8d8e8;
   width: 100%; padding: 7px 8px;
   font-family: 'JetBrains Mono', monospace; resize: none;
 }
 
-.btn-primary {
-  width: 100%; padding: 9px; font-size: 12px;
-  border: none; border-radius: 6px;
-  background: var(--primary-light); color: #fff;
-  cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif;
-  transition: background .15s;
-}
+.btn-primary { width: 100%; padding: 9px; font-size: 12px; border: none; border-radius: 6px; background: var(--primary-light); color: #fff; cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif; }
 .btn-primary:hover { background: #1a5ca8; }
-
-.btn-secondary {
-  width: 100%; padding: 8px; font-size: 11px;
-  border: 1px solid var(--border); border-radius: 6px;
-  background: transparent; color: var(--text2);
-  cursor: pointer; font-family: 'Sora', sans-serif;
-  transition: all .15s;
-}
+.btn-secondary { width: 100%; padding: 8px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; font-family: 'Sora', sans-serif; }
 .btn-secondary:hover { border-color: var(--primary-light); color: var(--text); }
-
-.btn-export {
-  width: 100%; padding: 12px; font-size: 13px;
-  border: none; border-radius: 8px;
-  background: linear-gradient(135deg, var(--primary) 0%, #1a5ca8 100%);
-  color: #fff; cursor: pointer; font-weight: 700;
-  font-family: 'Sora', sans-serif;
-  margin-top: auto; letter-spacing: .03em;
-  box-shadow: 0 4px 16px rgba(26,60,92,.5);
-  transition: opacity .15s;
-}
+.btn-export { width: 100%; padding: 12px; font-size: 13px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--primary) 0%, #1a5ca8 100%); color: #fff; cursor: pointer; font-weight: 700; font-family: 'Sora', sans-serif; margin-top: auto; box-shadow: 0 4px 16px rgba(26,60,92,.5); }
 .btn-export:hover { opacity: .9; }
 
-.msg {
-  font-size: 11px; padding: 6px 9px; border-radius: 5px; display: none;
-  font-family: 'JetBrains Mono', monospace;
-}
+.msg { font-size: 11px; padding: 6px 9px; border-radius: 5px; display: none; font-family: 'JetBrains Mono', monospace; }
 .msg.ok { background: #0a2a0a; color: #6fcf6f; border: 1px solid #1a5a1a; }
 .msg.err { background: #2a0a0a; color: #cf6f6f; border: 1px solid #5a1a1a; }
 
-/* Config tabs */
 .tabs { display: flex; gap: 4px; }
-.tab {
-  flex: 1; padding: 6px; font-size: 11px; border-radius: 5px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--text2); cursor: pointer; font-family: 'Sora', sans-serif;
-  transition: all .15s;
-}
+.tab { flex: 1; padding: 6px; font-size: 11px; border-radius: 5px; border: 1px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-family: 'Sora', sans-serif; }
 .tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
 .tab-panel { display: none; }
 .tab-panel.active { display: flex; flex-direction: column; gap: .7rem; }
 
-/* Color picker row */
-.color-row { display: flex; align-items: center; gap: 8px; }
-.color-row label { flex: 1; font-size: 11px; color: var(--text2); }
-.color-row input[type=color] {
-  width: 36px; height: 28px; padding: 2px; border-radius: 4px;
-  border: 1px solid var(--border); background: var(--bg3); cursor: pointer;
-}
-
-.logo-upload {
-  border: 1px dashed var(--border); border-radius: 6px; padding: 8px;
-  text-align: center; cursor: pointer; font-size: 11px; color: var(--text2);
-  background: var(--bg3); transition: border-color .15s;
-}
-.logo-upload:hover { border-color: var(--primary-light); }
-
 /* pass list */
 .pass-list { display: flex; flex-direction: column; gap: 4px; }
-.pass-item {
-  display: flex; gap: 5px; align-items: center;
-}
+.pass-item { display: flex; gap: 5px; align-items: center; }
 .pass-item input { flex: 1; }
-.pass-item button {
-  padding: 6px 8px; border: 1px solid var(--border);
-  border-radius: 5px; background: transparent; color: var(--text3);
-  cursor: pointer; font-size: 12px;
-}
+.pass-item button { padding: 6px 8px; border: 1px solid var(--border); border-radius: 5px; background: transparent; color: var(--text3); cursor: pointer; font-size: 12px; }
 .pass-item button:hover { color: #cf6f6f; border-color: #5a1a1a; }
 
-/* ─── PREVIEW ─── */
-.preview-area {
-  flex: 1; padding: 2rem;
-  background: #080f18;
-  display: flex; flex-direction: column; align-items: center;
-  overflow-y: auto;
+/* ─── ELEMENT CARD (Config) ─── */
+.el-card {
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg3); overflow: hidden;
 }
+.el-card-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; cursor: pointer;
+  background: rgba(255,255,255,.03);
+  border-bottom: 1px solid transparent;
+  transition: background .15s;
+}
+.el-card-head:hover { background: rgba(255,255,255,.06); }
+.el-card.open .el-card-head { border-bottom-color: var(--border); }
+.el-card-icon { font-size: 13px; }
+.el-card-title { flex: 1; font-size: 11px; font-weight: 600; color: var(--text); }
+.el-card-arrow { font-size: 10px; color: var(--text3); transition: transform .2s; }
+.el-card.open .el-card-arrow { transform: rotate(90deg); }
+.el-card-body { display: none; flex-direction: column; gap: 8px; padding: 10px; }
+.el-card.open .el-card-body { display: flex; }
+
+/* vis toggle pill */
+.vis-toggle { display: flex; align-items: center; gap: 6px; }
+.vis-toggle label { font-size: 11px; color: var(--text2); cursor: pointer; user-select: none; }
+.toggle-switch { position: relative; width: 30px; height: 16px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; background: #1e3040; border-radius: 8px; cursor: pointer; transition: background .2s;
+}
+.toggle-track::after { content: ''; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #fff; top: 2px; left: 2px; transition: transform .2s; }
+.toggle-switch input:checked + .toggle-track { background: var(--primary-light); }
+.toggle-switch input:checked + .toggle-track::after { transform: translateX(14px); }
+
+/* slider row */
+.sl-row { display: flex; flex-direction: column; gap: 3px; }
+.sl-row label { font-size: 10px; color: var(--text2); display: flex; justify-content: space-between; }
+.sl-row input[type=range] { width: 100%; accent-color: var(--primary-light); }
+
+/* color row inline */
+.cr-row { display: flex; align-items: center; gap: 6px; }
+.cr-row label { flex: 1; font-size: 11px; color: var(--text2); }
+.cr-row input[type=color] { width: 34px; height: 26px; padding: 2px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg3); cursor: pointer; }
+
+/* order badge */
+.order-row { display: flex; align-items: center; gap: 6px; }
+.order-row label { font-size: 11px; color: var(--text2); flex: 1; }
+.order-row select { font-size: 11px; padding: 5px 8px; border-radius: 5px; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+
+/* logo upload */
+.logo-upload { border: 1px dashed var(--border); border-radius: 6px; padding: 8px; text-align: center; cursor: pointer; font-size: 11px; color: var(--text2); background: var(--bg3); }
+.logo-upload:hover { border-color: var(--primary-light); }
+
+/* ─── PREVIEW ─── */
+.preview-area { flex: 1; padding: 2rem; background: #080f18; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
 
 /* ─── RECIBO ─── */
 #recibo {
@@ -183,9 +145,7 @@ body {
   font-family: 'Sora', sans-serif; font-size: 13px;
   padding: 32px 36px; border-radius: 10px;
   box-shadow: 0 8px 40px rgba(0,0,0,.5);
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-  color-adjust: exact;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact;
 }
 
 .rec-header {
@@ -203,276 +163,99 @@ body {
   color: #fff; font-size: 10px; font-weight: 700; text-align: center; line-height: 1.4;
 }
 .rec-company h1 { font-size: 20px; font-weight: 700; color: var(--r-primary, #307082); }
-.rec-slogan {
-  font-size: 10px; color: #4a5a50; margin-top: 3px;
-  border: .5px solid #b0a898; border-radius: 4px; padding: 3px 8px; display: inline-block;
-}
-.rec-tel { font-size: 10px; color: #5a6a60; margin-top: 4px; }
-.rec-contacts { display: flex; flex-direction: row; gap: 14px; margin-top: 5px; }
-.rec-contact-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #4a5a50; }
-.rec-contact-item svg { flex-shrink: 0; }
+.rec-slogan { font-size: 10px; color: #4a5a50; margin-top: 3px; border: .5px solid #b0a898; border-radius: 4px; padding: 3px 8px; display: inline-block; }
 .rec-cnpj { text-align: right; font-size: 11px; color: #4a5a50; align-self: flex-end; }
 .rec-cnpj strong { color: var(--r-primary, #307082); font-size: 12px; display: block; }
 
-/* blocos genéricos */
-.bloco {
-  border: 1px solid #b8b0a0; border-radius: 8px;
-  padding: 11px 15px; margin-bottom: 12px;
-  background: #f5f0e8;
-  break-inside: avoid; page-break-inside: avoid;
-}
-.bloco-titulo {
-  font-weight: 700; font-size: 13px; color: var(--r-primary, #307082);
-  margin-bottom: 5px; display: flex; align-items: center; gap: 6px;
-}
+.bloco { border: 1px solid #b8b0a0; border-radius: 8px; padding: 11px 15px; margin-bottom: 12px; background: #f5f0e8; break-inside: avoid; page-break-inside: avoid; }
+.bloco-titulo { font-weight: 700; font-size: 13px; color: var(--r-primary, #307082); margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
 .bloco p { color: #2a3a35; font-size: 12px; line-height: 1.8; }
-
-/* passageiro */
 .bloco-pass p { font-size: 13px; font-weight: 500; }
 
-/* localizador geral */
-.bloco-loc {
-  background: var(--r-loc-bg, #307082) !important;
-  border-color: var(--r-loc-bg, #307082) !important;
-}
+.bloco-loc { background: var(--r-loc-bg, #307082) !important; border-color: var(--r-loc-bg, #307082) !important; }
 .bloco-loc .bloco-titulo { color: rgba(255,255,255,.7) !important; font-size: 11px !important; font-weight: 500 !important; }
 .bloco-loc p { color: #fff !important; font-size: 14px !important; font-weight: 700 !important; }
 
-/* trecho */
-.trecho {
-  background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px;
-  padding: 12px 15px; margin-bottom: 12px;
-  break-inside: avoid; page-break-inside: avoid;
-}
-.trecho-titulo {
-  font-weight: 700; font-size: 14px; color: var(--r-primary, #307082);
-  display: flex; align-items: center; gap: 6px;
-  margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 1px solid #c8c0b0;
-}
+.trecho { background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px; padding: 12px 15px; margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
+.trecho-titulo { font-weight: 700; font-size: 14px; color: var(--r-primary, #307082); display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #c8c0b0; }
 
-/* localizador específico + cia aérea na mesma linha */
-.loc-cia-row {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
-}
-.loc-esp-bloco {
-  background: var(--r-loc-bg, #307082);
-  border-radius: 6px; padding: 7px 12px;
-  display: inline-flex; align-items: center; gap: 8px;
-}
+.loc-cia-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.loc-esp-bloco { background: var(--r-loc-bg, #307082); border-radius: 6px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; }
 .loc-esp-label { font-size: 10px; color: rgba(255,255,255,.6); font-weight: 500; }
 .loc-esp-val { font-size: 13px; color: #fff; font-weight: 700; }
-
-.cia-bloco {
-  border: 1px solid var(--r-loc-bg, #307082);
-  border-radius: 6px; padding: 7px 12px;
-  display: inline-flex; align-items: center; gap: 8px;
-}
+.cia-bloco { border: 1px solid var(--r-loc-bg, #307082); border-radius: 6px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; }
 .cia-label { font-size: 10px; color: var(--r-loc-bg, #307082); font-weight: 500; }
 .cia-val { font-size: 13px; color: var(--r-loc-bg, #307082); font-weight: 700; }
 
-/* grid partida/destino */
-.trecho-cols {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px 20px; margin-bottom: 10px;
-}
+.trecho-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 10px; }
 .tcol { display: flex; flex-direction: column; gap: 5px; }
-.tcol-header {
-  font-size: 10px; font-weight: 700; color: var(--r-primary, #307082);
-  text-transform: uppercase; letter-spacing: .06em;
-  padding-bottom: 4px; border-bottom: 2px solid var(--r-primary, #307082);
-  margin-bottom: 3px;
-}
+.tcol-header { font-size: 10px; font-weight: 700; color: var(--r-primary, #307082); text-transform: uppercase; letter-spacing: .06em; padding-bottom: 4px; border-bottom: 2px solid var(--r-primary, #307082); margin-bottom: 3px; }
 .trow { display: flex; flex-direction: column; }
 .trow-label { font-size: 10px; color: #6a7a70; }
 .trow-val { font-size: 12px; color: #12212E; font-weight: 600; }
 
-/* linha inferior do trecho — coluna vertical */
-.trecho-bottom {
-  display: flex; flex-direction: column; gap: 0;
-  margin-top: 10px; padding-top: 10px;
-  border-top: 1px solid #e8eef5;
-}
-/* cabeçalho Paradas | Duração — mesmo grid que trecho-cols */
-.tbot-header {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px 20px;
-  padding: 4px 0 6px;
-  border-bottom: 1px solid #b8b0a0;
-  margin-bottom: 4px;
-}
-.tbot-header-label {
-  font-size: 10px; font-weight: 700; color: #307082;
-  text-transform: uppercase; letter-spacing: .06em;
-}
-/* linhas de parada — mesmo grid */
-.tbot-parada-row {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px 20px;
-  padding: 3px 0;
-}
+.trecho-bottom { display: flex; flex-direction: column; gap: 0; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e8eef5; }
+.tbot-header { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; padding: 4px 0 6px; border-bottom: 1px solid #b8b0a0; margin-bottom: 4px; }
+.tbot-header-label { font-size: 10px; font-weight: 700; color: #307082; text-transform: uppercase; letter-spacing: .06em; }
+.tbot-parada-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; padding: 3px 0; }
 .tbot-parada-row + .tbot-parada-row { border-top: .5px solid #c8c0b0; }
 .tbot-parada-local { font-size: 12px; color: #12212E; font-weight: 500; }
 .tbot-parada-dur { font-size: 12px; color: #4a5a50; }
-/* duração total da viagem — mesmo grid que paradas */
-.tbot-total {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px 20px;
-  margin-top: 8px; padding-top: 8px;
-  border-top: 1px solid #b8b0a0;
-}
+.tbot-total { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #b8b0a0; }
 .tbot-total-label { font-size: 10px; color: #6a7a70; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
 .tbot-total-val { font-size: 13px; color: #307082; font-weight: 700; }
-.tbot-direto { font-size: 12px; color: #4a5a50; padding: 4px 0; }
 .tbot-item { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
 .tbot-label { font-size: 10px; color: #6a7a70; }
 .tbot-val { font-size: 12px; color: #12212E; font-weight: 600; }
 
-/* bagagem específica dentro do trecho */
-.bag-esp {
-  padding: 8px 11px;
-  background: var(--r-bag-esp-bg, #e0dbd0);
-  border-radius: 6px;
-  border-left: 3px solid var(--r-bag-esp-border, #307082);
-}
+.bag-esp { padding: 8px 11px; background: var(--r-bag-esp-bg, #e0dbd0); border-radius: 6px; border-left: 3px solid var(--r-bag-esp-border, #307082); }
 .bag-esp-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-esp-border, #307082); margin-bottom: 4px; }
 .bag-esp ul { list-style: none; }
 .bag-esp li { font-size: 11px; color: #2a3a35; line-height: 1.75; }
 .bag-esp li::before { content: "✓ "; color: var(--r-bag-esp-border, #307082); font-weight: 700; }
 
-/* bagagem geral */
-.bloco-bag {
-  background: var(--r-bag-bg, #fdf0e0) !important;
-  border-color: var(--r-bag-border, #EA9940) !important;
-}
+.bloco-bag { background: var(--r-bag-bg, #fdf0e0) !important; border-color: var(--r-bag-border, #EA9940) !important; }
 .bloco-bag .bloco-titulo { color: var(--r-bag-text, #b06010) !important; }
 .bloco-bag ul { list-style: none; }
 .bloco-bag li { font-size: 12px; color: #2a3a35; line-height: 1.85; }
 .bloco-bag li::before { content: "✓ "; color: var(--r-bag-text, #b06010); font-weight: 700; }
 
-/* informações */
-.bloco-info {
-  background: var(--r-info-bg, #e5eeec) !important;
-  border-color: var(--r-info-border, #6CA3A2) !important;
-}
+.bloco-info { background: var(--r-info-bg, #e5eeec) !important; border-color: var(--r-info-border, #6CA3A2) !important; }
 .bloco-info .bloco-titulo { color: var(--r-primary, #307082) !important; }
 .bloco-info p { white-space: pre-wrap; font-size: 12px; color: #2a3a35; line-height: 1.75; }
 
-/* valor */
-.bloco-valor {
-  background: var(--r-primary, #307082) !important;
-  border-color: var(--r-primary, #307082) !important;
-  display: flex; justify-content: space-between; align-items: center;
-}
+.bloco-valor { background: var(--r-primary, #307082) !important; border-color: var(--r-primary, #307082) !important; display: flex; justify-content: space-between; align-items: center; }
 .bloco-valor .bloco-titulo { color: rgba(255,255,255,.7) !important; margin-bottom: 0; font-size: 11px !important; font-weight: 500 !important; }
 .valor-num { font-size: 24px; font-weight: 700; color: #fff; }
 
-/* hospedagem — Modelo A */
-.hospedagem {
-  background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px;
-  padding: 12px 15px; margin-bottom: 12px;
-  break-inside: avoid; page-break-inside: avoid;
-}
-.hosp-titulo {
-  font-weight: 700; font-size: 13px; color: #307082;
-  display: flex; align-items: center; gap: 6px;
-  margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 1px solid #c8c0b0;
-}
-.hosp-conf {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: #e8e0d0; border-radius: 6px;
-  padding: 5px 12px; margin-bottom: 10px;
-}
+.hospedagem { background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px; padding: 12px 15px; margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
+.hosp-titulo { font-weight: 700; font-size: 13px; color: #307082; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #c8c0b0; }
+.hosp-conf { display: inline-flex; align-items: center; gap: 8px; background: #e8e0d0; border-radius: 6px; padding: 5px 12px; margin-bottom: 10px; }
 .hosp-conf-label { font-size: 10px; color: #307082; font-weight: 600; letter-spacing: .06em; opacity: .7; }
 .hosp-conf-val { font-size: 13px; color: #307082; font-weight: 700; letter-spacing: .05em; }
 .hosp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
 .hosp-item { display: flex; flex-direction: column; }
 .hosp-full { grid-column: 1/-1; }
-/* entrada | saída | vazia — 3 colunas iguais */
 .hosp-datas { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
 .hosp-label { font-size: 10px; color: #6a7a70; margin-bottom: 1px; }
 .hosp-val { font-size: 12px; color: #12212E; font-weight: 600; }
-.hosp-incluso {
-  margin-top: 8px; padding: 7px 10px;
-  background: #fdf0e0; border-radius: 5px;
-  border-left: 3px solid #EA9940;
-}
-.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: #b06010; margin-bottom: 3px; }
+.hosp-incluso { margin-top: 8px; padding: 7px 10px; background: var(--r-bag-bg, #fdf0e0); border-radius: 5px; border-left: 3px solid var(--r-bag-border, #EA9940); }
+.hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-text, #b06010); margin-bottom: 3px; }
 .hosp-incluso p { font-size: 11px; color: #2a3a35; line-height: 1.7; white-space: pre-wrap; }
 
-/* pagamento */
 .bloco-pag .bloco-titulo { color: var(--r-primary, #307082); }
 .bloco-pag p { font-size: 12px; color: #2a3a35; white-space: pre-wrap; }
 
-.rec-footer {
-  margin-top: 20px; padding-top: 12px;
-  border-top: 1px solid #b8b0a0;
-  font-size: 10px; color: #7a8a80; text-align: center;
-}
+.rec-footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid #b8b0a0; font-size: 10px; color: #7a8a80; display: flex; justify-content: space-between; align-items: center; }
 
-/* ─── MODO CELULAR ─── */
-#recibo.modo-celular {
-  width: 390px !important;
-  padding: 20px 16px !important;
-  font-size: 14px !important;
-}
-
-#recibo.modo-celular .rec-header {
-  flex-direction: column; align-items: flex-start; gap: 12px;
-}
-#recibo.modo-celular #logo-img-wrap img,
-#recibo.modo-celular #logo-img-wrap .logo-ph {
-  width: 52px; height: 52px;
-}
+#recibo.modo-celular { width: 390px !important; padding: 20px 16px !important; font-size: 14px !important; }
+#recibo.modo-celular .rec-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+#recibo.modo-celular #logo-img-wrap img, #recibo.modo-celular #logo-img-wrap .logo-ph { width: 52px; height: 52px; }
 #recibo.modo-celular .rec-company h1 { font-size: 16px; }
-#recibo.modo-celular .rec-slogan { font-size: 10px; }
 #recibo.modo-celular .rec-cnpj { text-align: left; margin-top: 4px; }
-
-#recibo.modo-celular .bloco {
-  padding: 12px 14px; margin-bottom: 10px; border-radius: 10px;
-}
-#recibo.modo-celular .bloco-titulo { font-size: 13px; }
-#recibo.modo-celular .bloco p { font-size: 14px; line-height: 1.7; }
-#recibo.modo-celular .bloco-pass p { font-size: 15px; font-weight: 600; }
-
-#recibo.modo-celular .bloco-loc { padding: 14px 16px !important; }
-#recibo.modo-celular .bloco-loc .loc-esp-val { font-size: 18px !important; }
-#recibo.modo-celular .bloco-loc .cia-val { font-size: 14px !important; }
-
-#recibo.modo-celular .trecho {
-  padding: 14px 14px; border-radius: 10px; margin-bottom: 10px;
-}
-#recibo.modo-celular .trecho-titulo { font-size: 15px; }
-#recibo.modo-celular .loc-esp-bloco { padding: 8px 14px; }
-#recibo.modo-celular .loc-esp-val { font-size: 15px !important; }
-#recibo.modo-celular .cia-bloco { padding: 8px 14px; }
-#recibo.modo-celular .cia-val { font-size: 14px !important; }
-
-#recibo.modo-celular .trecho-cols {
-  grid-template-columns: 1fr; gap: 12px;
-}
-#recibo.modo-celular .tcol-header { font-size: 11px; }
-#recibo.modo-celular .trow-label { font-size: 11px; }
-#recibo.modo-celular .trow-val { font-size: 15px; }
-
-#recibo.modo-celular .tbot-label { font-size: 11px; }
-#recibo.modo-celular .tbot-val { font-size: 14px; }
-
-#recibo.modo-celular .bag-esp { padding: 10px 13px; }
-#recibo.modo-celular .bag-esp-titulo { font-size: 11px; }
-#recibo.modo-celular .bag-esp li { font-size: 13px; line-height: 1.9; }
-
-#recibo.modo-celular .bloco-bag li { font-size: 14px; line-height: 2; }
-#recibo.modo-celular .bloco-info p { font-size: 13px; line-height: 1.8; }
-
+#recibo.modo-celular .trecho-cols { grid-template-columns: 1fr; gap: 12px; }
 #recibo.modo-celular .valor-num { font-size: 22px; }
-#recibo.modo-celular .bloco-pag p { font-size: 14px; line-height: 1.8; }
 
-#recibo.modo-celular .rec-footer { font-size: 11px; }
-
-/* ─── PRINT ─── */
 @media print {
   html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
   .sidebar { display: none !important; }
@@ -480,26 +263,7 @@ body {
   .preview-area { background: #fff !important; padding: 0 !important; overflow: visible !important; }
   #recibo { width: 100% !important; padding: 16px 20px !important; border-radius: 0 !important; box-shadow: none !important; }
   .bloco, .trecho, .hospedagem { break-inside: avoid !important; page-break-inside: avoid !important; }
-
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
-
-  /* Forçar cores dos elementos escuros explicitamente */
-  .bloco-loc,
-  .loc-esp-bloco,
-  .hosp-conf { background-color: #1e3f6e !important; }
-
-  .loc-esp-val,
-  .hosp-conf-val,
-  .cia-val { color: #ffffff !important; }
-
-  .loc-esp-label,
-  .hosp-conf-label,
-  .cia-label { color: rgba(255,255,255,0.6) !important; }
-
-  .bloco-valor { background-color: #1a3a5c !important; }
-  .valor-num { color: #ffffff !important; }
-  .bloco-valor .bloco-titulo { color: rgba(255,255,255,0.7) !important; }
-
   @page { margin: 1cm; size: 21cm auto; }
 }
 </style>
@@ -514,28 +278,24 @@ body {
     <div><span>K&V Easy Traveling</span><small>Gerador de Recibo</small></div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
-    <button class="tab active" onclick="showTab('dados')">Dados</button>
-    <button class="tab" onclick="showTab('config')">Config</button>
+    <button class="tab active" onclick="showTab('dados',this)">Dados</button>
+    <button class="tab" onclick="showTab('config',this)">Configuração</button>
   </div>
 
-  <!-- FORMAT TOGGLE -->
   <div style="display:flex;gap:4px;">
-    <button id="fmt-pdf" class="tab active" style="flex:1;font-size:11px;" onclick="setFormato('pdf')">📄 PDF</button>
-    <button id="fmt-cel" class="tab" style="flex:1;font-size:11px;" onclick="setFormato('celular')">📱 Celular</button>
+    <button id="fmt-pdf" class="tab active" onclick="setFormato('pdf')">📄 PDF</button>
+    <button id="fmt-cel" class="tab" onclick="setFormato('celular')">📱 Celular</button>
   </div>
 
   <!-- TAB DADOS -->
   <div id="tab-dados" class="tab-panel active">
     <div class="paste-box">
       <label>📋 Cole os dados do Coda aqui</label>
-      <!-- textarea que cresce com o conteúdo: oninput chama autoResize -->
       <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." oninput="autoResize(this)"></textarea>
       <button class="btn-primary" style="margin-top:6px" onclick="parsear()">Gerar recibo ↗</button>
       <div class="msg" id="msg"></div>
     </div>
-
     <div class="sb-section">Passageiros</div>
     <div class="pass-list" id="pass-list"></div>
     <button class="btn-secondary" onclick="addPassageiro()">+ Adicionar passageiro</button>
@@ -543,61 +303,345 @@ body {
 
   <!-- TAB CONFIG -->
   <div id="tab-config" class="tab-panel">
-    <div class="sb-section">Logo</div>
-    <div class="logo-upload" onclick="document.getElementById('logo-file').click()">
-      📷 Clique para trocar a logo
-      <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="loadLogo(event)">
-    </div>
-    <div class="fl">
-      <label>Tamanho da logo (px): <span id="logo-size-val">88</span></label>
-      <input type="range" id="logo-size" min="40" max="160" value="88" oninput="updateLogoSize(this.value)" style="width:100%;accent-color:#307082;">
-    </div>
 
-    <div class="sb-section">Ícones personalizados</div>
-    <div class="fl">
-      <label>Ícone WhatsApp</label>
-      <div class="logo-upload" onclick="document.getElementById('icon-wa').click()" id="icon-wa-preview">📤 Subir ícone WhatsApp
-        <input type="file" id="icon-wa" accept="image/*" style="display:none" onchange="loadIcon(event,'wa')">
+    <!-- ── LOGO ── -->
+    <div class="el-card open" id="card-logo">
+      <div class="el-card-head" onclick="toggleCard('card-logo')">
+        <span class="el-card-icon">🖼️</span>
+        <span class="el-card-title">Logo da empresa</span>
+        <span class="el-card-arrow">▶</span>
       </div>
-    </div>
-    <div class="fl">
-      <label>Ícone Instagram</label>
-      <div class="logo-upload" onclick="document.getElementById('icon-ig').click()" id="icon-ig-preview">📤 Subir ícone Instagram
-        <input type="file" id="icon-ig" accept="image/*" style="display:none" onchange="loadIcon(event,'ig')">
-      </div>
-    </div>
-    <div class="fl">
-      <label>Ícone Gmail (rodapé)</label>
-      <div class="logo-upload" onclick="document.getElementById('icon-gm').click()" id="icon-gm-preview">📤 Subir ícone Gmail
-        <input type="file" id="icon-gm" accept="image/*" style="display:none" onchange="loadIcon(event,'gm')">
+      <div class="el-card-body">
+        <div class="logo-upload" onclick="document.getElementById('logo-file').click()">
+          📷 Clique para trocar a logo
+          <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="loadLogo(event)">
+        </div>
+        <div id="logo-preview-wrap" style="display:none;text-align:center;">
+          <img id="logo-preview-thumb" style="width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid var(--border);">
+          <button class="btn-secondary" style="margin-top:4px;font-size:10px;" onclick="removeLogo()">✕ Remover logo</button>
+        </div>
+        <div class="sl-row">
+          <label>Tamanho <span id="logo-size-val">88</span>px</label>
+          <input type="range" id="logo-size" min="40" max="160" value="88" oninput="updateLogoSize(this.value)">
+        </div>
       </div>
     </div>
 
-    <div class="sb-section">Cabeçalho</div>
-    <div class="fl"><label>Nome da empresa</label><input id="cfg-nome" value="K&V  Easy Traveling" oninput="applyConfig()"></div>
-    <div class="fl"><label>Slogan</label><input id="cfg-slogan" value='✨ "Viaje hoje, viaje barato, viaje sempre" ✨' oninput="applyConfig()"></div>
-    <div class="fl"><label>Telefone (número)</label><input id="cfg-tel" value="(38) 9 8815-5417" oninput="applyConfig()"></div>
-    <div class="fl"><label>CNPJ</label><input id="cfg-cnpj" value="65.597.589/0001-00" oninput="applyConfig()"></div>
-    <div class="fl"><label>Rodapé (texto esquerdo)</label><input id="cfg-rodape" value="Recibo gerado pela K&V Easy Traveling" oninput="applyConfig()"></div>
-    <div class="fl"><label>Gmail (rodapé direito)</label><input id="cfg-gmail" value="keveasytraveling@gmail.com" oninput="applyConfig()"></div>
+    <!-- ── NOME ── -->
+    <div class="el-card open" id="card-nome">
+      <div class="el-card-head" onclick="toggleCard('card-nome')">
+        <span class="el-card-icon">🏢</span>
+        <span class="el-card-title">Nome da empresa</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-nome" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="fl"><label>Texto</label><input id="cfg-nome" value="K&V  Easy Traveling" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho <span id="nome-size-val">20</span>px</label>
+          <input type="range" id="nome-size" min="10" max="36" value="20" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="cr-row"><label>Cor</label><input type="color" id="c-primary" value="#307082" oninput="applyAll()"></div>
+        <div class="order-row">
+          <label>Posição no cabeçalho</label>
+          <select id="ord-nome" onchange="applyAll()"><option value="0">1º</option><option value="1">2º</option><option value="2">3º</option><option value="3">4º</option></select>
+        </div>
+      </div>
+    </div>
 
-    <div class="sb-section">Cores</div>
-    <div class="color-row"><label>Cor principal</label><input type="color" id="c-primary" value="#307082" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Localizador (fundo)</label><input type="color" id="c-loc" value="#307082" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bagagem (fundo)</label><input type="color" id="c-bag-bg" value="#fdf0e0" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bagagem (borda/texto)</label><input type="color" id="c-bag-accent" value="#EA9940" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Informações (fundo)</label><input type="color" id="c-info-bg" value="#e5eeec" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Informações (borda)</label><input type="color" id="c-info-border" value="#6CA3A2" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bag. específica (fundo)</label><input type="color" id="c-bagesp-bg" value="#e0dbd0" oninput="applyConfig()"></div>
-    <div class="color-row"><label>Bag. específica (borda)</label><input type="color" id="c-bagesp-border" value="#307082" oninput="applyConfig()"></div>
+    <!-- ── SLOGAN ── -->
+    <div class="el-card" id="card-slogan">
+      <div class="el-card-head" onclick="toggleCard('card-slogan')">
+        <span class="el-card-icon">✨</span>
+        <span class="el-card-title">Slogan</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-slogan" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="fl"><label>Texto</label><input id="cfg-slogan" value='✨ "Viaje hoje, viaje barato, viaje sempre" ✨' oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho <span id="slogan-size-val">10</span>px</label>
+          <input type="range" id="slogan-size" min="7" max="20" value="10" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="cr-row"><label>Cor</label><input type="color" id="c-slogan" value="#4a5a50" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor da borda</label><input type="color" id="c-slogan-border" value="#b0a898" oninput="applyAll()"></div>
+        <div class="order-row">
+          <label>Posição</label>
+          <select id="ord-slogan" onchange="applyAll()"><option value="0">1º</option><option value="1" selected>2º</option><option value="2">3º</option><option value="3">4º</option></select>
+        </div>
+      </div>
+    </div>
 
-    <button class="btn-primary" onclick="saveConfig()">💾 Salvar configuração</button>
-    <button class="btn-secondary" onclick="resetConfig()">↺ Restaurar padrão</button>
+    <!-- ── WHATSAPP + INSTAGRAM ── -->
+    <div class="el-card" id="card-tel">
+      <div class="el-card-head" onclick="toggleCard('card-tel')">
+        <span class="el-card-icon">📱</span>
+        <span class="el-card-title">WhatsApp + Instagram</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-tel" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="fl"><label>WhatsApp</label><input id="cfg-tel" value="(38) 9 8815-5417" oninput="applyAll()"></div>
+        <div class="fl"><label>Instagram</label><input id="cfg-ig" value="@kevviagens" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho <span id="tel-size-val">10</span>px</label>
+          <input type="range" id="tel-size" min="7" max="18" value="10" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <!-- ícone WA -->
+        <div class="fl"><label>Ícone WhatsApp</label>
+          <div class="logo-upload" onclick="document.getElementById('icon-wa').click()" id="icon-wa-preview">📤 Subir ícone WA
+            <input type="file" id="icon-wa" accept="image/*" style="display:none" onchange="loadIcon(event,'wa')">
+          </div>
+        </div>
+        <!-- ícone IG -->
+        <div class="fl"><label>Ícone Instagram</label>
+          <div class="logo-upload" onclick="document.getElementById('icon-ig').click()" id="icon-ig-preview">📤 Subir ícone IG
+            <input type="file" id="icon-ig" accept="image/*" style="display:none" onchange="loadIcon(event,'ig')">
+          </div>
+        </div>
+        <div class="order-row">
+          <label>Posição</label>
+          <select id="ord-tel" onchange="applyAll()"><option value="0">1º</option><option value="1">2º</option><option value="2" selected>3º</option><option value="3">4º</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CNPJ ── -->
+    <div class="el-card" id="card-cnpj">
+      <div class="el-card-head" onclick="toggleCard('card-cnpj')">
+        <span class="el-card-icon">🏛️</span>
+        <span class="el-card-title">CNPJ</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-cnpj" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="fl"><label>Número</label><input id="cfg-cnpj" value="65.597.589/0001-00" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho <span id="cnpj-size-val">12</span>px</label>
+          <input type="range" id="cnpj-size" min="7" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="cr-row"><label>Cor</label><input type="color" id="c-cnpj" value="#307082" oninput="applyAll()"></div>
+      </div>
+    </div>
+
+    <!-- ── LOCALIZADOR ── -->
+    <div class="el-card" id="card-loc">
+      <div class="el-card-head" onclick="toggleCard('card-loc')">
+        <span class="el-card-icon">🔑</span>
+        <span class="el-card-title">Bloco de Localizador</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-loc" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-loc" value="#307082" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho do texto <span id="loc-size-val">22</span>px</label>
+          <input type="range" id="loc-size" min="12" max="36" value="22" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TRECHOS ── -->
+    <div class="el-card" id="card-trechos">
+      <div class="el-card-head" onclick="toggleCard('card-trechos')">
+        <span class="el-card-icon">✈️</span>
+        <span class="el-card-title">Trechos de Voo</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-trechos" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor principal</label><input type="color" id="c-trecho-primary" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-trecho-titulo" value="#307082" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho do título <span id="trecho-titulo-size-val">14</span>px</label>
+          <input type="range" id="trecho-titulo-size" min="10" max="22" value="14" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="sl-row">
+          <label>Tamanho dos valores <span id="trecho-val-size-val">12</span>px</label>
+          <input type="range" id="trecho-val-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="order-row">
+          <label>Posição no recibo</label>
+          <select id="ord-trechos" onchange="update()"><option value="2">Padrão (após passag.)</option><option value="0">1º</option><option value="1">2º</option><option value="3">4º</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BAGAGEM ESPECÍFICA ── -->
+    <div class="el-card" id="card-bagesp">
+      <div class="el-card-head" onclick="toggleCard('card-bagesp')">
+        <span class="el-card-icon">🧳</span>
+        <span class="el-card-title">Bagagem Específica</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-bagesp" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bagesp-bg" value="#e0dbd0" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor da borda/texto</label><input type="color" id="c-bagesp-border" value="#307082" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho do item <span id="bagesp-size-val">11</span>px</label>
+          <input type="range" id="bagesp-size" min="9" max="18" value="11" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BAGAGEM GERAL ── -->
+    <div class="el-card" id="card-baggeral">
+      <div class="el-card-head" onclick="toggleCard('card-baggeral')">
+        <span class="el-card-icon">🎒</span>
+        <span class="el-card-title">Bagagem Geral</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-baggeral" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bag-bg" value="#fdf0e0" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor da borda/ícone</label><input type="color" id="c-bag-accent" value="#EA9940" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho dos itens <span id="bag-size-val">12</span>px</label>
+          <input type="range" id="bag-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="order-row">
+          <label>Posição no recibo</label>
+          <select id="ord-baggeral" onchange="update()"><option value="3">Padrão (após trechos)</option><option value="0">1º</option><option value="1">2º</option><option value="4">5º</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HOSPEDAGEM ── -->
+    <div class="el-card" id="card-hosp">
+      <div class="el-card-head" onclick="toggleCard('card-hosp')">
+        <span class="el-card-icon">🏨</span>
+        <span class="el-card-title">Hospedagem</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-hosp" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-hosp-titulo" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor do código de confirm.</label><input type="color" id="c-hosp-conf" value="#307082" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho dos valores <span id="hosp-val-size-val">12</span>px</label>
+          <input type="range" id="hosp-val-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── INFORMAÇÕES ── -->
+    <div class="el-card" id="card-info">
+      <div class="el-card-head" onclick="toggleCard('card-info')">
+        <span class="el-card-icon">📋</span>
+        <span class="el-card-title">Bloco de Informações</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-info" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-info-bg" value="#e5eeec" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor da borda</label><input type="color" id="c-info-border" value="#6CA3A2" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho do texto <span id="info-size-val">12</span>px</label>
+          <input type="range" id="info-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="order-row">
+          <label>Posição no recibo</label>
+          <select id="ord-info" onchange="update()"><option value="5">Padrão (antes do valor)</option><option value="0">1º</option><option value="2">3º</option><option value="6">Último</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VALOR ── -->
+    <div class="el-card" id="card-valor">
+      <div class="el-card-head" onclick="toggleCard('card-valor')">
+        <span class="el-card-icon">💰</span>
+        <span class="el-card-title">Valor à Pagar</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-valor" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-valor-bg" value="#307082" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho do número <span id="valor-size-val">24</span>px</label>
+          <input type="range" id="valor-size" min="14" max="40" value="24" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGAMENTO ── -->
+    <div class="el-card" id="card-pag">
+      <div class="el-card-head" onclick="toggleCard('card-pag')">
+        <span class="el-card-icon">💳</span>
+        <span class="el-card-title">Pagamento</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-pag" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-pag-titulo" value="#307082" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho do texto <span id="pag-size-val">12</span>px</label>
+          <input type="range" id="pag-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RODAPÉ ── -->
+    <div class="el-card" id="card-rodape">
+      <div class="el-card-head" onclick="toggleCard('card-rodape')">
+        <span class="el-card-icon">📎</span>
+        <span class="el-card-title">Rodapé</span>
+        <div class="vis-toggle" onclick="e=>e.stopPropagation()">
+          <label class="toggle-switch"><input type="checkbox" id="vis-rodape" checked onchange="applyAll()"><span class="toggle-track"></span></label>
+        </div>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="fl"><label>Texto esquerdo</label><input id="cfg-rodape" value="Recibo gerado pela K&V Easy Traveling" oninput="applyAll()"></div>
+        <div class="fl"><label>Gmail</label><input id="cfg-gmail" value="keveasytraveling@gmail.com" oninput="applyAll()"></div>
+        <div class="sl-row">
+          <label>Tamanho <span id="rodape-size-val">10</span>px</label>
+          <input type="range" id="rodape-size" min="7" max="16" value="10" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
+        </div>
+        <div class="cr-row"><label>Cor do texto</label><input type="color" id="c-rodape" value="#7a8a80" oninput="applyAll()"></div>
+        <div class="fl"><label>Ícone Gmail</label>
+          <div class="logo-upload" onclick="document.getElementById('icon-gm').click()" id="icon-gm-preview">📤 Subir ícone Gmail
+            <input type="file" id="icon-gm" accept="image/*" style="display:none" onchange="loadIcon(event,'gm')">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-top:4px;">
+      <button class="btn-primary" style="flex:1;" onclick="saveConfig()">💾 Salvar</button>
+      <button class="btn-secondary" style="flex:1;" onclick="resetConfig()">↺ Padrão</button>
+    </div>
   </div>
 
   <button class="btn-export" onclick="exportarPDF()">Exportar PDF</button>
-  <button class="btn-secondary" style="font-size:11px;" onclick="copiarLink()">🔗 Copiar link com dados</button>
-  <button class="btn-secondary" style="font-size:11px;color:#cf6f6f;" onclick="limparTudo()">🗑 Limpar tudo</button>
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <button class="btn-secondary" onclick="copiarLink()">🔗 Copiar link com dados</button>
+    <button class="btn-secondary" style="color:#cf6f6f;" onclick="limparTudo()">🗑 Limpar tudo</button>
+  </div>
 </div>
 
 <!-- ═══ PREVIEW ═══ -->
@@ -606,54 +650,34 @@ body {
   <div class="rec-header">
     <div class="rec-logo-area">
       <div id="logo-img-wrap"><div class="logo-ph">K&V<br>Viagens</div></div>
-      <div class="rec-company">
-        <h1 id="r-nome">K&amp;V&nbsp; Easy Traveling</h1>
+      <div class="rec-company" id="r-company-stack">
+        <h1 id="r-nome" style="font-size:20px;">K&amp;V&nbsp; Easy Traveling</h1>
         <div class="rec-slogan" id="r-slogan">✨ "Viaje hoje, viaje barato, viaje sempre" ✨</div>
-        <div class="rec-tel" id="r-tel" style="display:flex;align-items:center;gap:12px;margin-top:4px;">
-          <span class="rec-contact-item">
-            <!-- WhatsApp SVG -->
-            <svg width="13" height="13" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="12" fill="#25D366"/>
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#fff"/>
-            </svg>
+        <div id="r-tel-row" style="display:flex;align-items:center;gap:12px;margin-top:4px;font-size:10px;">
+          <span style="display:flex;align-items:center;gap:4px;">
+            <span id="icon-wa-el">
+              <svg width="13" height="13" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#fff"/></svg>
+            </span>
             <span id="r-tel-num">(38) 9 8815-5417</span>
           </span>
-          <span class="rec-contact-item">
-            <!-- Instagram SVG oficial -->
-            <svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
-                  <stop offset="0%" stop-color="#fdf497"/>
-                  <stop offset="5%" stop-color="#fdf497"/>
-                  <stop offset="45%" stop-color="#fd5949"/>
-                  <stop offset="60%" stop-color="#d6249f"/>
-                  <stop offset="90%" stop-color="#285AEB"/>
-                </radialGradient>
-              </defs>
-              <rect width="24" height="24" rx="5.5" fill="url(#ig-grad)"/>
-              <rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/>
-              <circle cx="12" cy="12" r="4.5" fill="none" stroke="#fff" stroke-width="1.5"/>
-              <circle cx="17.5" cy="6.5" r="1" fill="#fff"/>
-            </svg>
-            @kevviagens
+          <span style="display:flex;align-items:center;gap:4px;">
+            <span id="icon-ig-el">
+              <svg width="12" height="12" viewBox="0 0 24 24"><defs><radialGradient id="ig-g" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="5.5" fill="url(#ig-g)"/><rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg>
+            </span>
+            <span id="r-ig-handle">@kevviagens</span>
           </span>
         </div>
-        <div class="rec-contacts" style="display:none;"></div>
       </div>
     </div>
-    <div class="rec-cnpj">CNPJ:<strong id="r-cnpj">65.597.589/0001-00</strong></div>
+    <div class="rec-cnpj" id="r-cnpj-wrap">CNPJ:<strong id="r-cnpj" style="font-size:12px;">65.597.589/0001-00</strong></div>
   </div>
   <div id="r-corpo"></div>
-  <div class="rec-footer" style="display:flex;justify-content:space-between;align-items:center;">
+  <div class="rec-footer" id="r-rodape-el">
     <span id="r-rodape">Recibo gerado pela K&amp;V Easy Traveling</span>
     <span style="display:flex;align-items:center;gap:5px;">
-      <!-- Google G SVG -->
-      <svg id="footer-gmail-icon" width="13" height="13" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
+      <span id="icon-gm-el">
+        <svg id="footer-gmail-icon" width="13" height="13" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      </span>
       <span id="r-gmail">keveasytraveling@gmail.com</span>
     </span>
   </div>
@@ -661,259 +685,298 @@ body {
 </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-// ═══ AUTO RESIZE TEXTAREA ═══
-// Faz a textarea crescer conforme o usuário cola texto
-// scrollHeight = altura total do conteúdo interno
-function autoResize(el) {
-  el.style.height = 'auto';         // reseta para recalcular
-  el.style.height = el.scrollHeight + 'px'; // aplica altura real do conteúdo
-}
+// ══════════════════════════════════════════
+// AUTO RESIZE
+// ══════════════════════════════════════════
+function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
 
-// ═══ STATE ═══
-let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-let formato = 'pdf'; // 'pdf' | 'celular'
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
+let formato = 'pdf';
+// Icons stored as base64
+let ICONS = { logo: null, wa: null, ig: null, gm: null };
 
 function setFormato(f) {
   formato = f;
-  const recibo = document.getElementById('recibo');
-  if (f === 'celular') {
-    recibo.classList.add('modo-celular');
-    document.getElementById('fmt-cel').classList.add('active');
-    document.getElementById('fmt-pdf').classList.remove('active');
-  } else {
-    recibo.classList.remove('modo-celular');
-    document.getElementById('fmt-pdf').classList.add('active');
-    document.getElementById('fmt-cel').classList.remove('active');
-  }
-}
-
-// ═══ CONFIG ═══
-const CFG_DEFAULT = {
-  nome: 'K&V  Easy Traveling',
-  slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
-  tel: '📱 (38) 9 8815-5417',
-  cnpj: '65.597.589/0001-00',
-  rodape: 'Recibo gerado pela K&V Easy Traveling',
-  gmail: 'keveasytraveling@gmail.com',
-  primary: '#307082',
-  loc: '#307082',
-  bagBg: '#fdf0e0',
-  bagAccent: '#EA9940',
-  infoBg: '#e5eeec',
-  infoBorder: '#6CA3A2',
-  bagEspBg: '#e0dbd0',
-  bagEspBorder: '#307082',
-  logo: null
-};
-
-function loadConfig() {
-  try {
-    const saved = localStorage.getItem('kv-config');
-    if (saved) return { ...CFG_DEFAULT, ...JSON.parse(saved) };
-  } catch(e) {}
-  return { ...CFG_DEFAULT };
-}
-
-function saveConfig() {
-  const cfg = getCurrentConfig();
-  localStorage.setItem('kv-config', JSON.stringify(cfg));
-  showMsg('✓ Configuração salva!', 'ok');
-}
-
-function resetConfig() {
-  localStorage.removeItem('kv-config');
-  applyConfigFromObj(CFG_DEFAULT);
-  loadConfigToForm(CFG_DEFAULT);
-  showMsg('↺ Configuração restaurada', 'ok');
-}
-
-function getCurrentConfig() {
-  return {
-    nome: document.getElementById('cfg-nome').value,
-    slogan: document.getElementById('cfg-slogan').value,
-    tel: document.getElementById('cfg-tel').value,
-    cnpj: document.getElementById('cfg-cnpj').value,
-    rodape: document.getElementById('cfg-rodape').value,
-    gmail: document.getElementById('cfg-gmail').value,
-    primary: document.getElementById('c-primary').value,
-    loc: document.getElementById('c-loc').value,
-    bagBg: document.getElementById('c-bag-bg').value,
-    bagAccent: document.getElementById('c-bag-accent').value,
-    infoBg: document.getElementById('c-info-bg').value,
-    infoBorder: document.getElementById('c-info-border').value,
-    bagEspBg: document.getElementById('c-bagesp-bg').value,
-    bagEspBorder: document.getElementById('c-bagesp-border').value,
-    logoSize: parseInt(document.getElementById('logo-size').value) || 88,
-    logo: document.getElementById('logo-img-wrap').querySelector('img')?.src || null
-  };
-}
-
-function loadConfigToForm(cfg) {
-  document.getElementById('cfg-nome').value = cfg.nome;
-  document.getElementById('cfg-slogan').value = cfg.slogan;
-  document.getElementById('cfg-tel').value = cfg.tel;
-  document.getElementById('cfg-cnpj').value = cfg.cnpj;
-  document.getElementById('cfg-rodape').value = cfg.rodape;
-  const gmailInput = document.getElementById('cfg-gmail');
-  if (gmailInput) gmailInput.value = cfg.gmail || 'keveasytraveling@gmail.com';
-  document.getElementById('c-primary').value = cfg.primary;
-  document.getElementById('c-loc').value = cfg.loc;
-  document.getElementById('c-bag-bg').value = cfg.bagBg;
-  document.getElementById('c-bag-accent').value = cfg.bagAccent;
-  document.getElementById('c-info-bg').value = cfg.infoBg;
-  document.getElementById('c-info-border').value = cfg.infoBorder;
-  document.getElementById('c-bagesp-bg').value = cfg.bagEspBg || '#e0dbd0';
-  document.getElementById('c-bagesp-border').value = cfg.bagEspBorder || '#307082';
-  if (cfg.logoSize) {
-    document.getElementById('logo-size').value = cfg.logoSize;
-    document.getElementById('logo-size-val').textContent = cfg.logoSize;
-  }
-}
-
-function applyConfigFromObj(cfg) {
   const r = document.getElementById('recibo');
-  r.style.setProperty('--r-primary', cfg.primary);
-  r.style.setProperty('--r-loc-bg', cfg.loc);
-  r.style.setProperty('--r-bag-bg', cfg.bagBg);
-  r.style.setProperty('--r-bag-border', cfg.bagAccent);
-  r.style.setProperty('--r-bag-text', cfg.bagAccent);
-  r.style.setProperty('--r-info-bg', cfg.infoBg);
-  r.style.setProperty('--r-info-border', cfg.infoBorder);
-  r.style.setProperty('--r-bag-esp-bg', cfg.bagEspBg || '#e0dbd0');
-  r.style.setProperty('--r-bag-esp-border', cfg.bagEspBorder || '#307082');
-  document.getElementById('r-nome').textContent = cfg.nome;
-  document.getElementById('r-slogan').textContent = cfg.slogan;
-  const telNum = document.getElementById('r-tel-num');
-  if (telNum) telNum.textContent = cfg.tel;
-  document.getElementById('r-cnpj').textContent = cfg.cnpj;
-  document.getElementById('r-rodape').textContent = cfg.rodape;
-  const gmail = document.getElementById('r-gmail');
-  if (gmail) gmail.textContent = cfg.gmail || 'keveasytraveling@gmail.com';
-  const size = cfg.logoSize || 88;
-  if (cfg.logo) {
-    document.getElementById('logo-img-wrap').innerHTML = `<img src="${cfg.logo}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;">`;
-  } else {
-    const ph = document.getElementById('logo-img-wrap').querySelector('.logo-ph');
-    if (ph) { ph.style.width = size + 'px'; ph.style.height = size + 'px'; }
-  }
+  if (f === 'celular') { r.classList.add('modo-celular'); document.getElementById('fmt-cel').classList.add('active'); document.getElementById('fmt-pdf').classList.remove('active'); }
+  else { r.classList.remove('modo-celular'); document.getElementById('fmt-pdf').classList.add('active'); document.getElementById('fmt-cel').classList.remove('active'); }
 }
 
-function applyConfig() { applyConfigFromObj(getCurrentConfig()); }
-
-function updateLogoSize(val) {
-  document.getElementById('logo-size-val').textContent = val;
-  const img = document.getElementById('logo-img-wrap').querySelector('img');
-  if (img) { img.style.width = val + 'px'; img.style.height = val + 'px'; }
-  const ph = document.getElementById('logo-img-wrap').querySelector('.logo-ph');
-  if (ph) { ph.style.width = val + 'px'; ph.style.height = val + 'px'; }
+// ══════════════════════════════════════════
+// CARD TOGGLE
+// ══════════════════════════════════════════
+function toggleCard(id) {
+  const c = document.getElementById(id);
+  c.classList.toggle('open');
 }
 
-function loadIcon(e, type) {
-  const f = e.target.files[0]; if (!f) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const src = ev.target.result;
-    if (type === 'wa') {
-      const waIcon = document.querySelector('#r-tel svg');
-      if (waIcon) waIcon.outerHTML = `<img src="${src}" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;">`;
-      document.getElementById('icon-wa-preview').innerHTML = `<img src="${src}" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> ✓ Ícone WhatsApp atualizado`;
-    } else if (type === 'ig') {
-      const igIcon = document.querySelector('#r-tel .rec-contact-item:last-child svg');
-      if (igIcon) igIcon.outerHTML = `<img src="${src}" style="width:12px;height:12px;object-fit:contain;vertical-align:middle;">`;
-      document.getElementById('icon-ig-preview').innerHTML = `<img src="${src}" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> ✓ Ícone Instagram atualizado`;
-    } else if (type === 'gm') {
-      const gmIcon = document.getElementById('footer-gmail-icon');
-      if (gmIcon) gmIcon.outerHTML = `<img id="footer-gmail-icon" src="${src}" style="width:13px;height:13px;object-fit:contain;vertical-align:middle;">`;
-      document.getElementById('icon-gm-preview').innerHTML = `<img src="${src}" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> ✓ Ícone Gmail atualizado`;
-    }
-  };
-  reader.readAsDataURL(f);
-}
-
-// ═══ LOGO ═══
-function loadLogo(e) {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    document.getElementById('logo-img-wrap').innerHTML = `<img src="${ev.target.result}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;">`;
-  };
-  r.readAsDataURL(f);
-}
-
-// ═══ PASSAGEIROS ═══
-function addPassageiro(nome = '') {
-  D.passageiros.push(nome);
-  renderPassList();
-  update();
-}
-
-function removePassageiro(i) {
-  D.passageiros.splice(i, 1);
-  renderPassList();
-  update();
-}
-
-function renderPassList() {
-  const c = document.getElementById('pass-list');
-  c.innerHTML = '';
-  D.passageiros.forEach((p, i) => {
-    const d = document.createElement('div');
-    d.className = 'pass-item';
-    d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;update()">
-      <button onclick="removePassageiro(${i})">✕</button>`;
-    c.appendChild(d);
-  });
-}
-
-// ═══ TABS ═══
-function showTab(id) {
+// ══════════════════════════════════════════
+// TAB
+// ══════════════════════════════════════════
+function showTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
 
-// ═══ MSG ═══
+// ══════════════════════════════════════════
+// MSG
+// ══════════════════════════════════════════
 function showMsg(t, tp) {
   const el = document.getElementById('msg');
   el.textContent = t; el.className = 'msg ' + tp; el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 3000);
 }
 
-// ═══ PARSER ═══
-const DELIMITADORES = [
-  'Passageiro', 'Localizador Geral', 'Cia A[eé]rea Geral', 'Trecho \\d+',
-  'Localizador Específico', 'Cia A[eé]rea Específica',
-  'Partida', 'Data Sa[íi]da', 'Hora Sa[íi]da',
-  'Destino', 'Data Chegada', 'Hora Chegada', 'Paradas', 'Dura[çc][ãa]o',
-  'Bagagem Específica', 'Bagagem Geral',
-  'C[oó]digo de Confirma[çc][ãa]o', 'Local', 'Cidade',
-  'Data de Entrada', 'Data de Sa[íi]da', 'Incluso',
-  'Informa[çc][õo]es?', 'Valor [àa] Pagar', 'Pagamento'
-];
+// ══════════════════════════════════════════
+// CONFIG DEFAULT
+// ══════════════════════════════════════════
+const CFG_DEFAULT = {
+  nome: 'K&V  Easy Traveling', slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
+  tel: '(38) 9 8815-5417', ig: '@kevviagens', cnpj: '65.597.589/0001-00',
+  rodape: 'Recibo gerado pela K&V Easy Traveling', gmail: 'keveasytraveling@gmail.com',
+  primary: '#307082', slogan_color: '#4a5a50', slogan_border: '#b0a898',
+  cnpj_color: '#307082', loc: '#307082', trecho_primary: '#307082',
+  trecho_titulo: '#307082', bag_bg: '#fdf0e0', bag_accent: '#EA9940',
+  info_bg: '#e5eeec', info_border: '#6CA3A2', bagesp_bg: '#e0dbd0',
+  bagesp_border: '#307082', hosp_titulo: '#307082', hosp_conf: '#307082',
+  valor_bg: '#307082', pag_titulo: '#307082', rodape_color: '#7a8a80',
+  nome_size: 20, slogan_size: 10, tel_size: 10, cnpj_size: 12,
+  loc_size: 22, trecho_titulo_size: 14, trecho_val_size: 12,
+  bagesp_size: 11, bag_size: 12, hosp_val_size: 12, info_size: 12,
+  valor_size: 24, pag_size: 12, rodape_size: 10, logo_size: 88,
+  vis_nome: true, vis_slogan: true, vis_tel: true, vis_cnpj: true,
+  vis_loc: true, vis_trechos: true, vis_bagesp: true, vis_baggeral: true,
+  vis_hosp: true, vis_info: true, vis_valor: true, vis_pag: true, vis_rodape: true,
+  icons: { logo: null, wa: null, ig: null, gm: null }
+};
 
+function getFormValues() {
+  const gv = id => document.getElementById(id)?.value ?? '';
+  const gc = id => document.getElementById(id)?.checked ?? true;
+  const gi = id => parseInt(document.getElementById(id)?.value) || 0;
+  return {
+    nome: gv('cfg-nome'), slogan: gv('cfg-slogan'), tel: gv('cfg-tel'),
+    ig: gv('cfg-ig'), cnpj: gv('cfg-cnpj'), rodape: gv('cfg-rodape'),
+    gmail: gv('cfg-gmail'), primary: gv('c-primary'), slogan_color: gv('c-slogan'),
+    slogan_border: gv('c-slogan-border'), cnpj_color: gv('c-cnpj'), loc: gv('c-loc'),
+    trecho_primary: gv('c-trecho-primary'), trecho_titulo: gv('c-trecho-titulo'),
+    bag_bg: gv('c-bag-bg'), bag_accent: gv('c-bag-accent'),
+    info_bg: gv('c-info-bg'), info_border: gv('c-info-border'),
+    bagesp_bg: gv('c-bagesp-bg'), bagesp_border: gv('c-bagesp-border'),
+    hosp_titulo: gv('c-hosp-titulo'), hosp_conf: gv('c-hosp-conf'),
+    valor_bg: gv('c-valor-bg'), pag_titulo: gv('c-pag-titulo'),
+    rodape_color: gv('c-rodape'),
+    nome_size: gi('nome-size'), slogan_size: gi('slogan-size'), tel_size: gi('tel-size'),
+    cnpj_size: gi('cnpj-size'), loc_size: gi('loc-size'),
+    trecho_titulo_size: gi('trecho-titulo-size'), trecho_val_size: gi('trecho-val-size'),
+    bagesp_size: gi('bagesp-size'), bag_size: gi('bag-size'),
+    hosp_val_size: gi('hosp-val-size'), info_size: gi('info-size'),
+    valor_size: gi('valor-size'), pag_size: gi('pag-size'),
+    rodape_size: gi('rodape-size'), logo_size: gi('logo-size'),
+    vis_nome: gc('vis-nome'), vis_slogan: gc('vis-slogan'), vis_tel: gc('vis-tel'),
+    vis_cnpj: gc('vis-cnpj'), vis_loc: gc('vis-loc'), vis_trechos: gc('vis-trechos'),
+    vis_bagesp: gc('vis-bagesp'), vis_baggeral: gc('vis-baggeral'),
+    vis_hosp: gc('vis-hosp'), vis_info: gc('vis-info'), vis_valor: gc('vis-valor'),
+    vis_pag: gc('vis-pag'), vis_rodape: gc('vis-rodape'),
+    icons: { ...ICONS }
+  };
+}
+
+function setFormValues(cfg) {
+  const sv = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  const sb = (id, v) => { const el = document.getElementById(id); if (el) el.checked = !!v; };
+  sv('cfg-nome', cfg.nome); sv('cfg-slogan', cfg.slogan); sv('cfg-tel', cfg.tel);
+  sv('cfg-ig', cfg.ig ?? '@kevviagens'); sv('cfg-cnpj', cfg.cnpj);
+  sv('cfg-rodape', cfg.rodape); sv('cfg-gmail', cfg.gmail);
+  sv('c-primary', cfg.primary); sv('c-slogan', cfg.slogan_color ?? '#4a5a50');
+  sv('c-slogan-border', cfg.slogan_border ?? '#b0a898'); sv('c-cnpj', cfg.cnpj_color ?? '#307082');
+  sv('c-loc', cfg.loc); sv('c-trecho-primary', cfg.trecho_primary ?? '#307082');
+  sv('c-trecho-titulo', cfg.trecho_titulo ?? '#307082');
+  sv('c-bag-bg', cfg.bag_bg); sv('c-bag-accent', cfg.bag_accent);
+  sv('c-info-bg', cfg.info_bg); sv('c-info-border', cfg.info_border);
+  sv('c-bagesp-bg', cfg.bagesp_bg ?? '#e0dbd0'); sv('c-bagesp-border', cfg.bagesp_border ?? '#307082');
+  sv('c-hosp-titulo', cfg.hosp_titulo ?? '#307082'); sv('c-hosp-conf', cfg.hosp_conf ?? '#307082');
+  sv('c-valor-bg', cfg.valor_bg ?? '#307082'); sv('c-pag-titulo', cfg.pag_titulo ?? '#307082');
+  sv('c-rodape', cfg.rodape_color ?? '#7a8a80');
+  const sizes = { 'nome-size': [cfg.nome_size,20,'nome-size-val'], 'slogan-size': [cfg.slogan_size,10,'slogan-size-val'], 'tel-size': [cfg.tel_size,10,'tel-size-val'], 'cnpj-size': [cfg.cnpj_size,12,'cnpj-size-val'], 'loc-size': [cfg.loc_size,22,'loc-size-val'], 'trecho-titulo-size': [cfg.trecho_titulo_size,14,'trecho-titulo-size-val'], 'trecho-val-size': [cfg.trecho_val_size,12,'trecho-val-size-val'], 'bagesp-size': [cfg.bagesp_size,11,'bagesp-size-val'], 'bag-size': [cfg.bag_size,12,'bag-size-val'], 'hosp-val-size': [cfg.hosp_val_size,12,'hosp-val-size-val'], 'info-size': [cfg.info_size,12,'info-size-val'], 'valor-size': [cfg.valor_size,24,'valor-size-val'], 'pag-size': [cfg.pag_size,12,'pag-size-val'], 'rodape-size': [cfg.rodape_size,10,'rodape-size-val'], 'logo-size': [cfg.logo_size,88,'logo-size-val'] };
+  Object.entries(sizes).forEach(([id, [val, def, valId]]) => { sv(id, val ?? def); const el = document.getElementById(valId); if(el) el.textContent = val ?? def; });
+  ['nome','slogan','tel','cnpj','loc','trechos','bagesp','baggeral','hosp','info','valor','pag','rodape'].forEach(k => sb('vis-'+k, cfg['vis_'+k] !== false));
+  // restore icons
+  if (cfg.icons) {
+    ICONS = { ...ICONS, ...cfg.icons };
+    if (ICONS.logo) restoreLogoFromSaved();
+    if (ICONS.wa) restoreIconFromSaved('wa');
+    if (ICONS.ig) restoreIconFromSaved('ig');
+    if (ICONS.gm) restoreIconFromSaved('gm');
+  }
+}
+
+function saveConfig() {
+  const cfg = getFormValues();
+  try { localStorage.setItem('kv-config', JSON.stringify(cfg)); showMsg('✓ Configuração salva!', 'ok'); } catch(e) { showMsg('Erro ao salvar.', 'err'); }
+}
+
+function resetConfig() {
+  localStorage.removeItem('kv-config');
+  ICONS = { logo: null, wa: null, ig: null, gm: null };
+  setFormValues(CFG_DEFAULT);
+  // reset logo to placeholder
+  document.getElementById('logo-img-wrap').innerHTML = '<div class="logo-ph">K&V<br>Viagens</div>';
+  document.getElementById('logo-preview-wrap').style.display = 'none';
+  applyAll();
+  showMsg('↺ Padrão restaurado', 'ok');
+}
+
+// ══════════════════════════════════════════
+// APPLY ALL — applies config to DOM + re-renders body
+// ══════════════════════════════════════════
+function applyAll() {
+  const cfg = getFormValues();
+  const r = document.getElementById('recibo');
+
+  // CSS vars
+  r.style.setProperty('--r-primary', cfg.primary);
+  r.style.setProperty('--r-loc-bg', cfg.loc);
+  r.style.setProperty('--r-bag-bg', cfg.bag_bg);
+  r.style.setProperty('--r-bag-border', cfg.bag_accent);
+  r.style.setProperty('--r-bag-text', adjustColor(cfg.bag_accent, -30));
+  r.style.setProperty('--r-info-bg', cfg.info_bg);
+  r.style.setProperty('--r-info-border', cfg.info_border);
+  r.style.setProperty('--r-bag-esp-bg', cfg.bagesp_bg);
+  r.style.setProperty('--r-bag-esp-border', cfg.bagesp_border);
+
+  // Header elements — apply visibility & sizes
+  const nome = document.getElementById('r-nome');
+  if (nome) { nome.textContent = cfg.nome; nome.style.fontSize = cfg.nome_size + 'px'; nome.style.color = cfg.primary; nome.closest('h1') ? nome.style.display = cfg.vis_nome ? '' : 'none' : null; nome.style.display = cfg.vis_nome ? '' : 'none'; }
+
+  const slogan = document.getElementById('r-slogan');
+  if (slogan) { slogan.textContent = cfg.slogan; slogan.style.fontSize = cfg.slogan_size + 'px'; slogan.style.color = cfg.slogan_color; slogan.style.borderColor = cfg.slogan_border; slogan.style.display = cfg.vis_slogan ? 'inline-block' : 'none'; }
+
+  const telRow = document.getElementById('r-tel-row');
+  if (telRow) { document.getElementById('r-tel-num').textContent = cfg.tel; document.getElementById('r-ig-handle').textContent = cfg.ig; telRow.style.fontSize = cfg.tel_size + 'px'; telRow.style.display = cfg.vis_tel ? 'flex' : 'none'; }
+
+  const cnpjWrap = document.getElementById('r-cnpj-wrap');
+  const cnpjEl = document.getElementById('r-cnpj');
+  if (cnpjWrap) { cnpjWrap.style.display = cfg.vis_cnpj ? '' : 'none'; cnpjEl.textContent = cfg.cnpj; cnpjEl.style.color = cfg.cnpj_color; cnpjEl.style.fontSize = cfg.cnpj_size + 'px'; }
+
+  // Rodapé
+  const rodapeEl = document.getElementById('r-rodape-el');
+  if (rodapeEl) { rodapeEl.style.display = cfg.vis_rodape ? 'flex' : 'none'; rodapeEl.style.fontSize = cfg.rodape_size + 'px'; rodapeEl.style.color = cfg.rodape_color; document.getElementById('r-rodape').textContent = cfg.rodape; document.getElementById('r-gmail').textContent = cfg.gmail; }
+
+  // Logo size
+  const logoSize = cfg.logo_size || 88;
+  const logoImg = document.getElementById('logo-img-wrap').querySelector('img');
+  const logoPh = document.getElementById('logo-img-wrap').querySelector('.logo-ph');
+  if (logoImg) { logoImg.style.width = logoSize + 'px'; logoImg.style.height = logoSize + 'px'; }
+  if (logoPh) { logoPh.style.width = logoSize + 'px'; logoPh.style.height = logoSize + 'px'; }
+
+  // Re-render corpo (passes visibility flags + sizes)
+  update(cfg);
+}
+
+// Simple color darkening helper
+function adjustColor(hex, amount) {
+  try {
+    let r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    r = Math.max(0,Math.min(255,r+amount)); g = Math.max(0,Math.min(255,g+amount)); b = Math.max(0,Math.min(255,b+amount));
+    return '#' + [r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+  } catch { return hex; }
+}
+
+// ══════════════════════════════════════════
+// PASSAGEIROS
+// ══════════════════════════════════════════
+function addPassageiro(nome = '') {
+  D.passageiros.push(nome); renderPassList(); applyAll();
+}
+function removePassageiro(i) { D.passageiros.splice(i, 1); renderPassList(); applyAll(); }
+function renderPassList() {
+  const c = document.getElementById('pass-list'); c.innerHTML = '';
+  D.passageiros.forEach((p, i) => {
+    const d = document.createElement('div'); d.className = 'pass-item';
+    d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;applyAll()">
+      <button onclick="removePassageiro(${i})">✕</button>`;
+    c.appendChild(d);
+  });
+}
+
+// ══════════════════════════════════════════
+// LOGO & ICONS
+// ══════════════════════════════════════════
+function loadLogo(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = ev => {
+    ICONS.logo = ev.target.result;
+    const size = parseInt(document.getElementById('logo-size').value) || 88;
+    document.getElementById('logo-img-wrap').innerHTML = `<img src="${ICONS.logo}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;">`;
+    document.getElementById('logo-preview-wrap').style.display = 'block';
+    document.getElementById('logo-preview-thumb').src = ICONS.logo;
+  };
+  rd.readAsDataURL(f);
+}
+function removeLogo() {
+  ICONS.logo = null;
+  const size = parseInt(document.getElementById('logo-size').value) || 88;
+  document.getElementById('logo-img-wrap').innerHTML = `<div class="logo-ph" style="width:${size}px;height:${size}px;">K&V<br>Viagens</div>`;
+  document.getElementById('logo-preview-wrap').style.display = 'none';
+}
+function updateLogoSize(val) {
+  document.getElementById('logo-size-val').textContent = val;
+  const img = document.getElementById('logo-img-wrap').querySelector('img');
+  if (img) { img.style.width = val+'px'; img.style.height = val+'px'; }
+  const ph = document.getElementById('logo-img-wrap').querySelector('.logo-ph');
+  if (ph) { ph.style.width = val+'px'; ph.style.height = val+'px'; }
+}
+
+function loadIcon(e, type) {
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = ev => {
+    ICONS[type] = ev.target.result;
+    applyIconToDOM(type, ICONS[type]);
+    const prev = document.getElementById(`icon-${type}-preview`);
+    if (prev) prev.innerHTML = `<img src="${ICONS[type]}" style="width:16px;height:16px;object-fit:contain;"> ✓ Ícone salvo`;
+  };
+  rd.readAsDataURL(f);
+}
+
+function applyIconToDOM(type, src) {
+  const imgTag = `<img src="${src}" style="width:${type==='gm'?13:type==='ig'?12:13}px;height:${type==='gm'?13:type==='ig'?12:13}px;object-fit:contain;vertical-align:middle;">`;
+  if (type === 'wa') { const el = document.getElementById('icon-wa-el'); if(el) el.innerHTML = imgTag; }
+  if (type === 'ig') { const el = document.getElementById('icon-ig-el'); if(el) el.innerHTML = imgTag; }
+  if (type === 'gm') { const el = document.getElementById('icon-gm-el'); if(el) el.innerHTML = imgTag; }
+}
+
+function restoreLogoFromSaved() {
+  if (!ICONS.logo) return;
+  const size = parseInt(document.getElementById('logo-size').value) || 88;
+  document.getElementById('logo-img-wrap').innerHTML = `<img src="${ICONS.logo}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;">`;
+  document.getElementById('logo-preview-wrap').style.display = 'block';
+  document.getElementById('logo-preview-thumb').src = ICONS.logo;
+}
+function restoreIconFromSaved(type) {
+  if (!ICONS[type]) return;
+  applyIconToDOM(type, ICONS[type]);
+  const prev = document.getElementById(`icon-${type}-preview`);
+  if (prev) prev.innerHTML = `<img src="${ICONS[type]}" style="width:16px;height:16px;object-fit:contain;"> ✓ Ícone salvo`;
+}
+
+// ══════════════════════════════════════════
+// PARSER
+// ══════════════════════════════════════════
 function inserirQuebras(raw) {
   let txt = raw;
-  const ordem = [
-    'Localizador Geral', 'Localizador Específico',
-    'Cia A[eé]rea Geral', 'Cia A[eé]rea Específica',
-    'C[oó]digo de Confirma[çc][ãa]o',
-    'Data de Entrada', 'Hora de Entrada',
-    'Data de Sa[íi]da', 'Hora de Sa[íi]da',
-    'Data Sa[íi]da', 'Hora Sa[íi]da',
-    'Data Chegada', 'Hora Chegada',
-    'Bagagem Específica', 'Bagagem Geral',
-    'Informa[çc][õo]es?', 'Valor [àa] Pagar',
-    'Passageiro', 'Partida', 'Destino', 'Cidade',
-    'Paradas', 'Dura[çc][ãa]o Total', 'Dura[çc][ãa]o', 'Pagamento',
-    'Incluso', 'Local'
-  ];
-  ordem.forEach(r => {
-    try {
-      txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1');
-    } catch(e) {}
-  });
+  const ordem = ['Localizador Geral','Localizador Específico','Cia A[eé]rea Geral','Cia A[eé]rea Específica','C[oó]digo de Confirma[çc][ãa]o','Data de Entrada','Hora de Entrada','Data de Sa[íi]da','Hora de Sa[íi]da','Data Sa[íi]da','Hora Sa[íi]da','Data Chegada','Hora Chegada','Bagagem Específica','Bagagem Geral','Informa[çc][õo]es?','Valor [àa] Pagar','Passageiro','Partida','Destino','Cidade','Paradas','Dura[çc][ãa]o Total','Dura[çc][ãa]o','Pagamento','Incluso','Local'];
+  ordem.forEach(r => { try { txt = txt.replace(new RegExp(`(${r}:)`, 'gi'), '\n$1'); } catch(e) {} });
   txt = txt.replace(/(Trecho\s*\d+)(\s|$)/gi, '\n$1\n');
   txt = txt.replace(/(Hospedagem\s*\d*)(?=\s|C[oó]digo|Local|Cidade|Data|$)/gi, '\n$1\n');
   return txt;
@@ -922,19 +985,11 @@ function inserirQuebras(raw) {
 function parsear() {
   const raw = document.getElementById('paste-input').value.trim();
   if (!raw) { showMsg('Cole algum texto primeiro.', 'err'); return; }
-
   D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
-
   const txt = inserirQuebras(raw);
   const linhas = txt.split('\n').map(l => l.trim()).filter(l => l);
-
-  let campoAtual = null;
-  let trechoAtual = null;
-  let hospAtual = null;
-  let bufferMulti = [];
-
+  let campoAtual = null, trechoAtual = null, hospAtual = null, bufferMulti = [];
   const isPlaceholder = v => !v || v.includes('Nesse caso') || v === '""';
-
   function flushBuffer() {
     if (!campoAtual || !bufferMulti.length) return;
     const vals = bufferMulti.filter(l => l);
@@ -946,293 +1001,179 @@ function parsear() {
     else if (campoAtual === 'hospIncluso' && hospAtual) hospAtual.incluso = vals.join('\n');
     bufferMulti = [];
   }
-
-  function novoTrecho() {
-    trechoAtual = { num: D.trechos.length + 1, locEsp: '', ciaEsp: '', partida: '', dataPartida: '', horaPartida: '', destino: '', dataChegada: '', horaChegada: '', paradas: [], duracaoTotal: '', bagEsp: [] };
-    D.trechos.push(trechoAtual);
-  }
-
-  function novaHospedagem() {
-    hospAtual = { num: D.hospedagens.length + 1, codigo: '', local: '', cidade: '', entrada: '', horaEntrada: '', saida: '', horaSaida: '', incluso: '' };
-    D.hospedagens.push(hospAtual);
-  }
-
+  function novoTrecho() { trechoAtual = { num: D.trechos.length+1, locEsp:'', ciaEsp:'', partida:'', dataPartida:'', horaPartida:'', destino:'', dataChegada:'', horaChegada:'', paradas:[], duracaoTotal:'', bagEsp:[] }; D.trechos.push(trechoAtual); }
+  function novaHospedagem() { hospAtual = { num: D.hospedagens.length+1, codigo:'', local:'', cidade:'', entrada:'', horaEntrada:'', saida:'', horaSaida:'', incluso:'' }; D.hospedagens.push(hospAtual); }
   linhas.forEach(l => {
-    if (/^Passageiro:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'passageiro';
-      const v = l.replace(/^Passageiro:\s*/i, '').trim();
-      if (v) D.passageiros.push(v);
-      return;
-    }
-    if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locGeral'; D.locGeral = l.replace(/^Localizador Geral:\s*/i, '').trim(); return; }
-    if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaGeral'; D.ciaGeral = l.replace(/^Cia A[eé]rea Geral:\s*/i, '').trim(); return; }
-    if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual = 'trecho'; hospAtual = null; return; }
-    if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual = 'hospedagem'; trechoAtual = null; return; }
-    if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCodigo'; if (hospAtual) hospAtual.codigo = l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i, '').trim(); return; }
-    if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); campoAtual = 'hospLocal'; hospAtual.local = l.replace(/^Local:\s*/i, '').trim(); return; }
-    if (/^Cidade:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospCidade'; if (hospAtual) hospAtual.cidade = l.replace(/^Cidade:\s*/i, '').trim(); return; }
-    if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospEntrada'; if (hospAtual) hospAtual.entrada = l.replace(/^Data de Entrada:\s*/i, '').trim(); return; }
-    if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraEntrada'; if (hospAtual) hospAtual.horaEntrada = l.replace(/^Hora de Entrada:\s*/i, '').trim(); return; }
-    if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospSaida'; if (hospAtual) hospAtual.saida = l.replace(/^Data de Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'hospHoraSaida'; if (hospAtual) hospAtual.horaSaida = l.replace(/^Hora de Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Incluso:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'hospIncluso';
-      const inline = l.replace(/^Incluso:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); campoAtual = 'locEsp'; if (trechoAtual) trechoAtual.locEsp = l.replace(/^Localizador Específico:\s*/i, '').trim(); return; }
-    if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); campoAtual = 'ciaEsp'; if (trechoAtual) trechoAtual.ciaEsp = l.replace(/^Cia A[eé]rea Específica:\s*/i, '').trim(); return; }
-    if (/^Partida:\s*/i.test(l)) { flushBuffer(); campoAtual = 'partida'; if (trechoAtual) trechoAtual.partida = l.replace(/^Partida:\s*/i, '').trim(); return; }
-    if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataPartida'; if (trechoAtual) trechoAtual.dataPartida = l.replace(/^Data Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaPartida'; if (trechoAtual) trechoAtual.horaPartida = l.replace(/^Hora Sa[íi]da:\s*/i, '').trim(); return; }
-    if (/^Destino:\s*/i.test(l)) { flushBuffer(); campoAtual = 'destino'; if (trechoAtual) trechoAtual.destino = l.replace(/^Destino:\s*/i, '').trim(); return; }
-    if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'dataChegada'; if (trechoAtual) trechoAtual.dataChegada = l.replace(/^Data Chegada:\s*/i, '').trim(); return; }
-    if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); campoAtual = 'horaChegada'; if (trechoAtual) trechoAtual.horaChegada = l.replace(/^Hora Chegada:\s*/i, '').trim(); return; }
-    if (/^Paradas:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'paradas';
-      const inline = l.replace(/^Paradas:\s*/i, '').trim();
-      if (inline && trechoAtual) trechoAtual.paradas.push(inline);
-      return;
-    }
-    if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o Total:\s*/i, '').trim(); return; }
-    if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual = 'duracaoTotal'; if (trechoAtual) trechoAtual.duracaoTotal = l.replace(/^Dura[çc][ãa]o:\s*/i, '').trim(); return; }
-    if (/^Bagagem Específica:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'bagEspTrecho';
-      const inline = l.replace(/^Bagagem Específica:\s*/i, '').trim();
-      if (inline && !isPlaceholder(inline)) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Bagagem Geral:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'bagGeral'; trechoAtual = null;
-      const inline = l.replace(/^Bagagem Geral:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Informa[çc][õo]es?:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'informacoes'; trechoAtual = null;
-      const inline = l.replace(/^Informa[çc][õo]es?:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (/^Valor [àa] Pagar:\s*/i.test(l)) { flushBuffer(); campoAtual = 'valor'; trechoAtual = null; D.valor = l.replace(/^Valor [àa] Pagar:\s*/i, '').trim(); return; }
-    if (/^Pagamento:\s*/i.test(l)) {
-      flushBuffer(); campoAtual = 'pagamento'; trechoAtual = null;
-      const inline = l.replace(/^Pagamento:\s*/i, '').trim();
-      if (inline) bufferMulti.push(inline);
-      return;
-    }
-    if (['bagEspTrecho', 'bagGeral', 'informacoes', 'pagamento', 'hospIncluso', 'paradas'].includes(campoAtual)) bufferMulti.push(l);
+    if (/^Passageiro:\s*/i.test(l)) { flushBuffer(); campoAtual='passageiro'; const v=l.replace(/^Passageiro:\s*/i,'').trim(); if(v) D.passageiros.push(v); return; }
+    if (/^Localizador Geral:\s*/i.test(l)) { flushBuffer(); campoAtual='locGeral'; D.locGeral=l.replace(/^Localizador Geral:\s*/i,'').trim(); return; }
+    if (/^Cia A[eé]rea Geral:\s*/i.test(l)) { flushBuffer(); campoAtual='ciaGeral'; D.ciaGeral=l.replace(/^Cia A[eé]rea Geral:\s*/i,'').trim(); return; }
+    if (/^Trecho\s*\d+\s*$/i.test(l)) { flushBuffer(); novoTrecho(); campoAtual='trecho'; hospAtual=null; return; }
+    if (/^Hospedagem\s*\d*\s*$/i.test(l)) { flushBuffer(); novaHospedagem(); campoAtual='hospedagem'; trechoAtual=null; return; }
+    if (/^C[oó]digo de Confirma[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); campoAtual='hospCodigo'; if(hospAtual) hospAtual.codigo=l.replace(/^C[oó]digo de Confirma[çc][ãa]o:\s*/i,'').trim(); return; }
+    if (/^Local:\s*/i.test(l) && hospAtual) { flushBuffer(); hospAtual.local=l.replace(/^Local:\s*/i,'').trim(); return; }
+    if (/^Cidade:\s*/i.test(l)) { flushBuffer(); if(hospAtual) hospAtual.cidade=l.replace(/^Cidade:\s*/i,'').trim(); return; }
+    if (/^Data de Entrada:\s*/i.test(l)) { flushBuffer(); if(hospAtual) hospAtual.entrada=l.replace(/^Data de Entrada:\s*/i,'').trim(); return; }
+    if (/^Hora de Entrada:\s*/i.test(l)) { flushBuffer(); if(hospAtual) hospAtual.horaEntrada=l.replace(/^Hora de Entrada:\s*/i,'').trim(); return; }
+    if (/^Data de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); if(hospAtual) hospAtual.saida=l.replace(/^Data de Sa[íi]da:\s*/i,'').trim(); return; }
+    if (/^Hora de Sa[íi]da:\s*/i.test(l)) { flushBuffer(); if(hospAtual) hospAtual.horaSaida=l.replace(/^Hora de Sa[íi]da:\s*/i,'').trim(); return; }
+    if (/^Incluso:\s*/i.test(l)) { flushBuffer(); campoAtual='hospIncluso'; const inline=l.replace(/^Incluso:\s*/i,'').trim(); if(inline) bufferMulti.push(inline); return; }
+    if (/^Localizador Específico:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.locEsp=l.replace(/^Localizador Específico:\s*/i,'').trim(); return; }
+    if (/^Cia A[eé]rea Específica:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.ciaEsp=l.replace(/^Cia A[eé]rea Específica:\s*/i,'').trim(); return; }
+    if (/^Partida:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.partida=l.replace(/^Partida:\s*/i,'').trim(); return; }
+    if (/^Data Sa[íi]da:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.dataPartida=l.replace(/^Data Sa[íi]da:\s*/i,'').trim(); return; }
+    if (/^Hora Sa[íi]da:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.horaPartida=l.replace(/^Hora Sa[íi]da:\s*/i,'').trim(); return; }
+    if (/^Destino:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.destino=l.replace(/^Destino:\s*/i,'').trim(); return; }
+    if (/^Data Chegada:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.dataChegada=l.replace(/^Data Chegada:\s*/i,'').trim(); return; }
+    if (/^Hora Chegada:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.horaChegada=l.replace(/^Hora Chegada:\s*/i,'').trim(); return; }
+    if (/^Paradas:\s*/i.test(l)) { flushBuffer(); campoAtual='paradas'; const inline=l.replace(/^Paradas:\s*/i,'').trim(); if(inline && trechoAtual) trechoAtual.paradas.push(inline); return; }
+    if (/^Dura[çc][ãa]o Total:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.duracaoTotal=l.replace(/^Dura[çc][ãa]o Total:\s*/i,'').trim(); return; }
+    if (/^Dura[çc][ãa]o:\s*/i.test(l)) { flushBuffer(); if(trechoAtual) trechoAtual.duracaoTotal=l.replace(/^Dura[çc][ãa]o:\s*/i,'').trim(); return; }
+    if (/^Bagagem Específica:\s*/i.test(l)) { flushBuffer(); campoAtual='bagEspTrecho'; const inline=l.replace(/^Bagagem Específica:\s*/i,'').trim(); if(inline && !isPlaceholder(inline)) bufferMulti.push(inline); return; }
+    if (/^Bagagem Geral:\s*/i.test(l)) { flushBuffer(); campoAtual='bagGeral'; trechoAtual=null; const inline=l.replace(/^Bagagem Geral:\s*/i,'').trim(); if(inline) bufferMulti.push(inline); return; }
+    if (/^Informa[çc][õo]es?:\s*/i.test(l)) { flushBuffer(); campoAtual='informacoes'; trechoAtual=null; const inline=l.replace(/^Informa[çc][õo]es?:\s*/i,'').trim(); if(inline) bufferMulti.push(inline); return; }
+    if (/^Valor [àa] Pagar:\s*/i.test(l)) { flushBuffer(); campoAtual='valor'; trechoAtual=null; D.valor=l.replace(/^Valor [àa] Pagar:\s*/i,'').trim(); return; }
+    if (/^Pagamento:\s*/i.test(l)) { flushBuffer(); campoAtual='pagamento'; trechoAtual=null; const inline=l.replace(/^Pagamento:\s*/i,'').trim(); if(inline) bufferMulti.push(inline); return; }
+    if (['bagEspTrecho','bagGeral','informacoes','pagamento','hospIncluso','paradas'].includes(campoAtual)) bufferMulti.push(l);
   });
   flushBuffer();
-
-  // limpar placeholders
-  D.trechos.forEach(t => {
-    t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b));
-    if (isPlaceholder(t.locEsp)) t.locEsp = '';
-  });
-  if (isPlaceholder(D.locGeral)) D.locGeral = '';
-
+  D.trechos.forEach(t => { t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b)); if(isPlaceholder(t.locEsp)) t.locEsp=''; });
+  if (isPlaceholder(D.locGeral)) D.locGeral='';
   renderPassList();
   showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
-  update();
+  applyAll();
 }
 
-// ═══ RENDER ═══
-function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function update() {
+function update(cfg) {
+  if (!cfg) cfg = getFormValues();
   let html = '';
 
   // Passageiros
-  if (D.passageiros.length > 0) {
-    const nomes = D.passageiros.filter(p => p.trim());
-    if (nomes.length) {
-      html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length > 1 ? 'Passageiros' : 'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
-    }
+  const nomes = D.passageiros.filter(p => p.trim());
+  if (nomes.length) {
+    html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length>1?'Passageiros':'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
   }
 
-  // Localizador Geral + Cia Aérea Geral
-  if (D.locGeral || D.ciaGeral) {
-    html += `<div class="bloco bloco-loc" style="padding:16px 20px;">`;
+  // Localizador Geral
+  if (cfg.vis_loc && (D.locGeral || D.ciaGeral)) {
+    html += `<div class="bloco bloco-loc" style="padding:16px 20px;background:${cfg.loc}!important;border-color:${cfg.loc}!important;">`;
     html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-    if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:22px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
+    if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:${cfg.loc_size}px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
     if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
-    else if (!D.locGeral && D.ciaGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:22px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
     html += `</div></div>`;
   }
 
   // Trechos
-  D.trechos.forEach(t => {
-    html += `<div class="trecho"><div class="trecho-titulo">✈️ Trecho ${t.num}</div>`;
-
-    // Linha loc+cia
-    const temLoc = t.locEsp, temCia = t.ciaEsp;
-    if (temLoc || temCia) {
-      html += `<div class="loc-cia-row">`;
-      if (temLoc) {
-        html += `<div class="loc-esp-bloco"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+  if (cfg.vis_trechos) {
+    D.trechos.forEach(t => {
+      html += `<div class="trecho">`;
+      html += `<div class="trecho-titulo" style="font-size:${cfg.trecho_titulo_size}px;color:${cfg.trecho_titulo};border-bottom-color:${cfg.trecho_titulo};">✈️ Trecho ${t.num}</div>`;
+      if (t.locEsp || t.ciaEsp) {
+        html += `<div class="loc-cia-row">`;
+        if (t.locEsp) html += `<div class="loc-esp-bloco" style="background:${cfg.loc};"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+        if (t.ciaEsp) html += `<div class="cia-bloco" style="border-color:${cfg.loc};"><span class="cia-label" style="color:${cfg.loc};">CIA AÉREA</span><span class="cia-val" style="color:${cfg.loc};">${esc(t.ciaEsp)}</span></div>`;
+        html += `</div>`;
       }
-      if (temCia) {
-        html += `<div class="cia-bloco"><span class="cia-label">CIA AÉREA</span><span class="cia-val">${esc(t.ciaEsp)}</span></div>`;
-      }
+      html += `<div class="trecho-cols">`;
+      html += `<div class="tcol"><div class="tcol-header" style="color:${cfg.trecho_primary};border-bottom-color:${cfg.trecho_primary};">Partida</div>`;
+      if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.partida)}</div></div>`;
+      if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.dataPartida)}</div></div>`;
+      if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.horaPartida)}</div></div>`;
       html += `</div>`;
-    }
-
-    // Grid duas colunas: Partida | Destino
-    html += `<div class="trecho-cols">`;
-
-    // coluna partida
-    html += `<div class="tcol"><div class="tcol-header">Partida</div>`;
-    if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.partida)}</div></div>`;
-    if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataPartida)}</div></div>`;
-    if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaPartida)}</div></div>`;
-    html += `</div>`;
-
-    // coluna destino
-    html += `<div class="tcol"><div class="tcol-header">Destino</div>`;
-    if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val">${esc(t.destino)}</div></div>`;
-    if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val">${esc(t.dataChegada)}</div></div>`;
-    if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val">${esc(t.horaChegada)}</div></div>`;
-    html += `</div>`;
-
-    html += `</div>`; // fim trecho-cols
-
-    // inferior: Paradas com duração por parada + Duração Total + Bagagem
-    const temBottom = t.paradas.length || t.duracaoTotal || t.bagEsp.length;
-    if (temBottom) {
-      html += `<div class="trecho-bottom">`;
-
-      if (t.paradas.length) {
-        // verificar se é voo direto (sem " - ")
-        const temDurPorParada = t.paradas.some(p => p.includes(' - '));
-
-        if (temDurPorParada) {
-          // cabeçalho
-          html += `<div class="tbot-header">
-            <span class="tbot-header-label">Paradas</span>
-            <span class="tbot-header-label">Duração</span>
-          </div>`;
-          // linhas: "São Paulo GRU - 2h10m" → split em " - "
-          t.paradas.forEach(p => {
-            const parts = p.split(/\s*-\s*(?=\d)/); // split antes de número (duração)
-            const local = parts[0] ? parts[0].trim() : p;
-            const dur   = parts[1] ? parts[1].trim() : '';
-            html += `<div class="tbot-parada-row">
-              <span class="tbot-parada-local">${esc(local)}</span>
-              <span class="tbot-parada-dur">${esc(dur)}</span>
-            </div>`;
-          });
-        } else {
-          // voo direto ou sem duração por parada
-          html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`;
+      html += `<div class="tcol"><div class="tcol-header" style="color:${cfg.trecho_primary};border-bottom-color:${cfg.trecho_primary};">Destino</div>`;
+      if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.destino)}</div></div>`;
+      if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.dataChegada)}</div></div>`;
+      if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.horaChegada)}</div></div>`;
+      html += `</div></div>`;
+      const temBottom = t.paradas.length || t.duracaoTotal || (cfg.vis_bagesp && t.bagEsp.length);
+      if (temBottom) {
+        html += `<div class="trecho-bottom">`;
+        if (t.paradas.length) {
+          const temDur = t.paradas.some(p => p.includes(' - '));
+          if (temDur) {
+            html += `<div class="tbot-header"><span class="tbot-header-label" style="color:${cfg.trecho_primary};">Paradas</span><span class="tbot-header-label" style="color:${cfg.trecho_primary};">Duração</span></div>`;
+            t.paradas.forEach(p => { const parts = p.split(/\s*-\s*(?=\d)/); html += `<div class="tbot-parada-row"><span class="tbot-parada-local">${esc(parts[0]?.trim()||p)}</span><span class="tbot-parada-dur">${esc(parts[1]?.trim()||'')}</span></div>`; });
+          } else { html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`; }
         }
+        if (t.duracaoTotal) html += `<div class="tbot-total"><span class="tbot-total-label">Duração Total</span><span class="tbot-total-val" style="color:${cfg.trecho_primary};">${esc(t.duracaoTotal)}</span></div>`;
+        if (cfg.vis_bagesp && t.bagEsp.length) {
+          html += `<div class="bag-esp" style="margin-top:8px;background:${cfg.bagesp_bg};border-left-color:${cfg.bagesp_border};"><div class="bag-esp-titulo" style="color:${cfg.bagesp_border};">🧳 Bagagem</div><ul>`;
+          html += t.bagEsp.map(b => `<li style="font-size:${cfg.bagesp_size}px;">${esc(b)}</li>`).join('');
+          html += `</ul></div>`;
+        }
+        html += `</div>`;
       }
-
-      if (t.duracaoTotal) {
-        html += `<div class="tbot-total">
-          <span class="tbot-total-label">Duração Total da Viagem</span>
-          <span class="tbot-total-val">${esc(t.duracaoTotal)}</span>
-        </div>`;
-      }
-
-      if (t.bagEsp.length) {
-        html += `<div class="bag-esp" style="margin-top:8px;"><div class="bag-esp-titulo">🧳 Bagagem</div><ul>${t.bagEsp.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
-      }
-
       html += `</div>`;
-    }
-
-    html += `</div>`; // fim trecho
-  });
-
-  // Bagagem Geral
-  if (D.bagGeral.length) {
-    html += `<div class="bloco bloco-bag"><div class="bloco-titulo">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>`;
+    });
   }
 
-  // Hospedagens (acima de informações)
-  D.hospedagens.forEach((h, i) => {
-    const titulo = D.hospedagens.length > 1 ? `🏨 Hospedagem ${i + 1}` : '🏨 Hospedagem';
-    html += `<div class="hospedagem">`;
-    html += `<div class="hosp-titulo">${titulo}</div>`;
-    if (h.codigo) html += `<div class="hosp-conf"><span class="hosp-conf-label">CONFIRMAÇÃO</span><span class="hosp-conf-val">${esc(h.codigo)}</span></div>`;
-    html += `<div class="hosp-grid">`;
-    if (h.local)   html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val">${esc(h.local)}</div></div>`;
-    if (h.cidade)  html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val">${esc(h.cidade)}</div></div>`;
-    html += `</div>`;
-    if (h.entrada || h.saida) {
-      html += `<div class="hosp-datas">`;
-      html += `<div class="hosp-item">`;
-      if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val">${esc(h.entrada)}</div>`;
-      if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaEntrada)}</div>`;
+  // Bagagem Geral
+  if (cfg.vis_baggeral && D.bagGeral.length) {
+    const bagTextColor = adjustColor(cfg.bag_accent, -30);
+    html += `<div class="bloco bloco-bag" style="background:${cfg.bag_bg}!important;border-color:${cfg.bag_accent}!important;"><div class="bloco-titulo" style="color:${bagTextColor}!important;">🧳 Franquia de Bagagens: (por passageiro)</div><ul>`;
+    html += D.bagGeral.map(b => `<li style="font-size:${cfg.bag_size}px;">${esc(b)}</li>`).join('');
+    html += `</ul></div>`;
+  }
+
+  // Hospedagens
+  if (cfg.vis_hosp) {
+    (D.hospedagens||[]).forEach((h, i) => {
+      const titulo = D.hospedagens.length>1 ? `🏨 Hospedagem ${i+1}` : '🏨 Hospedagem';
+      html += `<div class="hospedagem">`;
+      html += `<div class="hosp-titulo" style="color:${cfg.hosp_titulo};">${titulo}</div>`;
+      if (h.codigo) html += `<div class="hosp-conf" style="border-left:3px solid ${cfg.hosp_conf};"><span class="hosp-conf-label" style="color:${cfg.hosp_conf};">CONFIRMAÇÃO</span><span class="hosp-conf-val" style="color:${cfg.hosp_conf};">${esc(h.codigo)}</span></div>`;
+      html += `<div class="hosp-grid">`;
+      if (h.local) html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.local)}</div></div>`;
+      if (h.cidade) html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.cidade)}</div></div>`;
       html += `</div>`;
-      html += `<div class="hosp-item">`;
-      if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val">${esc(h.saida)}</div>`;
-      if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val">${esc(h.horaSaida)}</div>`;
+      if (h.entrada || h.saida) {
+        html += `<div class="hosp-datas">`;
+        html += `<div class="hosp-item">`;
+        if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.entrada)}</div>`;
+        if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.horaEntrada)}</div>`;
+        html += `</div>`;
+        html += `<div class="hosp-item">`;
+        if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.saida)}</div>`;
+        if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.horaSaida)}</div>`;
+        html += `</div>`;
+        html += `</div>`;
+      }
+      if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
       html += `</div>`;
-      html += `</div>`;
-    }
-    if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
-    html += `</div>`;
-  });
+    });
+  }
 
   // Informações
-  if (D.informacoes) {
-    html += `<div class="bloco bloco-info"><div class="bloco-titulo">📋 Informações</div><p>${esc(D.informacoes)}</p></div>`;
+  if (cfg.vis_info && D.informacoes) {
+    html += `<div class="bloco bloco-info" style="background:${cfg.info_bg}!important;border-color:${cfg.info_border}!important;"><div class="bloco-titulo">📋 Informações</div><p style="font-size:${cfg.info_size}px;">${esc(D.informacoes)}</p></div>`;
   }
 
   // Valor
-  if (D.valor) {
-    html += `<div class="bloco bloco-valor"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num">${esc(D.valor)}</div></div>`;
+  if (cfg.vis_valor && D.valor) {
+    html += `<div class="bloco bloco-valor" style="background:${cfg.valor_bg}!important;border-color:${cfg.valor_bg}!important;"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num" style="font-size:${cfg.valor_size}px;">${esc(D.valor)}</div></div>`;
   }
 
   // Pagamento
-  if (D.pagamento.length) {
-    html += `<div class="bloco bloco-pag"><div class="bloco-titulo">💳 Pagamento</div><p>${D.pagamento.map(esc).join('\n')}</p></div>`;
+  if (cfg.vis_pag && D.pagamento.length) {
+    html += `<div class="bloco bloco-pag"><div class="bloco-titulo" style="color:${cfg.pag_titulo};">💳 Pagamento</div><p style="font-size:${cfg.pag_size}px;">${D.pagamento.map(esc).join('\n')}</p></div>`;
   }
 
   document.getElementById('r-corpo').innerHTML = html;
 }
 
-// ═══ INIT ═══
-window.addEventListener('load', () => {
-  // Carregar config salva
-  const cfg = loadConfig();
-  loadConfigToForm(cfg);
-  applyConfigFromObj(cfg);
-
-  // Dados via URL
-  const params = new URLSearchParams(window.location.search);
-  const dados = params.get('dados');
-  if (dados) {
-    try {
-      document.getElementById('paste-input').value = decodeURIComponent(dados);
-      parsear();
-    } catch(e) {}
-  } else {
-    update();
-  }
-});
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
+// ══════════════════════════════════════════
+// EXPORT / UTILS
+// ══════════════════════════════════════════
 function copiarLink() {
   const texto = document.getElementById('paste-input').value.trim();
   if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
   const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
-  navigator.clipboard.writeText(url).then(() => {
-    showMsg('✓ Link copiado!', 'ok');
-  }).catch(() => {
-    // fallback para navegadores sem clipboard API
-    const el = document.createElement('textarea');
-    el.value = url;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showMsg('✓ Link copiado!', 'ok');
+  navigator.clipboard.writeText(url).then(() => showMsg('✓ Link copiado!', 'ok')).catch(() => {
+    const el = document.createElement('textarea'); el.value = url; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showMsg('✓ Link copiado!', 'ok');
   });
 }
 
@@ -1241,60 +1182,49 @@ function limparTudo() {
   D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
   document.getElementById('paste-input').value = '';
   autoResize(document.getElementById('paste-input'));
-  document.getElementById('f-pass').value = '';
-  renderPassList();
-  update();
+  renderPassList(); applyAll();
   showMsg('↺ Dados limpos', 'ok');
 }
 
 async function exportarPDF() {
   const btn = document.querySelector('.btn-export');
-  const original = btn.textContent;
-  btn.textContent = 'Gerando PDF...';
-  btn.disabled = true;
-
+  const original = btn.textContent; btn.textContent = 'Gerando PDF...'; btn.disabled = true;
   try {
     const recibo = document.getElementById('recibo');
     await document.fonts.ready;
-
-    const canvas = await html2canvas(recibo, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false,
-    });
-
+    const canvas = await html2canvas(recibo, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false });
     const imgData = canvas.toDataURL('image/png');
-
     const pxToMm = 0.264583;
     const larguraMm = formato === 'celular' ? 103 : 210;
-    const alturaCanvas = canvas.height / 2;
-    const larguraCanvas = canvas.width / 2;
+    const alturaCanvas = canvas.height/2, larguraCanvas = canvas.width/2;
     const ratio = larguraMm / (larguraCanvas * pxToMm);
     const alturaMm = alturaCanvas * pxToMm * ratio;
-
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: [larguraMm, alturaMm]
-    });
-
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [larguraMm, alturaMm] });
     doc.addImage(imgData, 'PNG', 0, 0, larguraMm, alturaMm);
-
     const partes = ['Recibo K&V'];
     if (D.locGeral) partes.push(D.locGeral.trim());
-    D.trechos.forEach(t => { if (t.locEsp) partes.push(t.locEsp.trim()); });
-    const nomeArquivo = partes.join(' - ').replace(/[\/\\:*?"<>|]/g, '').trim();
-    doc.save(`${nomeArquivo}.pdf`);
-
-  } catch(e) {
-    alert('Erro ao gerar PDF: ' + e.message);
-  }
-
-  btn.textContent = original;
-  btn.disabled = false;
+    D.trechos.forEach(t => { if(t.locEsp) partes.push(t.locEsp.trim()); });
+    doc.save(`${partes.join(' - ').replace(/[\/\\:*?"<>|]/g,'').trim()}.pdf`);
+  } catch(e) { alert('Erro ao gerar PDF: ' + e.message); }
+  btn.textContent = original; btn.disabled = false;
 }
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+window.addEventListener('load', () => {
+  try {
+    const saved = localStorage.getItem('kv-config');
+    if (saved) { const cfg = { ...CFG_DEFAULT, ...JSON.parse(saved) }; setFormValues(cfg); }
+  } catch(e) {}
+
+  applyAll();
+
+  const params = new URLSearchParams(window.location.search);
+  const dados = params.get('dados');
+  if (dados) { try { document.getElementById('paste-input').value = decodeURIComponent(dados); parsear(); } catch(e) {} }
+});
 </script>
 </body>
 </html>
