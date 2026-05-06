@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K&V Easy Traveling — Recibo</title>
+<link id="favicon" rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23307082'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='22' fill='%23EA9940'>K%26V</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -911,6 +912,11 @@ function renderPassList() {
 // ══════════════════════════════════════════
 // LOGO & ICONS
 // ══════════════════════════════════════════
+function setFavicon(src) {
+  const link = document.getElementById('favicon');
+  if (link) link.href = src;
+}
+
 function loadLogo(e) {
   const f = e.target.files[0]; if (!f) return;
   const rd = new FileReader();
@@ -920,6 +926,7 @@ function loadLogo(e) {
     document.getElementById('logo-img-wrap').innerHTML = `<img src="${ICONS.logo}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;">`;
     document.getElementById('logo-preview-wrap').style.display = 'block';
     document.getElementById('logo-preview-thumb').src = ICONS.logo;
+    setFavicon(ICONS.logo);
   };
   rd.readAsDataURL(f);
 }
@@ -962,6 +969,7 @@ function restoreLogoFromSaved() {
   document.getElementById('logo-img-wrap').innerHTML = `<img src="${ICONS.logo}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;">`;
   document.getElementById('logo-preview-wrap').style.display = 'block';
   document.getElementById('logo-preview-thumb').src = ICONS.logo;
+  setFavicon(ICONS.logo);
 }
 function restoreIconFromSaved(type) {
   if (!ICONS[type]) return;
@@ -1048,121 +1056,147 @@ function parsear() {
 // ══════════════════════════════════════════
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+// ── helpers para gerar HTML de cada bloco ──
+function htmlPassageiros(cfg) {
+  const nomes = D.passageiros.filter(p => p.trim());
+  if (!nomes.length) return '';
+  return `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length>1?'Passageiros':'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
+}
+function htmlLocalizador(cfg) {
+  if (!cfg.vis_loc || (!D.locGeral && !D.ciaGeral)) return '';
+  let h = `<div class="bloco bloco-loc" style="padding:16px 20px;background:${cfg.loc}!important;border-color:${cfg.loc}!important;"><div style="display:flex;justify-content:space-between;align-items:center;">`;
+  if (D.locGeral) h += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:${cfg.loc_size}px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
+  if (D.ciaGeral) h += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
+  return h + `</div></div>`;
+}
+function htmlTrechos(cfg) {
+  if (!cfg.vis_trechos || !D.trechos.length) return '';
+  return D.trechos.map(t => {
+    let h = `<div class="trecho">`;
+    h += `<div class="trecho-titulo" style="font-size:${cfg.trecho_titulo_size}px;color:${cfg.trecho_titulo};border-bottom-color:${cfg.trecho_titulo};">✈️ Trecho ${t.num}</div>`;
+    if (t.locEsp || t.ciaEsp) {
+      h += `<div class="loc-cia-row">`;
+      if (t.locEsp) h += `<div class="loc-esp-bloco" style="background:${cfg.loc};"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
+      if (t.ciaEsp) h += `<div class="cia-bloco" style="border-color:${cfg.loc};"><span class="cia-label" style="color:${cfg.loc};">CIA AÉREA</span><span class="cia-val" style="color:${cfg.loc};">${esc(t.ciaEsp)}</span></div>`;
+      h += `</div>`;
+    }
+    h += `<div class="trecho-cols">`;
+    h += `<div class="tcol"><div class="tcol-header" style="color:${cfg.trecho_primary};border-bottom-color:${cfg.trecho_primary};">Partida</div>`;
+    if (t.partida)     h += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.partida)}</div></div>`;
+    if (t.dataPartida) h += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.dataPartida)}</div></div>`;
+    if (t.horaPartida) h += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.horaPartida)}</div></div>`;
+    h += `</div><div class="tcol"><div class="tcol-header" style="color:${cfg.trecho_primary};border-bottom-color:${cfg.trecho_primary};">Destino</div>`;
+    if (t.destino)     h += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.destino)}</div></div>`;
+    if (t.dataChegada) h += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.dataChegada)}</div></div>`;
+    if (t.horaChegada) h += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.horaChegada)}</div></div>`;
+    h += `</div></div>`;
+    const temBottom = t.paradas.length || t.duracaoTotal || (cfg.vis_bagesp && t.bagEsp.length);
+    if (temBottom) {
+      h += `<div class="trecho-bottom">`;
+      if (t.paradas.length) {
+        const temDur = t.paradas.some(p => p.includes(' - '));
+        if (temDur) {
+          h += `<div class="tbot-header"><span class="tbot-header-label" style="color:${cfg.trecho_primary};">Paradas</span><span class="tbot-header-label" style="color:${cfg.trecho_primary};">Duração</span></div>`;
+          t.paradas.forEach(p => { const pts = p.split(/\s*-\s*(?=\d)/); h += `<div class="tbot-parada-row"><span class="tbot-parada-local">${esc(pts[0]?.trim()||p)}</span><span class="tbot-parada-dur">${esc(pts[1]?.trim()||'')}</span></div>`; });
+        } else { h += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`; }
+      }
+      if (t.duracaoTotal) h += `<div class="tbot-total"><span class="tbot-total-label">Duração Total</span><span class="tbot-total-val" style="color:${cfg.trecho_primary};">${esc(t.duracaoTotal)}</span></div>`;
+      if (cfg.vis_bagesp && t.bagEsp.length) {
+        h += `<div class="bag-esp" style="margin-top:8px;background:${cfg.bagesp_bg};border-left-color:${cfg.bagesp_border};"><div class="bag-esp-titulo" style="color:${cfg.bagesp_border};">🧳 Bagagem</div><ul>`;
+        h += t.bagEsp.map(b => `<li style="font-size:${cfg.bagesp_size}px;">${esc(b)}</li>`).join('');
+        h += `</ul></div>`;
+      }
+      h += `</div>`;
+    }
+    return h + `</div>`;
+  }).join('');
+}
+function htmlBagGeral(cfg) {
+  if (!cfg.vis_baggeral || !D.bagGeral.length) return '';
+  const bagTextColor = adjustColor(cfg.bag_accent, -30);
+  return `<div class="bloco bloco-bag" style="background:${cfg.bag_bg}!important;border-color:${cfg.bag_accent}!important;"><div class="bloco-titulo" style="color:${bagTextColor}!important;">🧳 Franquia de Bagagens: (por passageiro)</div><ul>${D.bagGeral.map(b=>`<li style="font-size:${cfg.bag_size}px;">${esc(b)}</li>`).join('')}</ul></div>`;
+}
+function htmlHospedagens(cfg) {
+  if (!cfg.vis_hosp || !(D.hospedagens||[]).length) return '';
+  return D.hospedagens.map((h, i) => {
+    const titulo = D.hospedagens.length>1 ? `🏨 Hospedagem ${i+1}` : '🏨 Hospedagem';
+    let s = `<div class="hospedagem"><div class="hosp-titulo" style="color:${cfg.hosp_titulo};">${titulo}</div>`;
+    if (h.codigo) s += `<div class="hosp-conf" style="border-left:3px solid ${cfg.hosp_conf};"><span class="hosp-conf-label" style="color:${cfg.hosp_conf};">CONFIRMAÇÃO</span><span class="hosp-conf-val" style="color:${cfg.hosp_conf};">${esc(h.codigo)}</span></div>`;
+    s += `<div class="hosp-grid">`;
+    if (h.local)  s += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.local)}</div></div>`;
+    if (h.cidade) s += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.cidade)}</div></div>`;
+    s += `</div>`;
+    if (h.entrada || h.saida) {
+      s += `<div class="hosp-datas"><div class="hosp-item">`;
+      if (h.entrada)     s += `<div class="hosp-label">Entrada</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.entrada)}</div>`;
+      if (h.horaEntrada) s += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.horaEntrada)}</div>`;
+      s += `</div><div class="hosp-item">`;
+      if (h.saida)     s += `<div class="hosp-label">Saída</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.saida)}</div>`;
+      if (h.horaSaida) s += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.horaSaida)}</div>`;
+      s += `</div></div>`;
+    }
+    if (h.incluso) s += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
+    return s + `</div>`;
+  }).join('');
+}
+function htmlInfo(cfg) {
+  if (!cfg.vis_info || !D.informacoes) return '';
+  return `<div class="bloco bloco-info" style="background:${cfg.info_bg}!important;border-color:${cfg.info_border}!important;"><div class="bloco-titulo">📋 Informações</div><p style="font-size:${cfg.info_size}px;">${esc(D.informacoes)}</p></div>`;
+}
+function htmlValor(cfg) {
+  if (!cfg.vis_valor || !D.valor) return '';
+  return `<div class="bloco bloco-valor" style="background:${cfg.valor_bg}!important;border-color:${cfg.valor_bg}!important;"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num" style="font-size:${cfg.valor_size}px;">${esc(D.valor)}</div></div>`;
+}
+function htmlPagamento(cfg) {
+  if (!cfg.vis_pag || !D.pagamento.length) return '';
+  return `<div class="bloco bloco-pag"><div class="bloco-titulo" style="color:${cfg.pag_titulo};">💳 Pagamento</div><p style="font-size:${cfg.pag_size}px;">${D.pagamento.map(esc).join('\n')}</p></div>`;
+}
+
+// ── reordena elementos do cabeçalho ──
+function applyHeaderOrder(cfg) {
+  const stack = document.getElementById('r-company-stack');
+  if (!stack) return;
+  // Os 3 elementos reordenáveis: nome (h1), slogan (div.rec-slogan), tel-row
+  const nome   = document.getElementById('r-nome');
+  const slogan = document.getElementById('r-slogan');
+  const tel    = document.getElementById('r-tel-row');
+  if (!nome || !slogan || !tel) return;
+
+  const items = [
+    { el: nome.parentElement && nome.parentElement.tagName === 'H1' ? nome.parentElement : nome, ord: parseInt(document.getElementById('ord-nome')?.value ?? 0) },
+    { el: slogan, ord: parseInt(document.getElementById('ord-slogan')?.value ?? 1) },
+    { el: tel,    ord: parseInt(document.getElementById('ord-tel')?.value ?? 2) },
+  ];
+  // sort by chosen order, stable
+  items.sort((a, b) => a.ord - b.ord);
+  // re-append in sorted order (moves DOM nodes)
+  items.forEach(item => stack.appendChild(item.el));
+}
+
 function update(cfg) {
   if (!cfg) cfg = getFormValues();
-  let html = '';
 
-  // Passageiros
-  const nomes = D.passageiros.filter(p => p.trim());
-  if (nomes.length) {
-    html += `<div class="bloco bloco-pass"><div class="bloco-titulo">👤 ${nomes.length>1?'Passageiros':'Passageiro'}</div><p>${nomes.map(esc).join('<br>')}</p></div>`;
-  }
+  // ── Corpo: montar blocos com posição real ──
+  // Cada bloco tem { pos, html }
+  // Passageiros e Localizador ficam fixos no topo (pos -2, -1)
+  const blocos = [
+    { pos: -2, html: htmlPassageiros(cfg) },
+    { pos: -1, html: htmlLocalizador(cfg) },
+    { pos: parseInt(document.getElementById('ord-trechos')?.value  ?? 2),  html: htmlTrechos(cfg) },
+    { pos: parseInt(document.getElementById('ord-baggeral')?.value ?? 3),  html: htmlBagGeral(cfg) },
+    { pos: 4,                                                                html: htmlHospedagens(cfg) },
+    { pos: parseInt(document.getElementById('ord-info')?.value     ?? 5),  html: htmlInfo(cfg) },
+    { pos: 6,                                                                html: htmlValor(cfg) },
+    { pos: 7,                                                                html: htmlPagamento(cfg) },
+  ];
 
-  // Localizador Geral
-  if (cfg.vis_loc && (D.locGeral || D.ciaGeral)) {
-    html += `<div class="bloco bloco-loc" style="padding:16px 20px;background:${cfg.loc}!important;border-color:${cfg.loc}!important;">`;
-    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-    if (D.locGeral) html += `<div style="display:flex;flex-direction:column;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">LOCALIZADOR</span><span style="font-size:${cfg.loc_size}px;font-weight:700;color:#fff;font-family:monospace;letter-spacing:.05em;">${esc(D.locGeral)}</span></div>`;
-    if (D.ciaGeral) html += `<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;font-weight:600;">CIA AÉREA</span><span style="font-size:16px;font-weight:700;color:#fff;">${esc(D.ciaGeral)}</span></div>`;
-    html += `</div></div>`;
-  }
+  // Ordenar pelo campo pos, mantendo estável os fixos negativos sempre primeiro
+  blocos.sort((a, b) => a.pos - b.pos);
 
-  // Trechos
-  if (cfg.vis_trechos) {
-    D.trechos.forEach(t => {
-      html += `<div class="trecho">`;
-      html += `<div class="trecho-titulo" style="font-size:${cfg.trecho_titulo_size}px;color:${cfg.trecho_titulo};border-bottom-color:${cfg.trecho_titulo};">✈️ Trecho ${t.num}</div>`;
-      if (t.locEsp || t.ciaEsp) {
-        html += `<div class="loc-cia-row">`;
-        if (t.locEsp) html += `<div class="loc-esp-bloco" style="background:${cfg.loc};"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
-        if (t.ciaEsp) html += `<div class="cia-bloco" style="border-color:${cfg.loc};"><span class="cia-label" style="color:${cfg.loc};">CIA AÉREA</span><span class="cia-val" style="color:${cfg.loc};">${esc(t.ciaEsp)}</span></div>`;
-        html += `</div>`;
-      }
-      html += `<div class="trecho-cols">`;
-      html += `<div class="tcol"><div class="tcol-header" style="color:${cfg.trecho_primary};border-bottom-color:${cfg.trecho_primary};">Partida</div>`;
-      if (t.partida) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.partida)}</div></div>`;
-      if (t.dataPartida) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.dataPartida)}</div></div>`;
-      if (t.horaPartida) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.horaPartida)}</div></div>`;
-      html += `</div>`;
-      html += `<div class="tcol"><div class="tcol-header" style="color:${cfg.trecho_primary};border-bottom-color:${cfg.trecho_primary};">Destino</div>`;
-      if (t.destino) html += `<div class="trow"><div class="trow-label">Local</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.destino)}</div></div>`;
-      if (t.dataChegada) html += `<div class="trow"><div class="trow-label">Data</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.dataChegada)}</div></div>`;
-      if (t.horaChegada) html += `<div class="trow"><div class="trow-label">Hora</div><div class="trow-val" style="font-size:${cfg.trecho_val_size}px;">${esc(t.horaChegada)}</div></div>`;
-      html += `</div></div>`;
-      const temBottom = t.paradas.length || t.duracaoTotal || (cfg.vis_bagesp && t.bagEsp.length);
-      if (temBottom) {
-        html += `<div class="trecho-bottom">`;
-        if (t.paradas.length) {
-          const temDur = t.paradas.some(p => p.includes(' - '));
-          if (temDur) {
-            html += `<div class="tbot-header"><span class="tbot-header-label" style="color:${cfg.trecho_primary};">Paradas</span><span class="tbot-header-label" style="color:${cfg.trecho_primary};">Duração</span></div>`;
-            t.paradas.forEach(p => { const parts = p.split(/\s*-\s*(?=\d)/); html += `<div class="tbot-parada-row"><span class="tbot-parada-local">${esc(parts[0]?.trim()||p)}</span><span class="tbot-parada-dur">${esc(parts[1]?.trim()||'')}</span></div>`; });
-          } else { html += `<div class="tbot-item"><div class="tbot-label">Paradas</div><div class="tbot-val">${t.paradas.map(esc).join(' · ')}</div></div>`; }
-        }
-        if (t.duracaoTotal) html += `<div class="tbot-total"><span class="tbot-total-label">Duração Total</span><span class="tbot-total-val" style="color:${cfg.trecho_primary};">${esc(t.duracaoTotal)}</span></div>`;
-        if (cfg.vis_bagesp && t.bagEsp.length) {
-          html += `<div class="bag-esp" style="margin-top:8px;background:${cfg.bagesp_bg};border-left-color:${cfg.bagesp_border};"><div class="bag-esp-titulo" style="color:${cfg.bagesp_border};">🧳 Bagagem</div><ul>`;
-          html += t.bagEsp.map(b => `<li style="font-size:${cfg.bagesp_size}px;">${esc(b)}</li>`).join('');
-          html += `</ul></div>`;
-        }
-        html += `</div>`;
-      }
-      html += `</div>`;
-    });
-  }
+  document.getElementById('r-corpo').innerHTML = blocos.map(b => b.html).join('');
 
-  // Bagagem Geral
-  if (cfg.vis_baggeral && D.bagGeral.length) {
-    const bagTextColor = adjustColor(cfg.bag_accent, -30);
-    html += `<div class="bloco bloco-bag" style="background:${cfg.bag_bg}!important;border-color:${cfg.bag_accent}!important;"><div class="bloco-titulo" style="color:${bagTextColor}!important;">🧳 Franquia de Bagagens: (por passageiro)</div><ul>`;
-    html += D.bagGeral.map(b => `<li style="font-size:${cfg.bag_size}px;">${esc(b)}</li>`).join('');
-    html += `</ul></div>`;
-  }
-
-  // Hospedagens
-  if (cfg.vis_hosp) {
-    (D.hospedagens||[]).forEach((h, i) => {
-      const titulo = D.hospedagens.length>1 ? `🏨 Hospedagem ${i+1}` : '🏨 Hospedagem';
-      html += `<div class="hospedagem">`;
-      html += `<div class="hosp-titulo" style="color:${cfg.hosp_titulo};">${titulo}</div>`;
-      if (h.codigo) html += `<div class="hosp-conf" style="border-left:3px solid ${cfg.hosp_conf};"><span class="hosp-conf-label" style="color:${cfg.hosp_conf};">CONFIRMAÇÃO</span><span class="hosp-conf-val" style="color:${cfg.hosp_conf};">${esc(h.codigo)}</span></div>`;
-      html += `<div class="hosp-grid">`;
-      if (h.local) html += `<div class="hosp-item hosp-full"><div class="hosp-label">Local</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.local)}</div></div>`;
-      if (h.cidade) html += `<div class="hosp-item hosp-full"><div class="hosp-label">Cidade</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.cidade)}</div></div>`;
-      html += `</div>`;
-      if (h.entrada || h.saida) {
-        html += `<div class="hosp-datas">`;
-        html += `<div class="hosp-item">`;
-        if (h.entrada) html += `<div class="hosp-label">Entrada</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.entrada)}</div>`;
-        if (h.horaEntrada) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.horaEntrada)}</div>`;
-        html += `</div>`;
-        html += `<div class="hosp-item">`;
-        if (h.saida) html += `<div class="hosp-label">Saída</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.saida)}</div>`;
-        if (h.horaSaida) html += `<div class="hosp-label" style="margin-top:3px;">Hora</div><div class="hosp-val" style="font-size:${cfg.hosp_val_size}px;">${esc(h.horaSaida)}</div>`;
-        html += `</div>`;
-        html += `</div>`;
-      }
-      if (h.incluso) html += `<div class="hosp-incluso"><div class="hosp-incluso-titulo">✓ Incluso</div><p>${esc(h.incluso)}</p></div>`;
-      html += `</div>`;
-    });
-  }
-
-  // Informações
-  if (cfg.vis_info && D.informacoes) {
-    html += `<div class="bloco bloco-info" style="background:${cfg.info_bg}!important;border-color:${cfg.info_border}!important;"><div class="bloco-titulo">📋 Informações</div><p style="font-size:${cfg.info_size}px;">${esc(D.informacoes)}</p></div>`;
-  }
-
-  // Valor
-  if (cfg.vis_valor && D.valor) {
-    html += `<div class="bloco bloco-valor" style="background:${cfg.valor_bg}!important;border-color:${cfg.valor_bg}!important;"><div class="bloco-titulo">💰 Valor à Pagar</div><div class="valor-num" style="font-size:${cfg.valor_size}px;">${esc(D.valor)}</div></div>`;
-  }
-
-  // Pagamento
-  if (cfg.vis_pag && D.pagamento.length) {
-    html += `<div class="bloco bloco-pag"><div class="bloco-titulo" style="color:${cfg.pag_titulo};">💳 Pagamento</div><p style="font-size:${cfg.pag_size}px;">${D.pagamento.map(esc).join('\n')}</p></div>`;
-  }
-
-  document.getElementById('r-corpo').innerHTML = html;
+  // ── Cabeçalho: reordenar elementos ──
+  applyHeaderOrder(cfg);
 }
 
 // ══════════════════════════════════════════
