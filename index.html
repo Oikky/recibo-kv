@@ -821,11 +821,18 @@ function setFormValues(cfg) {
 }
 
 // ══════════════════════════════════════════
-// JSONBIN — CLOUD SYNC
+// JSONBIN — CLOUD SYNC (sem imagens — evita CORS e 413)
 // ══════════════════════════════════════════
 const JSONBIN_KEY = '$2a$10$a4WtOJJY1ngCg7kinYmsz.92hLG4Pgsj5nIG0Lv52nJntdCOP.YeC';
 const JSONBIN_BIN_STORE = 'kv-viagens-bin-id';
 const JSONBIN_BASE = 'https://api.jsonbin.io/v3';
+
+// Remove imagens base64 antes de enviar — evita 413 e acelera sync
+function cfgSemImagens(cfg) {
+  const c = { ...cfg };
+  if (c.icons) c.icons = { logo: null, wa: null, ig: null, gm: null };
+  return c;
+}
 
 function showCloudMsg(txt, tipo) {
   let el = document.getElementById('cloud-msg');
@@ -850,12 +857,16 @@ async function cloudLoad() {
   showCloudMsg('☁️ Carregando configuração...', 'loading');
   try {
     const res = await fetch(`${JSONBIN_BASE}/b/${binId}/latest`, {
-      headers: { 'X-Master-Key': JSONBIN_KEY }
+      headers: { 'X-Master-Key': JSONBIN_KEY, 'X-Access-Key': JSONBIN_KEY }
     });
-    if (!res.ok) throw new Error('Bin não encontrado');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (data.record && typeof data.record === 'object' && Object.keys(data.record).length > 0) {
-      setFormValues({ ...CFG_DEFAULT, ...data.record });
+      // Mescla com imagens do localStorage (que ficam locais)
+      const localRaw = localStorage.getItem('kv-config');
+      const localIcons = localRaw ? (JSON.parse(localRaw).icons || {}) : {};
+      const merged = { ...CFG_DEFAULT, ...data.record, icons: localIcons };
+      setFormValues(merged);
       showCloudMsg('✓ Configuração carregada da nuvem', 'ok');
       return true;
     }
@@ -868,13 +879,14 @@ async function cloudLoad() {
 async function cloudSave(cfg) {
   showCloudMsg('☁️ Salvando na nuvem...', 'loading');
   let binId = localStorage.getItem(JSONBIN_BIN_STORE);
+  const payload = cfgSemImagens(cfg);
   try {
     let res;
     if (binId) {
       res = await fetch(`${JSONBIN_BASE}/b/${binId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-        body: JSON.stringify(cfg)
+        body: JSON.stringify(payload)
       });
     } else {
       res = await fetch(`${JSONBIN_BASE}/b`, {
@@ -885,7 +897,7 @@ async function cloudSave(cfg) {
           'X-Bin-Name': 'kv-viagens-config',
           'X-Private': 'true'
         },
-        body: JSON.stringify(cfg)
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
         const data = await res.json();
@@ -893,20 +905,18 @@ async function cloudSave(cfg) {
         localStorage.setItem(JSONBIN_BIN_STORE, binId);
       }
     }
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`HTTP ${res.status}: ${errText}`);
-    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     showCloudMsg('✓ Salvo na nuvem!', 'ok');
   } catch(e) {
-    showCloudMsg(`⚠ Erro: ${e.message}`, 'err');
-    console.error('CloudSave error:', e);
+    showCloudMsg(`⚠ Erro ao salvar: ${e.message}`, 'err');
   }
 }
 
 function saveConfig() {
   const cfg = getFormValues();
+  // Salva tudo (com imagens) no localStorage
   try { localStorage.setItem('kv-config', JSON.stringify(cfg)); } catch(e) {}
+  // Salva só os dados (sem imagens) na nuvem
   cloudSave(cfg);
 }
 
@@ -918,8 +928,31 @@ function resetConfig() {
   document.getElementById('logo-img-wrap').innerHTML = '<div class="logo-ph">K&V<br>Viagens</div>';
   document.getElementById('logo-preview-wrap').style.display = 'none';
   applyAll();
-  showCloudMsg('↺ Padrão restaurado e nuvem desvinculada', 'ok');
+  showCloudMsg('↺ Padrão restaurado', 'ok');
 }
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+window.addEventListener('load', async () => {
+  // 1. Tenta carregar da nuvem (cores, textos, tamanhos)
+  const fromCloud = await cloudLoad();
+
+  // 2. Fallback para localStorage se não veio da nuvem
+  if (!fromCloud) {
+    try {
+      const saved = localStorage.getItem('kv-config');
+      if (saved) { setFormValues({ ...CFG_DEFAULT, ...JSON.parse(saved) }); }
+    } catch(e) {}
+  }
+
+  applyAll();
+
+  // 3. Dados via URL
+  const params = new URLSearchParams(window.location.search);
+  const dados = params.get('dados');
+  if (dados) { try { document.getElementById('paste-input').value = decodeURIComponent(dados); parsear(); } catch(e) {} }
+});
 
 // ══════════════════════════════════════════
 // APPLY ALL — applies config to DOM + re-renders body
@@ -1329,28 +1362,7 @@ async function exportarPDF() {
   btn.textContent = original; btn.disabled = false;
 }
 
-// ══════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════
-window.addEventListener('load', async () => {
-  // 1. Tenta carregar da nuvem primeiro
-  const fromCloud = await cloudLoad();
-
-  // 2. Fallback para localStorage se não veio da nuvem
-  if (!fromCloud) {
-    try {
-      const saved = localStorage.getItem('kv-config');
-      if (saved) { setFormValues({ ...CFG_DEFAULT, ...JSON.parse(saved) }); }
-    } catch(e) {}
-  }
-
-  applyAll();
-
-  // 3. Dados via URL
-  const params = new URLSearchParams(window.location.search);
-  const dados = params.get('dados');
-  if (dados) { try { document.getElementById('paste-input').value = decodeURIComponent(dados); parsear(); } catch(e) {} }
-});
+// fim
 </script>
 </body>
 </html>
