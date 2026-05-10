@@ -820,20 +820,101 @@ function setFormValues(cfg) {
   }
 }
 
+// ══════════════════════════════════════════
+// JSONBIN — CLOUD SYNC
+// ══════════════════════════════════════════
+const JSONBIN_KEY = '$2a$10$a4WtOJJY1ngCg7kinYmsz.92hLG4Pgsj5nIG0Lv52nJntdCOP.YeC';
+const JSONBIN_BIN_STORE = 'kv-viagens-bin-id';
+const JSONBIN_BASE = 'https://api.jsonbin.io/v3';
+
+function showCloudMsg(txt, tipo) {
+  let el = document.getElementById('cloud-msg');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'cloud-msg';
+    el.style.cssText = 'font-size:10px;padding:5px 8px;border-radius:5px;font-family:monospace;display:none;margin-bottom:4px;';
+    const expBtn = document.querySelector('.btn-export');
+    if (expBtn) expBtn.parentNode.insertBefore(el, expBtn);
+  }
+  el.textContent = txt;
+  el.style.background = tipo==='ok'?'#0a2a0a':tipo==='err'?'#2a0a0a':'#12212e';
+  el.style.color      = tipo==='ok'?'#6fcf6f':tipo==='err'?'#cf6f6f':'#cfcf6f';
+  el.style.border     = `1px solid ${tipo==='ok'?'#1a5a1a':tipo==='err'?'#5a1a1a':'#5a5a00'}`;
+  el.style.display    = 'block';
+  if (tipo === 'ok') setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+async function cloudLoad() {
+  const binId = localStorage.getItem(JSONBIN_BIN_STORE);
+  if (!binId) return false;
+  showCloudMsg('☁️ Carregando configuração...', 'loading');
+  try {
+    const res = await fetch(`${JSONBIN_BASE}/b/${binId}/latest`, {
+      headers: { 'X-Master-Key': JSONBIN_KEY }
+    });
+    if (!res.ok) throw new Error('Bin não encontrado');
+    const data = await res.json();
+    if (data.record && typeof data.record === 'object' && Object.keys(data.record).length > 0) {
+      setFormValues({ ...CFG_DEFAULT, ...data.record });
+      showCloudMsg('✓ Configuração carregada da nuvem', 'ok');
+      return true;
+    }
+  } catch(e) {
+    showCloudMsg('⚠ Não foi possível carregar da nuvem', 'err');
+  }
+  return false;
+}
+
+async function cloudSave(cfg) {
+  showCloudMsg('☁️ Salvando na nuvem...', 'loading');
+  let binId = localStorage.getItem(JSONBIN_BIN_STORE);
+  try {
+    let res;
+    if (binId) {
+      res = await fetch(`${JSONBIN_BASE}/b/${binId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+        body: JSON.stringify(cfg)
+      });
+    } else {
+      res = await fetch(`${JSONBIN_BASE}/b`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JSONBIN_KEY,
+          'X-Bin-Name': 'kv-viagens-config',
+          'X-Private': 'true'
+        },
+        body: JSON.stringify(cfg)
+      });
+      if (res.ok) {
+        const data = await res.json();
+        binId = data.metadata.id;
+        localStorage.setItem(JSONBIN_BIN_STORE, binId);
+      }
+    }
+    if (!res.ok) throw new Error('Falha ao salvar');
+    showCloudMsg('✓ Salvo na nuvem!', 'ok');
+  } catch(e) {
+    showCloudMsg('⚠ Erro ao salvar na nuvem', 'err');
+  }
+}
+
 function saveConfig() {
   const cfg = getFormValues();
-  try { localStorage.setItem('kv-config', JSON.stringify(cfg)); showMsg('✓ Configuração salva!', 'ok'); } catch(e) { showMsg('Erro ao salvar.', 'err'); }
+  try { localStorage.setItem('kv-config', JSON.stringify(cfg)); } catch(e) {}
+  cloudSave(cfg);
 }
 
 function resetConfig() {
   localStorage.removeItem('kv-config');
+  localStorage.removeItem(JSONBIN_BIN_STORE);
   ICONS = { logo: null, wa: null, ig: null, gm: null };
   setFormValues(CFG_DEFAULT);
-  // reset logo to placeholder
   document.getElementById('logo-img-wrap').innerHTML = '<div class="logo-ph">K&V<br>Viagens</div>';
   document.getElementById('logo-preview-wrap').style.display = 'none';
   applyAll();
-  showMsg('↺ Padrão restaurado', 'ok');
+  showCloudMsg('↺ Padrão restaurado e nuvem desvinculada', 'ok');
 }
 
 // ══════════════════════════════════════════
@@ -1247,14 +1328,21 @@ async function exportarPDF() {
 // ══════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════
-window.addEventListener('load', () => {
-  try {
-    const saved = localStorage.getItem('kv-config');
-    if (saved) { const cfg = { ...CFG_DEFAULT, ...JSON.parse(saved) }; setFormValues(cfg); }
-  } catch(e) {}
+window.addEventListener('load', async () => {
+  // 1. Tenta carregar da nuvem primeiro
+  const fromCloud = await cloudLoad();
+
+  // 2. Fallback para localStorage se não veio da nuvem
+  if (!fromCloud) {
+    try {
+      const saved = localStorage.getItem('kv-config');
+      if (saved) { setFormValues({ ...CFG_DEFAULT, ...JSON.parse(saved) }); }
+    } catch(e) {}
+  }
 
   applyAll();
 
+  // 3. Dados via URL
   const params = new URLSearchParams(window.location.search);
   const dados = params.get('dados');
   if (dados) { try { document.getElementById('paste-input').value = decodeURIComponent(dados); parsear(); } catch(e) {} }
