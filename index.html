@@ -114,8 +114,6 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .tabs { display: flex; gap: 4px; }
 .tab { flex: 1; padding: 6px; font-size: 11px; border-radius: 5px; border: 1px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-family: 'Sora', sans-serif; }
 .tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.tab-panel { display: none; }
-.tab-panel.active { display: flex; flex-direction: column; gap: .7rem; }
 
 /* pass list */
 .pass-list { display: flex; flex-direction: column; gap: 4px; }
@@ -343,10 +341,6 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     <div class="topnav-logo">K&V</div>
     <div class="topnav-name">K&V Easy Traveling<small>Gerador de Recibo</small></div>
   </div>
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('dados',this)">Dados</button>
-    <button class="tab" onclick="showTab('config',this)">Configuração</button>
-  </div>
   <div class="topnav-sep"></div>
   <div class="topnav-fmt">
     <button id="fmt-pdf" class="tab active" onclick="setFormato('pdf')">PDF</button>
@@ -365,21 +359,12 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 <!-- ═══ SIDEBAR ═══ -->
 <div class="sidebar">
 
-  <!-- TAB DADOS -->
-  <div id="tab-dados" class="tab-panel active">
-    <div class="paste-box">
-      <label>📋 Cole os dados do Coda aqui</label>
-      <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." oninput="autoResize(this)"></textarea>
-      <button class="btn-primary" style="margin-top:6px" onclick="parsear()">Gerar recibo ↗</button>
-      <div class="msg" id="msg"></div>
-    </div>
-    <div class="sb-section">Passageiros</div>
-    <div class="pass-list" id="pass-list"></div>
-    <button class="btn-secondary" onclick="addPassageiro()">+ Adicionar passageiro</button>
-  </div>
+  <!-- PASSAGEIROS -->
+  <div class="sb-section">Passageiros</div>
+  <div class="pass-list" id="pass-list"></div>
+  <button class="btn-secondary" onclick="addPassageiro()">+ Adicionar passageiro</button>
 
-  <!-- TAB CONFIG -->
-  <div id="tab-config" class="tab-panel">
+  <!-- CONFIGURAÇÃO -->
 
     <!-- ── LOGO ── -->
     <div class="el-card open" id="card-logo">
@@ -737,7 +722,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
       <button class="btn-checkpoint" onclick="cloudSaveCheckpoint(getFormValues())">📌 Definir ponto de reinício</button>
       <button class="btn-restart" onclick="loadCheckpoint()">↺ Reiniciar para ponto salvo</button>
     </div>
-  </div>
+
+  <!-- CODA INPUT -->
+    <div class="paste-box">
+      <label>📋 Cole os dados do Coda aqui</label>
+      <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." oninput="autoResize(this)"></textarea>
+      <button class="btn-primary" style="margin-top:6px" onclick="parsear()">Gerar recibo ↗</button>
+      <div class="msg" id="msg"></div>
+    </div>
 
 </div><!-- end sidebar -->
 
@@ -1552,10 +1544,4 @@ async function exportarPDF() {
     D.trechos.forEach(t => { if(t.locEsp) partes.push(t.locEsp.trim()); });
     doc.save(`${partes.join(' - ').replace(/[\/\\:*?"<>|]/g,'').trim()}.pdf`);
   } catch(e) { alert('Erro ao gerar PDF: ' + e.message); }
-  btn.textContent = original; btn.disabled = false;
-}
-
-// fim
-</script>
-</body>
-</html>
+  btn.textContent = original; btn.disabled =
