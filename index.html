@@ -129,19 +129,17 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 }
 .el-card-head {
   display: flex; align-items: center; gap: 10px;
-  padding: 11px 14px; cursor: pointer;
+  padding: 11px 14px; cursor: default;
   background: rgba(255,255,255,.03);
   border-bottom: 1px solid transparent;
   transition: background .15s;
 }
-.el-card-head:hover { background: rgba(255,255,255,.06); }
-.el-card.open .el-card-head { border-bottom-color: var(--border); }
+.el-card-head { border-bottom: 1px solid var(--border); }
 .el-card-icon { font-size: 18px; }
 .el-card-title { flex: 1; font-size: 14px; font-weight: 600; color: var(--text); }
 .el-card-arrow { font-size: 13px; color: var(--text3); transition: transform .2s; }
 .el-card.open .el-card-arrow { transform: rotate(90deg); }
-.el-card-body { display: none; flex-direction: column; gap: 11px; padding: 14px; }
-.el-card.open .el-card-body { display: flex; }
+.el-card-body { display: flex; flex-direction: column; gap: 11px; padding: 14px; }
 
 /* vis toggle pill */
 .vis-toggle { display: flex; align-items: center; gap: 6px; }
@@ -368,10 +366,9 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 
     <!-- ── LOGO ── -->
     <div class="el-card open" id="card-logo">
-      <div class="el-card-head" onclick="toggleCard('card-logo')">
+      <div class="el-card-head">
         <span class="el-card-icon">🖼️</span>
         <span class="el-card-title">Logo da empresa</span>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="logo-upload" onclick="document.getElementById('logo-file').click()">
@@ -391,13 +388,12 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 
     <!-- ── NOME ── -->
     <div class="el-card open" id="card-nome">
-      <div class="el-card-head" onclick="toggleCard('card-nome')">
+      <div class="el-card-head">
         <span class="el-card-icon">🏢</span>
         <span class="el-card-title">Nome da empresa</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-nome" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Texto</label><input id="cfg-nome" value="K&V  Easy Traveling" oninput="applyAll()"></div>
@@ -414,14 +410,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── SLOGAN ── -->
-    <div class="el-card" id="card-slogan">
-      <div class="el-card-head" onclick="toggleCard('card-slogan')">
+    <div class="el-card open" id="card-slogan">
+      <div class="el-card-head">
         <span class="el-card-icon">✨</span>
         <span class="el-card-title">Slogan</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-slogan" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Texto</label><input id="cfg-slogan" value='✨ "Viaje hoje, viaje barato, viaje sempre" ✨' oninput="applyAll()"></div>
@@ -439,14 +434,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── WHATSAPP + INSTAGRAM ── -->
-    <div class="el-card" id="card-tel">
-      <div class="el-card-head" onclick="toggleCard('card-tel')">
+    <div class="el-card open" id="card-tel">
+      <div class="el-card-head">
         <span class="el-card-icon">📱</span>
         <span class="el-card-title">WhatsApp + Instagram</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-tel" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>WhatsApp</label><input id="cfg-tel" value="(38) 9 8815-5417" oninput="applyAll()"></div>
@@ -475,14 +469,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── CNPJ ── -->
-    <div class="el-card" id="card-cnpj">
-      <div class="el-card-head" onclick="toggleCard('card-cnpj')">
+    <div class="el-card open" id="card-cnpj">
+      <div class="el-card-head">
         <span class="el-card-icon">🏛️</span>
         <span class="el-card-title">CNPJ</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-cnpj" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Número</label><input id="cfg-cnpj" value="65.597.589/0001-00" oninput="applyAll()"></div>
@@ -495,14 +488,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── LOCALIZADOR ── -->
-    <div class="el-card" id="card-loc">
-      <div class="el-card-head" onclick="toggleCard('card-loc')">
+    <div class="el-card open" id="card-loc">
+      <div class="el-card-head">
         <span class="el-card-icon">🔑</span>
         <span class="el-card-title">Bloco de Localizador</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-loc" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-loc" value="#193F72" oninput="applyAll()"></div>
@@ -514,14 +506,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── TRECHOS ── -->
-    <div class="el-card" id="card-trechos">
-      <div class="el-card-head" onclick="toggleCard('card-trechos')">
+    <div class="el-card open" id="card-trechos">
+      <div class="el-card-head">
         <span class="el-card-icon">✈️</span>
         <span class="el-card-title">Trechos de Voo</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-trechos" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor principal</label><input type="color" id="c-trecho-primary" value="#193F72" oninput="applyAll()"></div>
@@ -542,14 +533,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── BAGAGEM ESPECÍFICA ── -->
-    <div class="el-card" id="card-bagesp">
-      <div class="el-card-head" onclick="toggleCard('card-bagesp')">
+    <div class="el-card open" id="card-bagesp">
+      <div class="el-card-head">
         <span class="el-card-icon">🧳</span>
         <span class="el-card-title">Bagagem Específica</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-bagesp" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bagesp-bg" value="#e0dbd0" oninput="applyAll()"></div>
@@ -562,14 +552,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── BAGAGEM GERAL ── -->
-    <div class="el-card" id="card-baggeral">
-      <div class="el-card-head" onclick="toggleCard('card-baggeral')">
+    <div class="el-card open" id="card-baggeral">
+      <div class="el-card-head">
         <span class="el-card-icon">🎒</span>
         <span class="el-card-title">Bagagem Geral</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-baggeral" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bag-bg" value="#fdf0e0" oninput="applyAll()"></div>
@@ -586,14 +575,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── HOSPEDAGEM ── -->
-    <div class="el-card" id="card-hosp">
-      <div class="el-card-head" onclick="toggleCard('card-hosp')">
+    <div class="el-card open" id="card-hosp">
+      <div class="el-card-head">
         <span class="el-card-icon">🏨</span>
         <span class="el-card-title">Hospedagem</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-hosp" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor do título</label><input type="color" id="c-hosp-titulo" value="#193F72" oninput="applyAll()"></div>
@@ -606,14 +594,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── INFORMAÇÕES ── -->
-    <div class="el-card" id="card-info">
-      <div class="el-card-head" onclick="toggleCard('card-info')">
+    <div class="el-card open" id="card-info">
+      <div class="el-card-head">
         <span class="el-card-icon">📋</span>
         <span class="el-card-title">Bloco de Informações</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-info" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-info-bg" value="#e5eeec" oninput="applyAll()"></div>
@@ -630,14 +617,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── VALOR ── -->
-    <div class="el-card" id="card-valor">
-      <div class="el-card-head" onclick="toggleCard('card-valor')">
+    <div class="el-card open" id="card-valor">
+      <div class="el-card-head">
         <span class="el-card-icon">💰</span>
         <span class="el-card-title">Valor à Pagar</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-valor" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-valor-bg" value="#193F72" oninput="applyAll()"></div>
@@ -649,14 +635,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── PAGAMENTO ── -->
-    <div class="el-card" id="card-pag">
-      <div class="el-card-head" onclick="toggleCard('card-pag')">
+    <div class="el-card open" id="card-pag">
+      <div class="el-card-head">
         <span class="el-card-icon">💳</span>
         <span class="el-card-title">Pagamento</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-pag" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor do título</label><input type="color" id="c-pag-titulo" value="#193F72" oninput="applyAll()"></div>
@@ -668,14 +653,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── RODAPÉ ── -->
-    <div class="el-card" id="card-rodape">
-      <div class="el-card-head" onclick="toggleCard('card-rodape')">
+    <div class="el-card open" id="card-rodape">
+      <div class="el-card-head">
         <span class="el-card-icon">📎</span>
         <span class="el-card-title">Rodapé</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-rodape" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Texto esquerdo</label><input id="cfg-rodape" value="Recibo gerado pela K&V Easy Traveling" oninput="applyAll()"></div>
@@ -694,12 +678,11 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── SINCRONIZAÇÃO ── -->
-    <div class="el-card" id="card-cloud">
-      <div class="el-card-head" onclick="toggleCard('card-cloud')">
+    <div class="el-card open" id="card-cloud">
+      <div class="el-card-head">
         <span class="el-card-icon">☁️</span>
         <span class="el-card-title">Sincronização compartilhada</span>
         <span id="cloud-connected-badge" style="font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,0,0,.3);margin-right:4px;">○ Sem bin</span>
-        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl">
