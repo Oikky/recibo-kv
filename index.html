@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K&V Easy Traveling — Recibo</title>
-<link id="favicon" rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23307082'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='22' fill='%23EA9940'>K%26V</text></svg>">
+<link id="favicon" rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23193F72'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='22' fill='%23EA9940'>K%26V</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #307082;
-  --primary-light: #3d8a9e;
+  --primary: #193F72;
+  --primary-light: #2155a0;
   --accent: #EA9940;
   --bg: #12212E;
   --bg2: #0e1c27;
@@ -17,7 +17,7 @@
   --border: #1e3040;
   --text: #ECE7DC;
   --text2: #6CA3A2;
-  --text3: #4a7a80;
+  --text3: #2a4a7a;
   --success: #1a7a3a;
 }
 
@@ -51,8 +51,8 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .fl input:focus, .fl textarea:focus { outline: none; border-color: var(--primary-light); }
 .fl textarea { resize: vertical; min-height: 50px; }
 
-.paste-box { border: 1.5px dashed #1a4a70; border-radius: 8px; padding: 10px; background: var(--bg3); }
-.paste-box label { font-size: 11px; color: #5a9fd4; display: block; margin-bottom: 5px; font-weight: 500; }
+.paste-box { border: 1.5px dashed #152f5a; border-radius: 8px; padding: 10px; background: var(--bg3); }
+.paste-box label { font-size: 11px; color: #5a90d8; display: block; margin-bottom: 5px; font-weight: 500; }
 .paste-box textarea {
   font-size: 11px; min-height: calc(100vh / 3); overflow: hidden;
   border: 1px solid var(--border); border-radius: 5px;
@@ -62,10 +62,10 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 }
 
 .btn-primary { width: 100%; padding: 9px; font-size: 12px; border: none; border-radius: 6px; background: var(--primary-light); color: #fff; cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif; }
-.btn-primary:hover { background: #1a5ca8; }
+.btn-primary:hover { background: #0d2a4f; }
 .btn-secondary { width: 100%; padding: 8px; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; font-family: 'Sora', sans-serif; }
 .btn-secondary:hover { border-color: var(--primary-light); color: var(--text); }
-.btn-export { width: 100%; padding: 12px; font-size: 13px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--primary) 0%, #1a5ca8 100%); color: #fff; cursor: pointer; font-weight: 700; font-family: 'Sora', sans-serif; margin-top: auto; box-shadow: 0 4px 16px rgba(26,60,92,.5); }
+.btn-export { width: 100%; padding: 12px; font-size: 13px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--primary) 0%, #0d2a4f 100%); color: #fff; cursor: pointer; font-weight: 700; font-family: 'Sora', sans-serif; margin-top: auto; box-shadow: 0 4px 16px rgba(26,60,92,.5); }
 .btn-export:hover { opacity: .9; }
 
 .msg { font-size: 11px; padding: 6px 9px; border-radius: 5px; display: none; font-family: 'JetBrains Mono', monospace; }
@@ -152,68 +152,68 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .rec-header {
   display: flex; align-items: flex-end; justify-content: space-between;
   margin-bottom: 20px; padding-bottom: 16px;
-  border-bottom: 3px solid var(--r-primary, #307082);
+  border-bottom: 3px solid var(--r-primary, #193F72);
 }
 .rec-logo-area { display: flex; align-items: center; gap: 16px; }
 #logo-img-wrap img, #logo-img-wrap .logo-ph {
   width: 88px; height: 88px; object-fit: cover; border-radius: 8px; display: block;
 }
 #logo-img-wrap .logo-ph {
-  background: linear-gradient(135deg, #307082 60%, #EA9940 100%);
+  background: linear-gradient(135deg, #193F72 60%, #EA9940 100%);
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-size: 10px; font-weight: 700; text-align: center; line-height: 1.4;
 }
-.rec-company h1 { font-size: 20px; font-weight: 700; color: var(--r-primary, #307082); }
+.rec-company h1 { font-size: 20px; font-weight: 700; color: var(--r-primary, #193F72); }
 .rec-slogan { font-size: 10px; color: #4a5a50; margin-top: 3px; border: .5px solid #b0a898; border-radius: 4px; padding: 3px 8px; display: inline-block; }
 .rec-cnpj { text-align: right; font-size: 11px; color: #4a5a50; align-self: flex-end; }
-.rec-cnpj strong { color: var(--r-primary, #307082); font-size: 12px; display: block; }
+.rec-cnpj strong { color: var(--r-primary, #193F72); font-size: 12px; display: block; }
 
 .bloco { border: 1px solid #b8b0a0; border-radius: 8px; padding: 11px 15px; margin-bottom: 12px; background: #f5f0e8; break-inside: avoid; page-break-inside: avoid; }
-.bloco-titulo { font-weight: 700; font-size: 13px; color: var(--r-primary, #307082); margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.bloco-titulo { font-weight: 700; font-size: 13px; color: var(--r-primary, #193F72); margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
 .bloco p { color: #2a3a35; font-size: 12px; line-height: 1.8; }
 .bloco-pass p { font-size: 13px; font-weight: 500; }
 
-.bloco-loc { background: var(--r-loc-bg, #307082) !important; border-color: var(--r-loc-bg, #307082) !important; }
+.bloco-loc { background: var(--r-loc-bg, #193F72) !important; border-color: var(--r-loc-bg, #193F72) !important; }
 .bloco-loc .bloco-titulo { color: rgba(255,255,255,.7) !important; font-size: 11px !important; font-weight: 500 !important; }
 .bloco-loc p { color: #fff !important; font-size: 14px !important; font-weight: 700 !important; }
 
 .trecho { background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px; padding: 12px 15px; margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
-.trecho-titulo { font-weight: 700; font-size: 14px; color: var(--r-primary, #307082); display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #c8c0b0; }
+.trecho-titulo { font-weight: 700; font-size: 14px; color: var(--r-primary, #193F72); display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #c8c0b0; }
 
 .loc-cia-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-.loc-esp-bloco { background: var(--r-loc-bg, #307082); border-radius: 6px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; }
+.loc-esp-bloco { background: var(--r-loc-bg, #193F72); border-radius: 6px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; }
 .loc-esp-label { font-size: 10px; color: rgba(255,255,255,.6); font-weight: 500; }
 .loc-esp-val { font-size: 13px; color: #fff; font-weight: 700; }
-.cia-bloco { border: 1px solid var(--r-loc-bg, #307082); border-radius: 6px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; }
-.cia-label { font-size: 10px; color: var(--r-loc-bg, #307082); font-weight: 500; }
-.cia-val { font-size: 13px; color: var(--r-loc-bg, #307082); font-weight: 700; }
+.cia-bloco { border: 1px solid var(--r-loc-bg, #193F72); border-radius: 6px; padding: 7px 12px; display: inline-flex; align-items: center; gap: 8px; }
+.cia-label { font-size: 10px; color: var(--r-loc-bg, #193F72); font-weight: 500; }
+.cia-val { font-size: 13px; color: var(--r-loc-bg, #193F72); font-weight: 700; }
 
 .trecho-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 10px; }
 .tcol { display: flex; flex-direction: column; gap: 5px; }
-.tcol-header { font-size: 10px; font-weight: 700; color: var(--r-primary, #307082); text-transform: uppercase; letter-spacing: .06em; padding-bottom: 4px; border-bottom: 2px solid var(--r-primary, #307082); margin-bottom: 3px; }
+.tcol-header { font-size: 10px; font-weight: 700; color: var(--r-primary, #193F72); text-transform: uppercase; letter-spacing: .06em; padding-bottom: 4px; border-bottom: 2px solid var(--r-primary, #193F72); margin-bottom: 3px; }
 .trow { display: flex; flex-direction: column; }
 .trow-label { font-size: 10px; color: #6a7a70; }
 .trow-val { font-size: 12px; color: #12212E; font-weight: 600; }
 
 .trecho-bottom { display: flex; flex-direction: column; gap: 0; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e8eef5; }
 .tbot-header { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; padding: 4px 0 6px; border-bottom: 1px solid #b8b0a0; margin-bottom: 4px; }
-.tbot-header-label { font-size: 10px; font-weight: 700; color: #307082; text-transform: uppercase; letter-spacing: .06em; }
+.tbot-header-label { font-size: 10px; font-weight: 700; color: #193F72; text-transform: uppercase; letter-spacing: .06em; }
 .tbot-parada-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; padding: 3px 0; }
 .tbot-parada-row + .tbot-parada-row { border-top: .5px solid #c8c0b0; }
 .tbot-parada-local { font-size: 12px; color: #12212E; font-weight: 500; }
 .tbot-parada-dur { font-size: 12px; color: #4a5a50; }
 .tbot-total { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #b8b0a0; }
 .tbot-total-label { font-size: 10px; color: #6a7a70; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-.tbot-total-val { font-size: 13px; color: #307082; font-weight: 700; }
+.tbot-total-val { font-size: 13px; color: #193F72; font-weight: 700; }
 .tbot-item { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
 .tbot-label { font-size: 10px; color: #6a7a70; }
 .tbot-val { font-size: 12px; color: #12212E; font-weight: 600; }
 
-.bag-esp { padding: 8px 11px; background: var(--r-bag-esp-bg, #e0dbd0); border-radius: 6px; border-left: 3px solid var(--r-bag-esp-border, #307082); }
-.bag-esp-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-esp-border, #307082); margin-bottom: 4px; }
+.bag-esp { padding: 8px 11px; background: var(--r-bag-esp-bg, #e0dbd0); border-radius: 6px; border-left: 3px solid var(--r-bag-esp-border, #193F72); }
+.bag-esp-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-esp-border, #193F72); margin-bottom: 4px; }
 .bag-esp ul { list-style: none; }
 .bag-esp li { font-size: 11px; color: #2a3a35; line-height: 1.75; }
-.bag-esp li::before { content: "✓ "; color: var(--r-bag-esp-border, #307082); font-weight: 700; }
+.bag-esp li::before { content: "✓ "; color: var(--r-bag-esp-border, #193F72); font-weight: 700; }
 
 .bloco-bag { background: var(--r-bag-bg, #fdf0e0) !important; border-color: var(--r-bag-border, #EA9940) !important; }
 .bloco-bag .bloco-titulo { color: var(--r-bag-text, #b06010) !important; }
@@ -222,18 +222,18 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .bloco-bag li::before { content: "✓ "; color: var(--r-bag-text, #b06010); font-weight: 700; }
 
 .bloco-info { background: var(--r-info-bg, #e5eeec) !important; border-color: var(--r-info-border, #6CA3A2) !important; }
-.bloco-info .bloco-titulo { color: var(--r-primary, #307082) !important; }
+.bloco-info .bloco-titulo { color: var(--r-primary, #193F72) !important; }
 .bloco-info p { white-space: pre-wrap; font-size: 12px; color: #2a3a35; line-height: 1.75; }
 
-.bloco-valor { background: var(--r-primary, #307082) !important; border-color: var(--r-primary, #307082) !important; display: flex; justify-content: space-between; align-items: center; }
+.bloco-valor { background: var(--r-primary, #193F72) !important; border-color: var(--r-primary, #193F72) !important; display: flex; justify-content: space-between; align-items: center; }
 .bloco-valor .bloco-titulo { color: rgba(255,255,255,.7) !important; margin-bottom: 0; font-size: 11px !important; font-weight: 500 !important; }
 .valor-num { font-size: 24px; font-weight: 700; color: #fff; }
 
 .hospedagem { background: #f5f0e8; border: 1px solid #b8b0a0; border-radius: 8px; padding: 12px 15px; margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
-.hosp-titulo { font-weight: 700; font-size: 13px; color: #307082; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #c8c0b0; }
+.hosp-titulo { font-weight: 700; font-size: 13px; color: #193F72; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #c8c0b0; }
 .hosp-conf { display: inline-flex; align-items: center; gap: 8px; background: #e8e0d0; border-radius: 6px; padding: 5px 12px; margin-bottom: 10px; }
-.hosp-conf-label { font-size: 10px; color: #307082; font-weight: 600; letter-spacing: .06em; opacity: .7; }
-.hosp-conf-val { font-size: 13px; color: #307082; font-weight: 700; letter-spacing: .05em; }
+.hosp-conf-label { font-size: 10px; color: #193F72; font-weight: 600; letter-spacing: .06em; opacity: .7; }
+.hosp-conf-val { font-size: 13px; color: #193F72; font-weight: 700; letter-spacing: .05em; }
 .hosp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-bottom: 6px; }
 .hosp-item { display: flex; flex-direction: column; }
 .hosp-full { grid-column: 1/-1; }
@@ -244,7 +244,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .hosp-incluso-titulo { font-size: 10px; font-weight: 700; color: var(--r-bag-text, #b06010); margin-bottom: 3px; }
 .hosp-incluso p { font-size: 11px; color: #2a3a35; line-height: 1.7; white-space: pre-wrap; }
 
-.bloco-pag .bloco-titulo { color: var(--r-primary, #307082); }
+.bloco-pag .bloco-titulo { color: var(--r-primary, #193F72); }
 .bloco-pag p { font-size: 12px; color: #2a3a35; white-space: pre-wrap; }
 
 .rec-footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid #b8b0a0; font-size: 10px; color: #7a8a80; display: flex; justify-content: space-between; align-items: center; }
@@ -256,6 +256,30 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 #recibo.modo-celular .rec-cnpj { text-align: left; margin-top: 4px; }
 #recibo.modo-celular .trecho-cols { grid-template-columns: 1fr; gap: 12px; }
 #recibo.modo-celular .valor-num { font-size: 22px; }
+
+
+/* checkpoint / restart buttons */
+.btn-checkpoint {
+  width: 100%; padding: 9px; font-size: 12px;
+  border: 1px solid #193F72; border-radius: 6px;
+  background: rgba(25,63,114,.2); color: #7aaae8;
+  cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif;
+}
+.btn-checkpoint:hover { background: rgba(25,63,114,.38); }
+.btn-restart {
+  width: 100%; padding: 9px; font-size: 12px;
+  border: 1px solid var(--accent); border-radius: 6px;
+  background: rgba(234,153,64,.12); color: var(--accent);
+  cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif;
+}
+.btn-restart:hover { background: rgba(234,153,64,.24); }
+.bin-id-input-wrap { display:flex; gap:4px; }
+.bin-id-input-wrap input { flex:1; }
+.bin-copy-btn {
+  padding: 6px 9px; border: 1px solid var(--border); border-radius: 5px;
+  background: transparent; color: var(--text2); cursor: pointer; font-size: 12px;
+}
+.bin-copy-btn:hover { border-color: var(--primary-light); }
 
 @media print {
   html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
@@ -275,7 +299,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 <!-- ═══ SIDEBAR ═══ -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <div style="width:32px;height:32px;background:linear-gradient(135deg,#307082,#EA9940);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;text-align:center;line-height:1.2;">K&V</div>
+    <div style="width:32px;height:32px;background:linear-gradient(135deg,#193F72,#EA9940);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;text-align:center;line-height:1.2;">K&V</div>
     <div><span>K&V Easy Traveling</span><small>Gerador de Recibo</small></div>
   </div>
 
@@ -344,7 +368,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
           <label>Tamanho <span id="nome-size-val">20</span>px</label>
           <input type="range" id="nome-size" min="10" max="36" value="20" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
         </div>
-        <div class="cr-row"><label>Cor</label><input type="color" id="c-primary" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor</label><input type="color" id="c-primary" value="#193F72" oninput="applyAll()"></div>
         <div class="order-row">
           <label>Posição no cabeçalho</label>
           <select id="ord-nome" onchange="applyAll()"><option value="0">1º</option><option value="1">2º</option><option value="2">3º</option><option value="3">4º</option></select>
@@ -429,7 +453,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
           <label>Tamanho <span id="cnpj-size-val">12</span>px</label>
           <input type="range" id="cnpj-size" min="7" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
         </div>
-        <div class="cr-row"><label>Cor</label><input type="color" id="c-cnpj" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor</label><input type="color" id="c-cnpj" value="#193F72" oninput="applyAll()"></div>
       </div>
     </div>
 
@@ -444,7 +468,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
         <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
-        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-loc" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-loc" value="#193F72" oninput="applyAll()"></div>
         <div class="sl-row">
           <label>Tamanho do texto <span id="loc-size-val">22</span>px</label>
           <input type="range" id="loc-size" min="12" max="36" value="22" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
@@ -463,8 +487,8 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
         <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
-        <div class="cr-row"><label>Cor principal</label><input type="color" id="c-trecho-primary" value="#307082" oninput="applyAll()"></div>
-        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-trecho-titulo" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor principal</label><input type="color" id="c-trecho-primary" value="#193F72" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-trecho-titulo" value="#193F72" oninput="applyAll()"></div>
         <div class="sl-row">
           <label>Tamanho do título <span id="trecho-titulo-size-val">14</span>px</label>
           <input type="range" id="trecho-titulo-size" min="10" max="22" value="14" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
@@ -492,7 +516,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bagesp-bg" value="#e0dbd0" oninput="applyAll()"></div>
-        <div class="cr-row"><label>Cor da borda/texto</label><input type="color" id="c-bagesp-border" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor da borda/texto</label><input type="color" id="c-bagesp-border" value="#193F72" oninput="applyAll()"></div>
         <div class="sl-row">
           <label>Tamanho do item <span id="bagesp-size-val">11</span>px</label>
           <input type="range" id="bagesp-size" min="9" max="18" value="11" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
@@ -535,8 +559,8 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
         <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
-        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-hosp-titulo" value="#307082" oninput="applyAll()"></div>
-        <div class="cr-row"><label>Cor do código de confirm.</label><input type="color" id="c-hosp-conf" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-hosp-titulo" value="#193F72" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor do código de confirm.</label><input type="color" id="c-hosp-conf" value="#193F72" oninput="applyAll()"></div>
         <div class="sl-row">
           <label>Tamanho dos valores <span id="hosp-val-size-val">12</span>px</label>
           <input type="range" id="hosp-val-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
@@ -579,7 +603,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
         <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
-        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-valor-bg" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-valor-bg" value="#193F72" oninput="applyAll()"></div>
         <div class="sl-row">
           <label>Tamanho do número <span id="valor-size-val">24</span>px</label>
           <input type="range" id="valor-size" min="14" max="40" value="24" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
@@ -598,7 +622,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
         <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
-        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-pag-titulo" value="#307082" oninput="applyAll()"></div>
+        <div class="cr-row"><label>Cor do título</label><input type="color" id="c-pag-titulo" value="#193F72" oninput="applyAll()"></div>
         <div class="sl-row">
           <label>Tamanho do texto <span id="pag-size-val">12</span>px</label>
           <input type="range" id="pag-size" min="9" max="18" value="12" oninput="this.previousElementSibling.querySelector('span').textContent=this.value;applyAll()">
@@ -632,9 +656,34 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
       </div>
     </div>
 
-    <div style="display:flex;gap:6px;margin-top:4px;">
-      <button class="btn-primary" style="flex:1;" onclick="saveConfig()">💾 Salvar</button>
-      <button class="btn-secondary" style="flex:1;" onclick="resetConfig()">↺ Padrão</button>
+    <!-- ── SINCRONIZAÇÃO ── -->
+    <div class="el-card" id="card-cloud">
+      <div class="el-card-head" onclick="toggleCard('card-cloud')">
+        <span class="el-card-icon">☁️</span>
+        <span class="el-card-title">Sincronização compartilhada</span>
+        <span id="cloud-connected-badge" style="font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,0,0,.3);margin-right:4px;">○ Sem bin</span>
+        <span class="el-card-arrow">▶</span>
+      </div>
+      <div class="el-card-body">
+        <div class="fl">
+          <label>ID do Bin compartilhado</label>
+          <div class="bin-id-input-wrap">
+            <input id="cfg-bin-id" placeholder="Cole o ID aqui para sincronizar..." oninput="setSharedBinId(this.value.trim())">
+            <button class="bin-copy-btn" title="Copiar ID" onclick="navigator.clipboard?.writeText(getSharedBinId()||'').then(()=>showMsg('ID copiado!','ok'))">📋</button>
+          </div>
+        </div>
+        <button class="btn-secondary" style="font-size:10px;" onclick="criarNovoBin()">+ Criar novo bin compartilhado</button>
+        <div style="font-size:10px;color:var(--text3);line-height:1.6;margin-top:2px;">
+          Crie um bin uma vez e compartilhe o ID com toda a equipe. Links de recibo também propagam o ID automaticamente.
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;">
+      <button class="btn-primary" style="flex:1;" onclick="saveConfig()">💾 Salvar na nuvem</button>
+      <button class="btn-secondary" style="flex:1;" onclick="resetConfig()">↺ Fábrica</button>
+      <button class="btn-checkpoint" onclick="cloudSaveCheckpoint(getFormValues())">📌 Definir ponto de reinício</button>
+      <button class="btn-restart" onclick="loadCheckpoint()">↺ Reiniciar para ponto salvo</button>
     </div>
   </div>
 
@@ -743,12 +792,12 @@ const CFG_DEFAULT = {
   nome: 'K&V  Easy Traveling', slogan: '✨ "Viaje hoje, viaje barato, viaje sempre" ✨',
   tel: '(38) 9 8815-5417', ig: '@kevviagens', cnpj: '65.597.589/0001-00',
   rodape: 'Recibo gerado pela K&V Easy Traveling', gmail: 'keveasytraveling@gmail.com',
-  primary: '#307082', slogan_color: '#4a5a50', slogan_border: '#b0a898',
-  cnpj_color: '#307082', loc: '#307082', trecho_primary: '#307082',
-  trecho_titulo: '#307082', bag_bg: '#fdf0e0', bag_accent: '#EA9940',
+  primary: '#193F72', slogan_color: '#4a5a50', slogan_border: '#b0a898',
+  cnpj_color: '#193F72', loc: '#193F72', trecho_primary: '#193F72',
+  trecho_titulo: '#193F72', bag_bg: '#fdf0e0', bag_accent: '#EA9940',
   info_bg: '#e5eeec', info_border: '#6CA3A2', bagesp_bg: '#e0dbd0',
-  bagesp_border: '#307082', hosp_titulo: '#307082', hosp_conf: '#307082',
-  valor_bg: '#307082', pag_titulo: '#307082', rodape_color: '#7a8a80',
+  bagesp_border: '#193F72', hosp_titulo: '#193F72', hosp_conf: '#193F72',
+  valor_bg: '#193F72', pag_titulo: '#193F72', rodape_color: '#7a8a80',
   nome_size: 20, slogan_size: 10, tel_size: 10, cnpj_size: 12,
   loc_size: 22, trecho_titulo_size: 14, trecho_val_size: 12,
   bagesp_size: 11, bag_size: 12, hosp_val_size: 12, info_size: 12,
@@ -798,14 +847,14 @@ function setFormValues(cfg) {
   sv('cfg-ig', cfg.ig ?? '@kevviagens'); sv('cfg-cnpj', cfg.cnpj);
   sv('cfg-rodape', cfg.rodape); sv('cfg-gmail', cfg.gmail);
   sv('c-primary', cfg.primary); sv('c-slogan', cfg.slogan_color ?? '#4a5a50');
-  sv('c-slogan-border', cfg.slogan_border ?? '#b0a898'); sv('c-cnpj', cfg.cnpj_color ?? '#307082');
-  sv('c-loc', cfg.loc); sv('c-trecho-primary', cfg.trecho_primary ?? '#307082');
-  sv('c-trecho-titulo', cfg.trecho_titulo ?? '#307082');
+  sv('c-slogan-border', cfg.slogan_border ?? '#b0a898'); sv('c-cnpj', cfg.cnpj_color ?? '#193F72');
+  sv('c-loc', cfg.loc); sv('c-trecho-primary', cfg.trecho_primary ?? '#193F72');
+  sv('c-trecho-titulo', cfg.trecho_titulo ?? '#193F72');
   sv('c-bag-bg', cfg.bag_bg); sv('c-bag-accent', cfg.bag_accent);
   sv('c-info-bg', cfg.info_bg); sv('c-info-border', cfg.info_border);
-  sv('c-bagesp-bg', cfg.bagesp_bg ?? '#e0dbd0'); sv('c-bagesp-border', cfg.bagesp_border ?? '#307082');
-  sv('c-hosp-titulo', cfg.hosp_titulo ?? '#307082'); sv('c-hosp-conf', cfg.hosp_conf ?? '#307082');
-  sv('c-valor-bg', cfg.valor_bg ?? '#307082'); sv('c-pag-titulo', cfg.pag_titulo ?? '#307082');
+  sv('c-bagesp-bg', cfg.bagesp_bg ?? '#e0dbd0'); sv('c-bagesp-border', cfg.bagesp_border ?? '#193F72');
+  sv('c-hosp-titulo', cfg.hosp_titulo ?? '#193F72'); sv('c-hosp-conf', cfg.hosp_conf ?? '#193F72');
+  sv('c-valor-bg', cfg.valor_bg ?? '#193F72'); sv('c-pag-titulo', cfg.pag_titulo ?? '#193F72');
   sv('c-rodape', cfg.rodape_color ?? '#7a8a80');
   const sizes = { 'nome-size': [cfg.nome_size,20,'nome-size-val'], 'slogan-size': [cfg.slogan_size,10,'slogan-size-val'], 'tel-size': [cfg.tel_size,10,'tel-size-val'], 'cnpj-size': [cfg.cnpj_size,12,'cnpj-size-val'], 'loc-size': [cfg.loc_size,22,'loc-size-val'], 'trecho-titulo-size': [cfg.trecho_titulo_size,14,'trecho-titulo-size-val'], 'trecho-val-size': [cfg.trecho_val_size,12,'trecho-val-size-val'], 'bagesp-size': [cfg.bagesp_size,11,'bagesp-size-val'], 'bag-size': [cfg.bag_size,12,'bag-size-val'], 'hosp-val-size': [cfg.hosp_val_size,12,'hosp-val-size-val'], 'info-size': [cfg.info_size,12,'info-size-val'], 'valor-size': [cfg.valor_size,24,'valor-size-val'], 'pag-size': [cfg.pag_size,12,'pag-size-val'], 'rodape-size': [cfg.rodape_size,10,'rodape-size-val'], 'logo-size': [cfg.logo_size,88,'logo-size-val'] };
   Object.entries(sizes).forEach(([id, [val, def, valId]]) => { sv(id, val ?? def); const el = document.getElementById(valId); if(el) el.textContent = val ?? def; });
@@ -821,13 +870,37 @@ function setFormValues(cfg) {
 }
 
 // ══════════════════════════════════════════
-// JSONBIN — CLOUD SYNC (sem imagens — evita CORS e 413)
+// JSONBIN — CONFIG COMPARTILHADA (shared bin)
 // ══════════════════════════════════════════
-const JSONBIN_KEY = '$2a$10$a4WtOJJY1ngCg7kinYmsz.92hLG4Pgsj5nIG0Lv52nJntdCOP.YeC';
-const JSONBIN_BIN_STORE = 'kv-viagens-bin-id';
+const JSONBIN_KEY  = '$2a$10$a4WtOJJY1ngCg7kinYmsz.92hLG4Pgsj5nIG0Lv52nJntdCOP.YeC';
 const JSONBIN_BASE = 'https://api.jsonbin.io/v3';
+const SHARED_BIN_STORE = 'kv-shared-bin-id';
 
-// Remove imagens base64 antes de enviar — evita 413 e acelera sync
+function getSharedBinId() { return localStorage.getItem(SHARED_BIN_STORE); }
+function setSharedBinId(id) {
+  if (id) localStorage.setItem(SHARED_BIN_STORE, id);
+  else localStorage.removeItem(SHARED_BIN_STORE);
+  updateBinIdUI();
+}
+
+function updateBinIdUI() {
+  const binId = getSharedBinId();
+  const el = document.getElementById('cfg-bin-id');
+  if (el && document.activeElement !== el) el.value = binId || '';
+  const badge = document.getElementById('cloud-connected-badge');
+  if (badge) {
+    badge.textContent = binId ? '● Conectado' : '○ Sem bin';
+    badge.style.color = binId ? '#6fcf6f' : '#cf8f6f';
+  }
+}
+
+// Migra bin antigo (privado por usuário) para o campo de bin compartilhado se já existir
+function migrateLegacyBin() {
+  const legacy = localStorage.getItem('kv-viagens-bin-id');
+  if (legacy && !getSharedBinId()) { setSharedBinId(legacy); }
+}
+
+// Remove imagens base64 antes de enviar (evita 413)
 function cfgSemImagens(cfg) {
   const c = { ...cfg };
   if (c.icons) c.icons = { logo: null, wa: null, ig: null, gm: null };
@@ -851,105 +924,175 @@ function showCloudMsg(txt, tipo) {
   if (tipo === 'ok') setTimeout(() => { el.style.display = 'none'; }, 3000);
 }
 
+async function cloudGetRecord() {
+  const binId = getSharedBinId();
+  if (!binId) return null;
+  try {
+    const res = await fetch(`${JSONBIN_BASE}/b/${binId}/latest`, {
+      headers: { 'X-Master-Key': JSONBIN_KEY }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.record || null;
+  } catch(e) { return null; }
+}
+
 async function cloudLoad() {
-  const binId = localStorage.getItem(JSONBIN_BIN_STORE);
+  const binId = getSharedBinId();
   if (!binId) return false;
   showCloudMsg('☁️ Carregando configuração...', 'loading');
   try {
-    const res = await fetch(`${JSONBIN_BASE}/b/${binId}/latest`, {
-      headers: { 'X-Master-Key': JSONBIN_KEY, 'X-Access-Key': JSONBIN_KEY }
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    if (data.record && typeof data.record === 'object' && Object.keys(data.record).length > 0) {
-      // Mescla com imagens do localStorage (que ficam locais)
-      const localRaw = localStorage.getItem('kv-config');
-      const localIcons = localRaw ? (JSON.parse(localRaw).icons || {}) : {};
-      const merged = { ...CFG_DEFAULT, ...data.record, icons: localIcons };
-      setFormValues(merged);
-      showCloudMsg('✓ Configuração carregada da nuvem', 'ok');
-      return true;
+    const record = await cloudGetRecord();
+    if (!record) throw new Error('Sem resposta');
+    // Suporta estrutura nova {config,checkpoint} e legado (objeto plano)
+    let cfg = (record.config && typeof record.config === 'object' && Object.keys(record.config).length > 0)
+      ? record.config : record;
+    if (!cfg || Object.keys(cfg).length === 0) {
+      showCloudMsg('☁️ Bin vazio, usando padrão', 'ok'); return false;
     }
+    const localRaw = localStorage.getItem('kv-config');
+    const localIcons = localRaw ? (JSON.parse(localRaw).icons || {}) : {};
+    setFormValues({ ...CFG_DEFAULT, ...cfg, icons: localIcons });
+    showCloudMsg('✓ Configuração carregada da nuvem', 'ok');
+    return true;
   } catch(e) {
     showCloudMsg('⚠ Não foi possível carregar da nuvem', 'err');
+    return false;
   }
-  return false;
 }
 
 async function cloudSave(cfg) {
+  const binId = getSharedBinId();
+  if (!binId) { showCloudMsg('⚠ Configure o bin compartilhado primeiro ↑', 'err'); return; }
   showCloudMsg('☁️ Salvando na nuvem...', 'loading');
-  let binId = localStorage.getItem(JSONBIN_BIN_STORE);
   const payload = cfgSemImagens(cfg);
   try {
-    let res;
-    if (binId) {
-      res = await fetch(`${JSONBIN_BASE}/b/${binId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-        body: JSON.stringify(payload)
-      });
-    } else {
-      res = await fetch(`${JSONBIN_BASE}/b`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': JSONBIN_KEY,
-          'X-Bin-Name': 'kv-viagens-config',
-          'X-Private': 'true'
-        },
-        body: JSON.stringify(payload)
-      });
-      if (res.ok) {
-        const data = await res.json();
-        binId = data.metadata.id;
-        localStorage.setItem(JSONBIN_BIN_STORE, binId);
-      }
-    }
+    const record = await cloudGetRecord();
+    const checkpoint = record?.checkpoint || {};
+    const res = await fetch(`${JSONBIN_BASE}/b/${binId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+      body: JSON.stringify({ config: payload, checkpoint })
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     showCloudMsg('✓ Salvo na nuvem!', 'ok');
-  } catch(e) {
-    showCloudMsg(`⚠ Erro ao salvar: ${e.message}`, 'err');
-  }
+  } catch(e) { showCloudMsg(`⚠ Erro ao salvar: ${e.message}`, 'err'); }
+}
+
+async function cloudSaveCheckpoint(cfg) {
+  const binId = getSharedBinId();
+  if (!binId) { showCloudMsg('⚠ Configure o bin compartilhado primeiro ↑', 'err'); return; }
+  if (!confirm('Definir ponto de reinício com a configuração atual?\n\nTodos os usuários poderão voltar para este estado.')) return;
+  showCloudMsg('📌 Salvando ponto de reinício...', 'loading');
+  const payload = cfgSemImagens(cfg);
+  try {
+    const record = await cloudGetRecord();
+    const config = record?.config || payload;
+    const res = await fetch(`${JSONBIN_BASE}/b/${binId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+      body: JSON.stringify({ config, checkpoint: payload })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    try { localStorage.setItem('kv-checkpoint', JSON.stringify(payload)); } catch(e2) {}
+    showCloudMsg('📌 Ponto de reinício definido!', 'ok');
+  } catch(e) { showCloudMsg(`⚠ Erro: ${e.message}`, 'err'); }
+}
+
+async function loadCheckpoint() {
+  if (!confirm('Reiniciar para o ponto de reinício salvo?\n\nA configuração atual será substituída.')) return;
+  showCloudMsg('↺ Carregando ponto de reinício...', 'loading');
+  try {
+    let checkpoint = null;
+    const binId = getSharedBinId();
+    if (binId) {
+      const record = await cloudGetRecord();
+      checkpoint = record?.checkpoint;
+    }
+    // Fallback para localStorage
+    if (!checkpoint || !Object.keys(checkpoint).length) {
+      const local = localStorage.getItem('kv-checkpoint');
+      if (local) checkpoint = JSON.parse(local);
+    }
+    if (!checkpoint || !Object.keys(checkpoint).length) {
+      showCloudMsg('⚠ Nenhum ponto de reinício definido ainda', 'err'); return;
+    }
+    const localRaw = localStorage.getItem('kv-config');
+    const localIcons = localRaw ? (JSON.parse(localRaw).icons || {}) : {};
+    setFormValues({ ...CFG_DEFAULT, ...checkpoint, icons: localIcons });
+    applyAll();
+    showCloudMsg('✓ Reiniciado para o ponto salvo!', 'ok');
+  } catch(e) { showCloudMsg(`⚠ Erro: ${e.message}`, 'err'); }
+}
+
+async function criarNovoBin() {
+  if (!confirm('Criar um novo bin compartilhado?\n\nCompartilhe o ID gerado com sua equipe.')) return;
+  showCloudMsg('☁️ Criando bin...', 'loading');
+  try {
+    const res = await fetch(`${JSONBIN_BASE}/b`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_KEY,
+        'X-Bin-Name': 'kv-viagens-shared',
+        'X-Private': 'false'
+      },
+      body: JSON.stringify({ config: {}, checkpoint: {} })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const newId = data.metadata.id;
+    setSharedBinId(newId);
+    showCloudMsg(`✓ Bin criado! ID copiado para o campo acima.`, 'ok');
+  } catch(e) { showCloudMsg(`⚠ Erro ao criar bin: ${e.message}`, 'err'); }
 }
 
 function saveConfig() {
   const cfg = getFormValues();
-  // Salva tudo (com imagens) no localStorage
   try { localStorage.setItem('kv-config', JSON.stringify(cfg)); } catch(e) {}
-  // Salva só os dados (sem imagens) na nuvem
   cloudSave(cfg);
 }
 
 function resetConfig() {
-  localStorage.removeItem('kv-config');
-  localStorage.removeItem(JSONBIN_BIN_STORE);
+  if (!confirm('Restaurar configurações de fábrica?\n\nIsso NÃO afeta a nuvem nem o ponto de reinício.')) return;
   ICONS = { logo: null, wa: null, ig: null, gm: null };
   setFormValues(CFG_DEFAULT);
   document.getElementById('logo-img-wrap').innerHTML = '<div class="logo-ph">K&V<br>Viagens</div>';
   document.getElementById('logo-preview-wrap').style.display = 'none';
   applyAll();
-  showCloudMsg('↺ Padrão restaurado', 'ok');
+  showCloudMsg('↺ Configurações de fábrica restauradas', 'ok');
 }
 
 // ══════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════
 window.addEventListener('load', async () => {
-  // 1. Tenta carregar da nuvem (cores, textos, tamanhos)
+  const params = new URLSearchParams(window.location.search);
+
+  // Auto-configura bin compartilhado via URL param (?sharedbin=ID)
+  const sharedBin = params.get('sharedbin');
+  if (sharedBin) setSharedBinId(sharedBin);
+
+  // Migra bin legado (por usuário) se existir
+  migrateLegacyBin();
+
+  // Atualiza UI do bin
+  updateBinIdUI();
+
+  // 1. Tenta carregar da nuvem
   const fromCloud = await cloudLoad();
 
-  // 2. Fallback para localStorage se não veio da nuvem
+  // 2. Fallback para localStorage
   if (!fromCloud) {
     try {
       const saved = localStorage.getItem('kv-config');
-      if (saved) { setFormValues({ ...CFG_DEFAULT, ...JSON.parse(saved) }); }
+      if (saved) setFormValues({ ...CFG_DEFAULT, ...JSON.parse(saved) });
     } catch(e) {}
   }
 
   applyAll();
 
-  // 3. Dados via URL
-  const params = new URLSearchParams(window.location.search);
+  // 3. Dados via URL (?dados=...)
   const dados = params.get('dados');
   if (dados) { try { document.getElementById('paste-input').value = decodeURIComponent(dados); parsear(); } catch(e) {} }
 });
@@ -1323,7 +1466,9 @@ function update(cfg) {
 function copiarLink() {
   const texto = document.getElementById('paste-input').value.trim();
   if (!texto) { showMsg('Cole os dados primeiro.', 'err'); return; }
-  const url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
+  let url = window.location.origin + window.location.pathname + '?dados=' + encodeURIComponent(texto);
+  const binId = getSharedBinId();
+  if (binId) url += '&sharedbin=' + encodeURIComponent(binId);
   navigator.clipboard.writeText(url).then(() => showMsg('✓ Link copiado!', 'ok')).catch(() => {
     const el = document.createElement('textarea'); el.value = url; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showMsg('✓ Link copiado!', 'ok');
   });
