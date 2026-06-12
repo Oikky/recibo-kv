@@ -1029,6 +1029,24 @@ function buildDcCards() {
     icon: '+', title: 'Adicionar trecho',
     body: '', isAdd: true
   });
+  // Hospedagens
+  D.hospedagens.forEach((h, i) => {
+    let hb = '';
+    hb += row('Código Conf.', inp(h.codigo,      `D.hospedagens[${i}].codigo=this.value`));
+    hb += row('Local',        inp(h.local,        `D.hospedagens[${i}].local=this.value`));
+    hb += row('Cidade',       inp(h.cidade,       `D.hospedagens[${i}].cidade=this.value`));
+    hb += `<hr class="dc-divider">`;
+    hb += row('Entrada',      inp(h.entrada,      `D.hospedagens[${i}].entrada=this.value`));
+    hb += row('Hora Entrada', inp(h.horaEntrada,  `D.hospedagens[${i}].horaEntrada=this.value`));
+    hb += row('Saída',        inp(h.saida,        `D.hospedagens[${i}].saida=this.value`));
+    hb += row('Hora Saída',   inp(h.horaSaida,    `D.hospedagens[${i}].horaSaida=this.value`));
+    hb += `<hr class="dc-divider"><div class="dc-section-lbl">Incluso</div>`;
+    hb += txta(h.incluso, `D.hospedagens[${i}].incluso=this.value`);
+    cards.push({ icon:'🏨', title:`Hospedagem ${i+1}`, body: hb });
+  });
+  // Botão adicionar hospedagem
+  cards.push({ icon:'+', title:'Adicionar hospedagem', body:'', isAddHosp: true });
+
   // Bagagem + Info
   let bb = `<div class="dc-section-lbl">Bagagem Geral</div>`;
   bb += bagBlock(D.bagGeral, `D.bagGeral.push('');renderDataCards()`, idx => `D.bagGeral[${idx}]=this.value`);
@@ -1062,6 +1080,15 @@ function renderDataCards() {
       wrap.appendChild(el);
       return;
     }
+    if (c.isAddHosp) {
+      el.className = 'dc-card';
+      el.innerHTML = `<div class="dc-add-trecho" onclick="addHospedagem()" style="border-color:rgba(25,63,114,.2);">
+        <span class="dc-add-plus">+</span>
+        <span>Adicionar hospedagem</span>
+      </div>`;
+      wrap.appendChild(el);
+      return;
+    }
     el.className = 'dc-card';
     el.dataset.key = c.title;
     el.innerHTML = `
@@ -1080,6 +1107,23 @@ function renderDataCards() {
   if (openKey) {
     const toReopen = wrap.querySelector(`.dc-card[data-key="${openKey}"]`);
     if (toReopen) requestAnimationFrame(() => requestAnimationFrame(() => toReopen.classList.add('open')));
+  }
+}
+
+function addHospedagem() {
+  D.hospedagens.push({codigo:'',local:'',cidade:'',entrada:'',horaEntrada:'',saida:'',horaSaida:'',incluso:''});
+  const newTitle = `Hospedagem ${D.hospedagens.length}`;
+  const wrap = document.getElementById('data-cards');
+  wrap.querySelectorAll('.dc-card').forEach(c => c.classList.remove('open'));
+  renderDataCards();
+  const toOpen = wrap.querySelector(`.dc-card[data-key="${newTitle}"]`);
+  if (toOpen) {
+    toOpen.classList.add('dc-card-new');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toOpen.classList.add('open');
+      toOpen.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      toOpen.addEventListener('animationend', () => toOpen.classList.remove('dc-card-new'), { once: true });
+    }));
   }
 }
 
@@ -1533,6 +1577,18 @@ function serializeD() {
     } else {
       lines.push('Bagagem Específica:');
     }
+  });
+  (D.hospedagens || []).forEach((h, i) => {
+    lines.push('');
+    lines.push(`Hospedagem ${i + 1}`);
+    if (h.codigo) lines.push(`Código de Confirmação: ${h.codigo}`);
+    if (h.local)  lines.push(`Local: ${h.local}`);
+    if (h.cidade) lines.push(`Cidade: ${h.cidade}`);
+    if (h.entrada)     lines.push(`Data de Entrada: ${h.entrada}`);
+    if (h.horaEntrada) lines.push(`Hora de Entrada: ${h.horaEntrada}`);
+    if (h.saida)       lines.push(`Data de Saída: ${h.saida}`);
+    if (h.horaSaida)   lines.push(`Hora de Saída: ${h.horaSaida}`);
+    if (h.incluso) { lines.push('Incluso:'); lines.push(h.incluso); }
   });
   if (D.bagGeral && D.bagGeral.length) {
     lines.push('');
