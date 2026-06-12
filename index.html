@@ -981,9 +981,11 @@ function txta(val, onchange) {
 function row(lbl, inputHtml) {
   return `<div class="dc-row"><span class="dc-row-lbl">${lbl}</span>${inputHtml}</div>`;
 }
-function bagBlock(arr, addCode, changeCode) {
+function bagBlock(arr, addCode, changeCode, removeCode) {
   let h = `<div class="dc-bag-list">`;
-  arr.forEach((b,i) => { h += `<div class="dc-bag-item-row">${inp(b, changeCode(i), 'item')}</div>`; });
+  arr.forEach((b,i) => {
+    h += `<div class="dc-bag-item-row">${inp(b, changeCode(i), 'item')}<button class="dc-add-btn" style="padding:1px 6px;min-width:0;flex-shrink:0;color:#a04040;border-color:#4a2020;" onclick="${removeCode(i)}">✕</button></div>`;
+  });
   h += `</div><button class="dc-add-btn" onclick="${addCode}">+ item</button>`;
   return h;
 }
@@ -1021,7 +1023,8 @@ function buildDcCards() {
     b += row('Paradas',    inp(t.paradas.join(' / '), `D.trechos[${i}].paradas=this.value?this.value.split(' / '):[]`));
     b += row('Duração',    inp(t.duracaoTotal,   `D.trechos[${i}].duracaoTotal=this.value`));
     b += `<hr class="dc-divider"><div class="dc-section-lbl">Bagagem Específica</div>`;
-    b += bagBlock(t.bagEsp, `D.trechos[${i}].bagEsp.push('');renderDataCards()`, idx => `D.trechos[${i}].bagEsp[${idx}]=this.value`);
+    b += bagBlock(t.bagEsp, `D.trechos[${i}].bagEsp.push('');renderDataCards()`, idx => `D.trechos[${i}].bagEsp[${idx}]=this.value`, idx => `D.trechos[${i}].bagEsp.splice(${idx},1);renderDataCards()`);
+    b += `<hr class="dc-divider"><button class="dc-add-btn" style="color:#a04040;border-color:#4a2020;align-self:flex-end;" onclick="D.trechos.splice(${i},1);renderDataCards();applyAll();">✕ Remover trecho</button>`;
     cards.push({ icon:'✈️', title:`Trecho ${i+1}`, body: b });
   });
   // Botão adicionar trecho (aparece como card fake)
@@ -1042,6 +1045,7 @@ function buildDcCards() {
     hb += row('Hora Saída',   inp(h.horaSaida,    `D.hospedagens[${i}].horaSaida=this.value`));
     hb += `<hr class="dc-divider"><div class="dc-section-lbl">Incluso</div>`;
     hb += txta(h.incluso, `D.hospedagens[${i}].incluso=this.value`);
+    hb += `<hr class="dc-divider"><button class="dc-add-btn" style="color:#a04040;border-color:#4a2020;align-self:flex-end;" onclick="D.hospedagens.splice(${i},1);renderDataCards();applyAll();">✕ Remover hospedagem</button>`;
     cards.push({ icon:'🏨', title:`Hospedagem ${i+1}`, body: hb });
   });
   // Botão adicionar hospedagem
@@ -1049,14 +1053,14 @@ function buildDcCards() {
 
   // Bagagem + Info
   let bb = `<div class="dc-section-lbl">Bagagem Geral</div>`;
-  bb += bagBlock(D.bagGeral, `D.bagGeral.push('');renderDataCards()`, idx => `D.bagGeral[${idx}]=this.value`);
+  bb += bagBlock(D.bagGeral, `D.bagGeral.push('');renderDataCards()`, idx => `D.bagGeral[${idx}]=this.value`, idx => `D.bagGeral.splice(${idx},1);renderDataCards()`);
   bb += `<hr class="dc-divider"><div class="dc-section-lbl" style="margin-top:4px">Informações</div>`;
   bb += txta(D.informacoes, 'D.informacoes=this.value');
   cards.push({ icon:'🎒', title:'Bagagem / Info', body: bb });
   // Valor + Pagamento
   let vb = row('Valor', inp(D.valor, 'D.valor=this.value', 'R$0,00'));
   vb += `<hr class="dc-divider"><div class="dc-section-lbl">Pagamento</div>`;
-  vb += bagBlock(D.pagamento, `D.pagamento.push('');renderDataCards()`, idx => `D.pagamento[${idx}]=this.value`);
+  vb += bagBlock(D.pagamento, `D.pagamento.push('');renderDataCards()`, idx => `D.pagamento[${idx}]=this.value`, idx => `D.pagamento.splice(${idx},1);renderDataCards()`);
   cards.push({ icon:'💰', title:'Valor / Pagamento', body: vb });
   return cards;
 }
@@ -1103,10 +1107,10 @@ function renderDataCards() {
     wrap.appendChild(el);
   });
   setupDcCards();
-  // restore open card after paint (so CSS transition plays)
+  // restore open card immediately (no animation — card was already open)
   if (openKey) {
     const toReopen = wrap.querySelector(`.dc-card[data-key="${openKey}"]`);
-    if (toReopen) requestAnimationFrame(() => requestAnimationFrame(() => toReopen.classList.add('open')));
+    if (toReopen) toReopen.classList.add('open');
   }
   // refresh VG if open
   if (document.getElementById('vg-overlay')?.classList.contains('open')) refreshVG();
