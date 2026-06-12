@@ -1108,6 +1108,8 @@ function renderDataCards() {
     const toReopen = wrap.querySelector(`.dc-card[data-key="${openKey}"]`);
     if (toReopen) requestAnimationFrame(() => requestAnimationFrame(() => toReopen.classList.add('open')));
   }
+  // refresh VG if open
+  if (document.getElementById('vg-overlay')?.classList.contains('open')) refreshVG();
 }
 
 function addHospedagem() {
@@ -1165,6 +1167,23 @@ function setupDcCards() {
 }
 
 // ── Visão Geral ──────────────────────────────────────────────────────────────
+function refreshVG() {
+  const grid = document.getElementById('vg-grid');
+  if (!grid) return;
+  const cards = buildDcCards().filter(c => !c.isAdd && !c.isAddHosp);
+  // preserve scroll position
+  const scrollTop = document.getElementById('vg-overlay').scrollTop;
+  grid.innerHTML = cards.map(c => `
+    <div class="vg-card">
+      <div class="vg-card-head">
+        <span class="vg-card-icon">${c.icon}</span>
+        <span class="vg-card-title">${c.title}</span>
+      </div>
+      <div class="vg-card-body">${c.body}</div>
+    </div>`).join('');
+  document.getElementById('vg-overlay').scrollTop = scrollTop;
+}
+
 function openVG() {
   const grid = document.getElementById('vg-grid');
   const cards = buildDcCards().filter(c => !c.isAdd);
