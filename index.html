@@ -71,9 +71,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 /* ─── DATA CARDS ─── */
 #data-cards {
   border: 1px solid var(--border); border-radius: 10px;
-  overflow: hidden; background: var(--bg3);
+  background: var(--bg3);
   box-shadow: 0 2px 12px rgba(0,0,0,.35);
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  scrollbar-width: none;
 }
+#data-cards::-webkit-scrollbar { display: none; }
 .dc-card { border-bottom: 1px solid rgba(255,255,255,.04); }
 .dc-card:last-child { border-bottom: none; }
 
@@ -242,28 +246,21 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .fl input:focus, .fl textarea:focus { outline: none; border-color: var(--primary-light); }
 .fl textarea { resize: vertical; min-height: 50px; }
 
-.paste-box {
+#data-cards-coda {
   border: 1px solid var(--border); border-radius: 10px;
-  background: var(--bg3); overflow: hidden;
+  overflow: hidden; background: var(--bg3);
   box-shadow: 0 2px 12px rgba(0,0,0,.35);
 }
-.paste-box-head {
-  display: flex; align-items: center; gap: 8px;
-  padding: 9px 13px; background: rgba(25,63,114,.2);
-  border-bottom: 1px solid var(--border);
-}
-.paste-box-head-icon { font-size: 14px; }
-.paste-box-head-title { font-size: 12.5px; font-weight: 600; color: #d0e0f0; font-family: 'JetBrains Mono', monospace; letter-spacing: .02em; }
-.paste-box-body { padding: 12px 13px; display: flex; flex-direction: column; gap: 8px; }
-.paste-box textarea {
-  font-size: 12.5px; min-height: 120px; overflow: hidden;
+#data-cards-coda .dc-card { border-bottom: none; }
+#paste-input {
+  font-size: 12.5px; height: 160px; max-height: 160px;
   border: 1px solid var(--border); border-radius: 6px;
   background: rgba(0,0,0,.25); color: #c8d8e8;
   width: 100%; padding: 9px 10px;
-  font-family: 'JetBrains Mono', monospace; resize: none;
+  font-family: 'JetBrains Mono', monospace; resize: vertical; overflow-y: auto;
   transition: border-color .15s;
 }
-.paste-box textarea:focus { outline: none; border-color: #193F72; }
+#paste-input:focus { outline: none; border-color: #193F72; }
 
 .btn-primary { width: 100%; padding: 12px; font-size: 15px; border: none; border-radius: 8px; background: var(--primary-light); color: #fff; cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif; }
 .btn-primary:hover { background: #0d2a4f; }
@@ -891,16 +888,21 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
   <div id="data-cards"></div>
 
   <div style="flex:1;min-height:.5rem;"></div>
-  <!-- CODA INPUT -->
-  <div class="paste-box">
-    <div class="paste-box-head">
-      <span class="paste-box-head-icon">📋</span>
-      <span class="paste-box-head-title">Cole os dados do Coda aqui</span>
-    </div>
-    <div class="paste-box-body">
-      <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." oninput="autoResize(this)"></textarea>
-      <button class="btn-primary" onclick="parsear()">Gerar recibo ↗</button>
-      <div class="msg" id="msg"></div>
+  <!-- CODA INPUT as collapsible card -->
+  <div id="data-cards-coda">
+    <div class="dc-card" id="coda-card">
+      <div class="dc-card-head" onclick="toggleCodaCard()">
+        <span class="dc-card-arrow" id="coda-arrow">▶</span>
+        <span class="dc-card-icon">📋</span>
+        <span class="dc-card-title">Cole os dados do Coda aqui</span>
+      </div>
+      <div class="dc-card-body-wrap" id="coda-body-wrap">
+        <div class="dc-card-body" onclick="event.stopPropagation()">
+          <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." style="margin-top:4px;"></textarea>
+          <button class="btn-primary" onclick="parsear()" style="margin-top:4px;border-radius:6px;padding:9px;">Gerar recibo ↗</button>
+          <div class="msg" id="msg"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1098,10 +1100,18 @@ function addTrecho() {
   }
 }
 
+function toggleCodaCard() {
+  const card = document.getElementById('coda-card');
+  const isOpen = card.classList.toggle('open');
+  document.getElementById('coda-arrow').style.transform = isOpen ? 'rotate(90deg)' : '';
+}
+
 function setupDcCards() {
   const closeAll = () => document.querySelectorAll('#data-cards .dc-card').forEach(c => c.classList.remove('open'));
   document.querySelectorAll('#data-cards .dc-card').forEach((card) => {
-    card.querySelector('.dc-card-head').addEventListener('click', e => {
+    const head = card.querySelector('.dc-card-head');
+    if (!head) return; // skip isAdd / coda cards
+    head.addEventListener('click', e => {
       e.stopPropagation();
       const isOpen = card.classList.contains('open');
       closeAll();
@@ -1127,10 +1137,10 @@ function openVG() {
 }
 
 function closeVG() {
-  applyAll();
-  renderDataCards();
   document.getElementById('vg-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  applyAll();
+  setTimeout(renderDataCards, 0);
 }
 
 // ══════════════════════════════════════════
@@ -1490,12 +1500,57 @@ window.addEventListener('load', async () => {
 
   // 3. Dados via URL (?dados=...)
   const dados = params.get('dados');
-  if (dados) { try { document.getElementById('paste-input').value = dados; autoResize(document.getElementById('paste-input')); parsear(); } catch(e) { console.error('dados URL', e); } }
+  if (dados) { try { const pi = document.getElementById('paste-input'); pi.value = dados; parsear(); } catch(e) { console.error('dados URL', e); } }
 });
 
 // ══════════════════════════════════════════
 // APPLY ALL — applies config to DOM + re-renders body
 // ══════════════════════════════════════════
+function serializeD() {
+  const pi = document.getElementById('paste-input');
+  if (!pi) return;
+  let lines = [];
+  D.passageiros.forEach(p => { if (p) lines.push(`Passageiro: ${p}`); });
+  lines.push(`Localizador Geral: ${D.locGeral || ''}`);
+  lines.push(`Cia Aérea Geral: ${D.ciaGeral || ''}`);
+  D.trechos.forEach((t, i) => {
+    lines.push('');
+    lines.push(`Trecho ${i + 1}`);
+    lines.push(`Localizador Específico: ${t.locEsp || ''}`);
+    lines.push(`Cia Aérea Específica: ${t.ciaEsp || ''}`);
+    lines.push(`Partida: ${t.partida || ''}`);
+    lines.push(`Data Saída: ${t.dataPartida || ''}`);
+    lines.push(`Hora Saída: ${t.horaPartida || ''}`);
+    lines.push(`Destino: ${t.destino || ''}`);
+    lines.push(`Data Chegada: ${t.dataChegada || ''}`);
+    lines.push(`Hora Chegada: ${t.horaChegada || ''}`);
+    const paradas = Array.isArray(t.paradas) ? t.paradas.join(' / ') : (t.paradas || '');
+    lines.push(`Paradas: ${paradas}`);
+    lines.push(`Duração Total: ${t.duracaoTotal || ''}`);
+    if (t.bagEsp && t.bagEsp.length) {
+      lines.push('Bagagem Específica:');
+      t.bagEsp.forEach(b => { if (b) lines.push(b); });
+    } else {
+      lines.push('Bagagem Específica:');
+    }
+  });
+  if (D.bagGeral && D.bagGeral.length) {
+    lines.push('');
+    lines.push('Bagagem Geral:');
+    D.bagGeral.forEach(b => { if (b) lines.push(b); });
+  }
+  if (D.informacoes) {
+    lines.push('');
+    lines.push(`Informações: ${D.informacoes}`);
+  }
+  if (D.valor) lines.push(`Valor à Pagar: ${D.valor}`);
+  if (D.pagamento && D.pagamento.length) {
+    lines.push('Pagamento:');
+    D.pagamento.forEach(p => { if (p) lines.push(p); });
+  }
+  pi.value = lines.join("\n");
+}
+
 function applyAll() {
   const cfg = getFormValues();
   const r = document.getElementById('recibo');
@@ -1538,6 +1593,7 @@ function applyAll() {
 
   // Re-render corpo (passes visibility flags + sizes)
   update(cfg);
+  serializeD();
 }
 
 // Simple color darkening helper
@@ -1700,8 +1756,8 @@ function parsear() {
   if (isPlaceholder(D.locGeral)) D.locGeral='';
   renderPassList();
   renderDataCards();
-  showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
   applyAll();
+  showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
 }
 
 // ══════════════════════════════════════════
@@ -1870,7 +1926,6 @@ function limparTudo() {
   if (!confirm('Limpar todos os dados do recibo?')) return;
   D = { passageiros: [], locGeral: '', ciaGeral: '', trechos: [], hospedagens: [], bagGeral: [], informacoes: '', valor: '', pagamento: [] };
   document.getElementById('paste-input').value = '';
-  autoResize(document.getElementById('paste-input'));
   renderPassList(); applyAll();
   showMsg('↺ Dados limpos', 'ok');
 }
