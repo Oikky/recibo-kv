@@ -64,6 +64,158 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .topnav-btn.accent { background: #EA9940; border-color: #EA9940; color: #fff; font-weight: 600; }
 .topnav-btn.accent:hover { background: #d08030; border-color: #d08030; }
 
+
+/* ─── CONFIG PANEL ─── */
+#config-panel .el-card { width: 240px; flex-shrink: 0; }
+
+/* ─── DATA CARDS ─── */
+#data-cards {
+  border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; background: var(--bg3);
+  box-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
+.dc-card { border-bottom: 1px solid rgba(255,255,255,.04); }
+.dc-card:last-child { border-bottom: none; }
+
+.dc-card-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 13px; cursor: pointer; user-select: none;
+  transition: background .18s ease;
+}
+.dc-card-head:hover { background: rgba(25,63,114,.28); }
+.dc-card.open .dc-card-head { background: rgba(25,63,114,.35); }
+
+.dc-card-arrow {
+  font-size: 8px; color: #4a7aaa;
+  transition: transform .22s cubic-bezier(.4,0,.2,1);
+  flex-shrink: 0;
+}
+.dc-card.open .dc-card-arrow { transform: rotate(90deg); }
+.dc-card-icon { font-size: 14px; }
+.dc-card-title {
+  font-size: 12.5px; font-weight: 600; color: #d0e0f0;
+  font-family: 'JetBrains Mono', monospace; flex: 1; letter-spacing: .02em;
+}
+
+/* Smooth height animation via grid */
+.dc-card-body-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .22s cubic-bezier(.4,0,.2,1),
+              opacity .18s ease;
+  opacity: 0;
+}
+.dc-card.open .dc-card-body-wrap {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.dc-card-body {
+  overflow: hidden; min-height: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 0 14px 0 32px;
+  transition: padding .22s cubic-bezier(.4,0,.2,1);
+}
+.dc-card.open .dc-card-body { padding: 10px 14px 12px 32px; }
+
+.dc-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; line-height: 1.5; }
+.dc-row-lbl {
+  color: #4a7aaa; font-weight: 600; white-space: nowrap; flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; min-width: 90px;
+}
+.dc-input {
+  flex: 1; background: transparent; border: none;
+  border-bottom: 1px solid transparent;
+  color: #d0e0f0; font-size: 12.5px; font-family: 'Sora', sans-serif;
+  padding: 2px 4px; min-width: 0; outline: none;
+  transition: border-color .15s, background .15s;
+}
+.dc-input:hover { border-bottom-color: #2a4a6a; }
+.dc-input:focus { border-bottom-color: #2155a0; background: rgba(25,63,114,.15); border-radius: 3px; }
+.dc-input.empty { color: #2a4060; }
+.dc-textarea {
+  background: rgba(0,0,0,.25); border: 1px solid var(--border); border-radius: 5px;
+  color: #d0e0f0; font-size: 12px; font-family: 'JetBrains Mono', monospace;
+  padding: 6px 8px; width: 100%; resize: vertical; min-height: 52px;
+  outline: none; transition: border-color .15s;
+}
+.dc-textarea:focus { border-color: #2155a0; }
+.dc-divider { border: none; border-top: 1px solid rgba(255,255,255,.05); margin: 4px 0; }
+.dc-section-lbl { color: #4a7aaa; font-size: 11px; font-weight: 600; font-family: 'JetBrains Mono', monospace; margin-bottom: 2px; }
+.dc-bag-list { display: flex; flex-direction: column; gap: 3px; }
+.dc-bag-item-row { display: flex; align-items: center; gap: 5px; }
+.dc-bag-item-row::before { content: "▸"; color: #3a6a9a; font-size: 10px; flex-shrink: 0; }
+.dc-empty-hint { color: #2a4060; font-size: 12px; font-style: italic; padding: 6px 4px; font-family: 'JetBrains Mono', monospace; }
+
+@keyframes cardSlideIn {
+  from { opacity: 0; transform: translateY(-8px) scaleY(.92); }
+  to   { opacity: 1; transform: translateY(0)    scaleY(1); }
+}
+.dc-card-new { animation: cardSlideIn .28s cubic-bezier(.4,0,.2,1) forwards; }
+.dc-add-trecho {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 13px; cursor: pointer; user-select: none;
+  border-top: 1px dashed rgba(25,63,114,.35);
+  color: #4a7aaa; font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 600;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+  letter-spacing: .03em;
+}
+.dc-add-trecho:hover { background: rgba(25,63,114,.2); color: #7aaad8; border-color: rgba(25,63,114,.6); }
+.dc-add-trecho:active { background: rgba(25,63,114,.35); }
+.dc-add-trecho .dc-add-plus {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid currentColor; font-size: 14px; line-height: 1;
+  transition: transform .2s cubic-bezier(.4,0,.2,1);
+}
+.dc-add-trecho:hover .dc-add-plus { transform: rotate(90deg); }
+.dc-add-btn {
+  align-self: flex-start; margin-top: 3px; padding: 3px 9px;
+  font-size: 11px; border: 1px solid var(--border); border-radius: 4px;
+  background: transparent; color: #4a7aaa; cursor: pointer; font-family: 'Sora', sans-serif;
+  transition: background .15s, color .15s;
+}
+.dc-add-btn:hover { background: rgba(25,63,114,.25); color: #c8d8e8; }
+
+/* ─── VISÃO GERAL MODAL ─── */
+#vg-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(3,8,14,.88); backdrop-filter: blur(4px);
+  overflow-y: auto; padding: 2rem;
+}
+#vg-overlay.open { display: flex; flex-direction: column; align-items: center; }
+#vg-modal {
+  background: #0a1520; border: 1px solid #1a2a3a; border-radius: 14px;
+  width: 100%; max-width: 900px; padding: 1.5rem;
+  box-shadow: 0 12px 48px rgba(0,0,0,.6);
+}
+#vg-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.2rem; padding-bottom: .8rem; border-bottom: 1px solid #1a2a3a;
+}
+#vg-modal-title { font-size: 15px; font-weight: 700; color: #d0e0f0; font-family: 'JetBrains Mono', monospace; }
+#vg-close { background: transparent; border: 1px solid #1a2a3a; border-radius: 6px; color: #5a8aaa; font-size: 13px; padding: 5px 12px; cursor: pointer; transition: background .15s; }
+#vg-close:hover { background: #0e1c28; color: #c8d8e8; }
+#vg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .8rem; }
+.vg-card {
+  background: #0e1c28; border: 1px solid #1a2a3a; border-radius: 10px; overflow: hidden;
+}
+.vg-card-head { display: flex; align-items: center; gap: 8px; padding: 9px 13px; background: rgba(25,63,114,.2); border-bottom: 1px solid #1a2a3a; }
+.vg-card-icon { font-size: 14px; }
+.vg-card-title { font-size: 12px; font-weight: 700; color: #d0e0f0; font-family: 'JetBrains Mono', monospace; }
+.vg-card-body { padding: 10px 13px; display: flex; flex-direction: column; gap: 5px; }
+.vg-card-body .dc-row { font-size: 13px; }
+.vg-card-body .dc-row-lbl { font-size: 11.5px; min-width: 100px; }
+.vg-card-body .dc-input { font-size: 13px; }
+.vg-card-body .dc-textarea { font-size: 12.5px; }
+.vg-card-body .dc-section-lbl { font-size: 11.5px; }
+.vg-row { display: flex; gap: 6px; font-size: 12px; line-height: 1.5; }
+.vg-lbl { color: #4a7aaa; font-size: 10.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; white-space: nowrap; min-width: 80px; flex-shrink: 0; }
+.vg-val { color: #c8d8e8; word-break: break-word; }
+.vg-val.empty { color: #2a4060; font-style: italic; }
+.vg-divider { border: none; border-top: 1px solid #1a2a3a; margin: 4px 0; }
+.vg-bag { color: #a0b8d0; font-size: 11px; padding-left: 2px; }
+.vg-bag::before { content: "▸ "; color: #3a6a9a; }
+
 /* ─── APP BODY ─── */
 .app-body { display: flex; flex: 1; min-height: 0; }
 
@@ -90,15 +242,28 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .fl input:focus, .fl textarea:focus { outline: none; border-color: var(--primary-light); }
 .fl textarea { resize: vertical; min-height: 50px; }
 
-.paste-box { border: 1px solid #1a2a3a; border-radius: 8px; padding: 14px; background: var(--bg3); }
-.paste-box label { font-size: 13px; color: #3a6a9a; display: block; margin-bottom: 7px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
-.paste-box textarea {
-  font-size: 13px; min-height: calc(100vh / 3); overflow: hidden;
-  border: 1px solid var(--border); border-radius: 7px;
-  background: var(--bg); color: #c8d8e8;
-  width: 100%; padding: 10px 11px;
-  font-family: 'JetBrains Mono', monospace; resize: none;
+.paste-box {
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--bg3); overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.35);
 }
+.paste-box-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 13px; background: rgba(25,63,114,.2);
+  border-bottom: 1px solid var(--border);
+}
+.paste-box-head-icon { font-size: 14px; }
+.paste-box-head-title { font-size: 12.5px; font-weight: 600; color: #d0e0f0; font-family: 'JetBrains Mono', monospace; letter-spacing: .02em; }
+.paste-box-body { padding: 12px 13px; display: flex; flex-direction: column; gap: 8px; }
+.paste-box textarea {
+  font-size: 12.5px; min-height: 120px; overflow: hidden;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: rgba(0,0,0,.25); color: #c8d8e8;
+  width: 100%; padding: 9px 10px;
+  font-family: 'JetBrains Mono', monospace; resize: none;
+  transition: border-color .15s;
+}
+.paste-box textarea:focus { outline: none; border-color: #193F72; }
 
 .btn-primary { width: 100%; padding: 12px; font-size: 15px; border: none; border-radius: 8px; background: var(--primary-light); color: #fff; cursor: pointer; font-weight: 600; font-family: 'Sora', sans-serif; }
 .btn-primary:hover { background: #0d2a4f; }
@@ -129,7 +294,7 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 }
 .el-card-head {
   display: flex; align-items: center; gap: 10px;
-  padding: 11px 14px; cursor: default;
+  padding: 11px 14px; cursor: pointer;
   background: rgba(255,255,255,.03);
   border-bottom: 1px solid transparent;
   transition: background .15s;
@@ -139,7 +304,8 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 .el-card-title { flex: 1; font-size: 14px; font-weight: 600; color: var(--text); }
 .el-card-arrow { font-size: 13px; color: var(--text3); transition: transform .2s; }
 .el-card.open .el-card-arrow { transform: rotate(90deg); }
-.el-card-body { display: flex; flex-direction: column; gap: 11px; padding: 14px; }
+.el-card-body { display: none; flex-direction: column; gap: 11px; padding: 14px; }
+.el-card.open .el-card-body { display: flex; }
 
 /* vis toggle pill */
 .vis-toggle { display: flex; align-items: center; gap: 6px; }
@@ -345,30 +511,23 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     <button id="fmt-cel" class="tab" onclick="setFormato('celular')">Celular</button>
   </div>
   <div class="topnav-actions">
+    <button class="topnav-btn" id="btn-cfg" onclick="toggleCfg()">⚙ Config</button>
     <button class="topnav-btn" onclick="copiarLink()">🔗 Link</button>
     <button class="topnav-btn danger" onclick="limparTudo()">🗑 Limpar</button>
     <button id="btn-export-pdf" class="topnav-btn accent" onclick="exportarPDF()">↗ Exportar PDF</button>
   </div>
 </nav>
 
-<!-- ═══ APP BODY ═══ -->
-<div class="app-body">
 
-<!-- ═══ SIDEBAR ═══ -->
-<div class="sidebar">
-
-  <!-- PASSAGEIROS -->
-  <div class="sb-section">Passageiros</div>
-  <div class="pass-list" id="pass-list"></div>
-  <button class="btn-secondary" onclick="addPassageiro()">+ Adicionar passageiro</button>
-
-  <!-- CONFIGURAÇÃO -->
-
-    <!-- ── LOGO ── -->
+<!-- ═══ CONFIG PANEL ═══ -->
+<div id="config-panel" style="display:none; background:#0a1520; border-bottom:2px solid #193F72; padding:1.2rem 1.5rem; overflow-y:auto; max-height:70vh; position:sticky; top:58px; z-index:90;">
+  <div style="display:flex; flex-wrap:wrap; gap:0.7rem; align-items:flex-start;">
+<!-- ── LOGO ── -->
     <div class="el-card open" id="card-logo">
-      <div class="el-card-head">
+      <div class="el-card-head" onclick="toggleCard('card-logo')">
         <span class="el-card-icon">🖼️</span>
         <span class="el-card-title">Logo da empresa</span>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="logo-upload" onclick="document.getElementById('logo-file').click()">
@@ -388,12 +547,13 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 
     <!-- ── NOME ── -->
     <div class="el-card open" id="card-nome">
-      <div class="el-card-head">
+      <div class="el-card-head" onclick="toggleCard('card-nome')">
         <span class="el-card-icon">🏢</span>
         <span class="el-card-title">Nome da empresa</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-nome" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Texto</label><input id="cfg-nome" value="K&V  Easy Traveling" oninput="applyAll()"></div>
@@ -410,13 +570,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── SLOGAN ── -->
-    <div class="el-card open" id="card-slogan">
-      <div class="el-card-head">
+    <div class="el-card" id="card-slogan">
+      <div class="el-card-head" onclick="toggleCard('card-slogan')">
         <span class="el-card-icon">✨</span>
         <span class="el-card-title">Slogan</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-slogan" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Texto</label><input id="cfg-slogan" value='✨ "Viaje hoje, viaje barato, viaje sempre" ✨' oninput="applyAll()"></div>
@@ -434,13 +595,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── WHATSAPP + INSTAGRAM ── -->
-    <div class="el-card open" id="card-tel">
-      <div class="el-card-head">
+    <div class="el-card" id="card-tel">
+      <div class="el-card-head" onclick="toggleCard('card-tel')">
         <span class="el-card-icon">📱</span>
         <span class="el-card-title">WhatsApp + Instagram</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-tel" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>WhatsApp</label><input id="cfg-tel" value="(38) 9 8815-5417" oninput="applyAll()"></div>
@@ -469,13 +631,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── CNPJ ── -->
-    <div class="el-card open" id="card-cnpj">
-      <div class="el-card-head">
+    <div class="el-card" id="card-cnpj">
+      <div class="el-card-head" onclick="toggleCard('card-cnpj')">
         <span class="el-card-icon">🏛️</span>
         <span class="el-card-title">CNPJ</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-cnpj" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Número</label><input id="cfg-cnpj" value="65.597.589/0001-00" oninput="applyAll()"></div>
@@ -488,13 +651,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── LOCALIZADOR ── -->
-    <div class="el-card open" id="card-loc">
-      <div class="el-card-head">
+    <div class="el-card" id="card-loc">
+      <div class="el-card-head" onclick="toggleCard('card-loc')">
         <span class="el-card-icon">🔑</span>
         <span class="el-card-title">Bloco de Localizador</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-loc" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-loc" value="#193F72" oninput="applyAll()"></div>
@@ -506,13 +670,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── TRECHOS ── -->
-    <div class="el-card open" id="card-trechos">
-      <div class="el-card-head">
+    <div class="el-card" id="card-trechos">
+      <div class="el-card-head" onclick="toggleCard('card-trechos')">
         <span class="el-card-icon">✈️</span>
         <span class="el-card-title">Trechos de Voo</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-trechos" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor principal</label><input type="color" id="c-trecho-primary" value="#193F72" oninput="applyAll()"></div>
@@ -533,13 +698,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── BAGAGEM ESPECÍFICA ── -->
-    <div class="el-card open" id="card-bagesp">
-      <div class="el-card-head">
+    <div class="el-card" id="card-bagesp">
+      <div class="el-card-head" onclick="toggleCard('card-bagesp')">
         <span class="el-card-icon">🧳</span>
         <span class="el-card-title">Bagagem Específica</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-bagesp" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bagesp-bg" value="#e0dbd0" oninput="applyAll()"></div>
@@ -552,13 +718,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── BAGAGEM GERAL ── -->
-    <div class="el-card open" id="card-baggeral">
-      <div class="el-card-head">
+    <div class="el-card" id="card-baggeral">
+      <div class="el-card-head" onclick="toggleCard('card-baggeral')">
         <span class="el-card-icon">🎒</span>
         <span class="el-card-title">Bagagem Geral</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-baggeral" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-bag-bg" value="#fdf0e0" oninput="applyAll()"></div>
@@ -575,13 +742,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── HOSPEDAGEM ── -->
-    <div class="el-card open" id="card-hosp">
-      <div class="el-card-head">
+    <div class="el-card" id="card-hosp">
+      <div class="el-card-head" onclick="toggleCard('card-hosp')">
         <span class="el-card-icon">🏨</span>
         <span class="el-card-title">Hospedagem</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-hosp" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor do título</label><input type="color" id="c-hosp-titulo" value="#193F72" oninput="applyAll()"></div>
@@ -594,13 +762,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── INFORMAÇÕES ── -->
-    <div class="el-card open" id="card-info">
-      <div class="el-card-head">
+    <div class="el-card" id="card-info">
+      <div class="el-card-head" onclick="toggleCard('card-info')">
         <span class="el-card-icon">📋</span>
         <span class="el-card-title">Bloco de Informações</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-info" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-info-bg" value="#e5eeec" oninput="applyAll()"></div>
@@ -617,13 +786,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── VALOR ── -->
-    <div class="el-card open" id="card-valor">
-      <div class="el-card-head">
+    <div class="el-card" id="card-valor">
+      <div class="el-card-head" onclick="toggleCard('card-valor')">
         <span class="el-card-icon">💰</span>
         <span class="el-card-title">Valor à Pagar</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-valor" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor de fundo</label><input type="color" id="c-valor-bg" value="#193F72" oninput="applyAll()"></div>
@@ -635,13 +805,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── PAGAMENTO ── -->
-    <div class="el-card open" id="card-pag">
-      <div class="el-card-head">
+    <div class="el-card" id="card-pag">
+      <div class="el-card-head" onclick="toggleCard('card-pag')">
         <span class="el-card-icon">💳</span>
         <span class="el-card-title">Pagamento</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-pag" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="cr-row"><label>Cor do título</label><input type="color" id="c-pag-titulo" value="#193F72" oninput="applyAll()"></div>
@@ -653,13 +824,14 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── RODAPÉ ── -->
-    <div class="el-card open" id="card-rodape">
-      <div class="el-card-head">
+    <div class="el-card" id="card-rodape">
+      <div class="el-card-head" onclick="toggleCard('card-rodape')">
         <span class="el-card-icon">📎</span>
         <span class="el-card-title">Rodapé</span>
         <div class="vis-toggle" onclick="e=>e.stopPropagation()">
           <label class="toggle-switch"><input type="checkbox" id="vis-rodape" checked onchange="applyAll()"><span class="toggle-track"></span></label>
         </div>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl"><label>Texto esquerdo</label><input id="cfg-rodape" value="Recibo gerado pela K&V Easy Traveling" oninput="applyAll()"></div>
@@ -678,11 +850,12 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <!-- ── SINCRONIZAÇÃO ── -->
-    <div class="el-card open" id="card-cloud">
-      <div class="el-card-head">
+    <div class="el-card" id="card-cloud">
+      <div class="el-card-head" onclick="toggleCard('card-cloud')">
         <span class="el-card-icon">☁️</span>
         <span class="el-card-title">Sincronização compartilhada</span>
         <span id="cloud-connected-badge" style="font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,0,0,.3);margin-right:4px;">○ Sem bin</span>
+        <span class="el-card-arrow">▶</span>
       </div>
       <div class="el-card-body">
         <div class="fl">
@@ -699,20 +872,39 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
       </div>
     </div>
 
-    <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;">
-      <button class="btn-primary" style="flex:1;" onclick="saveConfig()">💾 Salvar na nuvem</button>
-      <button class="btn-secondary" style="flex:1;" onclick="resetConfig()">↺ Fábrica</button>
-      <button class="btn-checkpoint" onclick="cloudSaveCheckpoint(getFormValues())">📌 Definir ponto de reinício</button>
-      <button class="btn-restart" onclick="loadCheckpoint()">↺ Reiniciar para ponto salvo</button>
-    </div>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:1rem;flex-wrap:wrap;">
+    
+  </div>
+</div>
 
+<!-- ═══ APP BODY ═══ -->
+<div class="app-body">
+
+<!-- ═══ SIDEBAR ═══ -->
+<div class="sidebar">
+
+  <!-- DATA CARDS -->
+  <div style="display:flex;justify-content:flex-end;margin-bottom:4px;">
+    <button class="dc-add-btn" onclick="openVG()" style="border-color:#193F72;color:#6a9aca;">⊞ Visão geral</button>
+  </div>
+  <div id="data-cards"></div>
+
+  <div style="flex:1;min-height:.5rem;"></div>
   <!-- CODA INPUT -->
-    <div class="paste-box">
-      <label>📋 Cole os dados do Coda aqui</label>
+  <div class="paste-box">
+    <div class="paste-box-head">
+      <span class="paste-box-head-icon">📋</span>
+      <span class="paste-box-head-title">Cole os dados do Coda aqui</span>
+    </div>
+    <div class="paste-box-body">
       <textarea id="paste-input" placeholder="Cole o texto exportado do Canvas..." oninput="autoResize(this)"></textarea>
-      <button class="btn-primary" style="margin-top:6px" onclick="parsear()">Gerar recibo ↗</button>
+      <button class="btn-primary" onclick="parsear()">Gerar recibo ↗</button>
       <div class="msg" id="msg"></div>
     </div>
+  </div>
+
+<!-- PLACEHOLDER_END_SIDEBAR -->
 
 </div><!-- end sidebar -->
 
@@ -761,6 +953,186 @@ body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+
+function toggleCfg() {
+  const p = document.getElementById('config-panel');
+  const b = document.getElementById('btn-cfg');
+  const open = p.style.display === 'none' || !p.style.display;
+  p.style.display = open ? 'block' : 'none';
+  b.style.cssText = open ? 'background:#193F72;color:#fff;border-color:#193F72;' : '';
+}
+
+// ══════════════════════════════════════════
+// DATA CARDS — folder style, smooth, editable
+// ══════════════════════════════════════════
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function inp(val, onchange, ph) {
+  const v = val || '';
+  return `<input class="dc-input${v?'':' empty'}" value="${esc(v)}" placeholder="${ph||'—'}"
+    oninput="${onchange};applyAll();"
+    onfocus="this.classList.remove('empty')"
+    onblur="if(!this.value)this.classList.add('empty')">`;
+}
+function txta(val, onchange) {
+  return `<textarea class="dc-textarea" oninput="${onchange};applyAll();">${esc(val)}</textarea>`;
+}
+function row(lbl, inputHtml) {
+  return `<div class="dc-row"><span class="dc-row-lbl">${lbl}</span>${inputHtml}</div>`;
+}
+function bagBlock(arr, addCode, changeCode) {
+  let h = `<div class="dc-bag-list">`;
+  arr.forEach((b,i) => { h += `<div class="dc-bag-item-row">${inp(b, changeCode(i), 'item')}</div>`; });
+  h += `</div><button class="dc-add-btn" onclick="${addCode}">+ item</button>`;
+  return h;
+}
+
+function buildDcCards() {
+  const cards = [];
+  // Passageiro
+  let pb = '';
+  D.passageiros.forEach((p,i) => {
+    pb += `<div class="dc-row"><span class="dc-row-lbl">Pass.${D.passageiros.length>1?i+1:''}</span>${inp(p, `D.passageiros[${i}]=this.value`, 'passageiro')}<button class="dc-add-btn" style="padding:2px 6px;min-width:0;flex-shrink:0;" onclick="D.passageiros.splice(${i},1);renderDataCards();applyAll()">✕</button></div>`;
+  });
+  if (!D.passageiros.length) pb += `<div class="dc-empty-hint">nenhum passageiro</div>`;
+  pb += `<button class="dc-add-btn" onclick="addPassageiro()">+ passageiro</button>`;
+  pb += `<hr class="dc-divider">`;
+  pb += row('Loc. Geral', inp(D.locGeral, 'D.locGeral=this.value'));
+  pb += row('Cia Geral',  inp(D.ciaGeral, 'D.ciaGeral=this.value'));
+  cards.push({ icon:'👤', title:'Passageiro', body: pb });
+  // Trechos — always at least one
+  if (!D.trechos.length) D.trechos.push({
+    locEsp:'', ciaEsp:'', partida:'', dataPartida:'', horaPartida:'',
+    destino:'', dataChegada:'', horaChegada:'', paradas:[], duracaoTotal:'', bagEsp:[]
+  });
+  D.trechos.forEach((t,i) => {
+    let b = '';
+    b += row('Localizador', inp(t.locEsp,       `D.trechos[${i}].locEsp=this.value`));
+    b += row('Cia Aérea',   inp(t.ciaEsp,        `D.trechos[${i}].ciaEsp=this.value`));
+    b += `<hr class="dc-divider">`;
+    b += row('Partida',    inp(t.partida,        `D.trechos[${i}].partida=this.value`));
+    b += row('Data Saída', inp(t.dataPartida,    `D.trechos[${i}].dataPartida=this.value`));
+    b += row('Hora Saída', inp(t.horaPartida,    `D.trechos[${i}].horaPartida=this.value`));
+    b += `<hr class="dc-divider">`;
+    b += row('Destino',    inp(t.destino,        `D.trechos[${i}].destino=this.value`));
+    b += row('Data Cheg.', inp(t.dataChegada,    `D.trechos[${i}].dataChegada=this.value`));
+    b += row('Hora Cheg.', inp(t.horaChegada,    `D.trechos[${i}].horaChegada=this.value`));
+    b += row('Paradas',    inp(t.paradas.join(' / '), `D.trechos[${i}].paradas=this.value?this.value.split(' / '):[]`));
+    b += row('Duração',    inp(t.duracaoTotal,   `D.trechos[${i}].duracaoTotal=this.value`));
+    b += `<hr class="dc-divider"><div class="dc-section-lbl">Bagagem Específica</div>`;
+    b += bagBlock(t.bagEsp, `D.trechos[${i}].bagEsp.push('');renderDataCards()`, idx => `D.trechos[${i}].bagEsp[${idx}]=this.value`);
+    cards.push({ icon:'✈️', title:`Trecho ${i+1}`, body: b });
+  });
+  // Botão adicionar trecho (aparece como card fake)
+  cards.push({
+    icon: '+', title: 'Adicionar trecho',
+    body: '', isAdd: true
+  });
+  // Bagagem + Info
+  let bb = `<div class="dc-section-lbl">Bagagem Geral</div>`;
+  bb += bagBlock(D.bagGeral, `D.bagGeral.push('');renderDataCards()`, idx => `D.bagGeral[${idx}]=this.value`);
+  bb += `<hr class="dc-divider"><div class="dc-section-lbl" style="margin-top:4px">Informações</div>`;
+  bb += txta(D.informacoes, 'D.informacoes=this.value');
+  cards.push({ icon:'🎒', title:'Bagagem / Info', body: bb });
+  // Valor + Pagamento
+  let vb = row('Valor', inp(D.valor, 'D.valor=this.value', 'R$0,00'));
+  vb += `<hr class="dc-divider"><div class="dc-section-lbl">Pagamento</div>`;
+  vb += bagBlock(D.pagamento, `D.pagamento.push('');renderDataCards()`, idx => `D.pagamento[${idx}]=this.value`);
+  cards.push({ icon:'💰', title:'Valor / Pagamento', body: vb });
+  return cards;
+}
+
+function renderDataCards() {
+  const wrap = document.getElementById('data-cards');
+  if (!wrap) return;
+  // remember open card by title (stable across rebuilds)
+  const openEl = wrap.querySelector('.dc-card.open');
+  const openKey = openEl ? openEl.dataset.key : null;
+  const cards = buildDcCards();
+  wrap.innerHTML = '';
+  cards.forEach((c) => {
+    const el = document.createElement('div');
+    if (c.isAdd) {
+      el.className = 'dc-card';
+      el.innerHTML = `<div class="dc-add-trecho" onclick="addTrecho()">
+        <span class="dc-add-plus">+</span>
+        <span>Adicionar trecho</span>
+      </div>`;
+      wrap.appendChild(el);
+      return;
+    }
+    el.className = 'dc-card';
+    el.dataset.key = c.title;
+    el.innerHTML = `
+      <div class="dc-card-head">
+        <span class="dc-card-arrow">▶</span>
+        <span class="dc-card-icon">${c.icon}</span>
+        <span class="dc-card-title">${c.title}</span>
+      </div>
+      <div class="dc-card-body-wrap">
+        <div class="dc-card-body" onclick="event.stopPropagation()">${c.body}</div>
+      </div>`;
+    wrap.appendChild(el);
+  });
+  setupDcCards();
+  // restore open card after paint (so CSS transition plays)
+  if (openKey) {
+    const toReopen = wrap.querySelector(`.dc-card[data-key="${openKey}"]`);
+    if (toReopen) requestAnimationFrame(() => requestAnimationFrame(() => toReopen.classList.add('open')));
+  }
+}
+
+function addTrecho() {
+  D.trechos.push({locEsp:'',ciaEsp:'',partida:'',dataPartida:'',horaPartida:'',destino:'',dataChegada:'',horaChegada:'',paradas:[],duracaoTotal:'',bagEsp:[]});
+  const newTitle = `Trecho ${D.trechos.length}`;
+  const wrap = document.getElementById('data-cards');
+  wrap.querySelectorAll('.dc-card').forEach(c => c.classList.remove('open'));
+  renderDataCards();
+  const toOpen = wrap.querySelector(`.dc-card[data-key="${newTitle}"]`);
+  if (toOpen) {
+    toOpen.classList.add('dc-card-new');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toOpen.classList.add('open');
+      toOpen.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      toOpen.addEventListener('animationend', () => toOpen.classList.remove('dc-card-new'), { once: true });
+    }));
+  }
+}
+
+function setupDcCards() {
+  const closeAll = () => document.querySelectorAll('#data-cards .dc-card').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('#data-cards .dc-card').forEach((card) => {
+    card.querySelector('.dc-card-head').addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = card.classList.contains('open');
+      closeAll();
+      if (!isOpen) card.classList.add('open');
+    });
+  });
+}
+
+// ── Visão Geral ──────────────────────────────────────────────────────────────
+function openVG() {
+  const grid = document.getElementById('vg-grid');
+  const cards = buildDcCards().filter(c => !c.isAdd);
+  grid.innerHTML = cards.map(c => `
+    <div class="vg-card">
+      <div class="vg-card-head">
+        <span class="vg-card-icon">${c.icon}</span>
+        <span class="vg-card-title">${c.title}</span>
+      </div>
+      <div class="vg-card-body">${c.body}</div>
+    </div>`).join('');
+  document.getElementById('vg-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVG() {
+  applyAll();
+  renderDataCards();
+  document.getElementById('vg-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 // ══════════════════════════════════════════
 // AUTO RESIZE
 // ══════════════════════════════════════════
@@ -1114,10 +1486,11 @@ window.addEventListener('load', async () => {
   }
 
   applyAll();
+  renderDataCards();
 
   // 3. Dados via URL (?dados=...)
   const dados = params.get('dados');
-  if (dados) { try { document.getElementById('paste-input').value = decodeURIComponent(dados); parsear(); } catch(e) {} }
+  if (dados) { try { document.getElementById('paste-input').value = dados; autoResize(document.getElementById('paste-input')); parsear(); } catch(e) { console.error('dados URL', e); } }
 });
 
 // ══════════════════════════════════════════
@@ -1184,13 +1557,8 @@ function addPassageiro(nome = '') {
 }
 function removePassageiro(i) { D.passageiros.splice(i, 1); renderPassList(); applyAll(); }
 function renderPassList() {
-  const c = document.getElementById('pass-list'); c.innerHTML = '';
-  D.passageiros.forEach((p, i) => {
-    const d = document.createElement('div'); d.className = 'pass-item';
-    d.innerHTML = `<input type="text" value="${esc(p)}" placeholder="Nome do passageiro" oninput="D.passageiros[${i}]=this.value;applyAll()">
-      <button onclick="removePassageiro(${i})">✕</button>`;
-    c.appendChild(d);
-  });
+  // passageiros now live inside the data card
+  renderDataCards();
 }
 
 // ══════════════════════════════════════════
@@ -1331,6 +1699,7 @@ function parsear() {
   D.trechos.forEach(t => { t.bagEsp = t.bagEsp.filter(b => !isPlaceholder(b)); if(isPlaceholder(t.locEsp)) t.locEsp=''; });
   if (isPlaceholder(D.locGeral)) D.locGeral='';
   renderPassList();
+  renderDataCards();
   showMsg(`✓ ${D.trechos.length} trecho(s) | ${D.passageiros.length} passageiro(s)`, 'ok');
   applyAll();
 }
@@ -1355,9 +1724,9 @@ function htmlLocalizador(cfg) {
 }
 function htmlTrechos(cfg) {
   if (!cfg.vis_trechos || !D.trechos.length) return '';
-  return D.trechos.map(t => {
+  return D.trechos.map((t, i) => {
     let h = `<div class="trecho">`;
-    h += `<div class="trecho-titulo" style="font-size:${cfg.trecho_titulo_size}px;color:${cfg.trecho_titulo};border-bottom-color:${cfg.trecho_titulo};">✈️ Trecho ${t.num}</div>`;
+    h += `<div class="trecho-titulo" style="font-size:${cfg.trecho_titulo_size}px;color:${cfg.trecho_titulo};border-bottom-color:${cfg.trecho_titulo};">✈️ Trecho ${i + 1}</div>`;
     if (t.locEsp || t.ciaEsp) {
       h += `<div class="loc-cia-row">`;
       if (t.locEsp) h += `<div class="loc-esp-bloco" style="background:${cfg.loc};"><span class="loc-esp-label">LOCALIZADOR</span><span class="loc-esp-val">${esc(t.locEsp)}</span></div>`;
@@ -1527,4 +1896,22 @@ async function exportarPDF() {
     D.trechos.forEach(t => { if(t.locEsp) partes.push(t.locEsp.trim()); });
     doc.save(`${partes.join(' - ').replace(/[\/\\:*?"<>|]/g,'').trim()}.pdf`);
   } catch(e) { alert('Erro ao gerar PDF: ' + e.message); }
-  btn.textContent = original; btn.disabled =
+  btn.textContent = original; btn.disabled = false;
+}
+
+// fim
+</script>
+
+<!-- ═══ VISÃO GERAL MODAL ═══ -->
+<div id="vg-overlay" onclick="if(event.target===this)closeVG()">
+  <div id="vg-modal">
+    <div id="vg-modal-header">
+      <span id="vg-modal-title">⊞ Visão Geral</span>
+      <button id="vg-close" onclick="closeVG()">✕ Fechar</button>
+    </div>
+    <div id="vg-grid"></div>
+  </div>
+</div>
+
+</body>
+</html>
